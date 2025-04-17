@@ -33,6 +33,7 @@ library(rnaturalearth)
 library(sf)
 library(stringr)
 library(countrycode)
+library(janitor)
 ```
 
 ## Data wrangling
@@ -41,8 +42,17 @@ library(countrycode)
 #| label: shiny-econ-starter-code
 
 #Read in the data
- air <- read.csv("raw-data/air-pollution(air-pollution).csv")
- climate <- read.csv("raw-data/climate-change(climate-change).csv")
- co2 <- read.csv("raw-data/co2-emissions(co2-emissions).csv")
+ air <- read.csv("raw-data/air-pollution(air-pollution).csv", skip = 3)
+ climate <- read.csv("raw-data/climate-change.csv", skip = 3)
+ co2 <- read.csv("raw-data/co2-emissions(co2-emissions).csv", skip = 3)
+
+ #assign the names of the first row to row names
+co2 <- co2|>
+  row_to_names(row_number = 1)
+air <- air|>
+  row_to_names(row_number = 1)
+climate <- climate|>
+  row_to_names(row_number = 1)
+
 
 ```  
