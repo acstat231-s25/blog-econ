@@ -41,7 +41,8 @@ library(countrycode)
 #| label: shiny-econ-starter-code
 
 #Read in the data
- <- read.csv("raw-data/")
- <- read_excel("raw-data/")
+ air <- read.csv("raw-data/air-pollution(air-pollution).csv")
+ climate <- read.csv("raw-data/climate-change(climate-change).csv")
+ co2 <- read.csv("raw-data/co2-emissions(co2-emissions).csv")
 
 ```  
