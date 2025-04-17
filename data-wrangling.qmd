@@ -1,0 +1,47 @@
+---
+title: "Blog Project Data Wrangling"
+subtitle: "Exploring GLobal Trends in Green Transition"
+name: Eglah Belizor, Shamil Khusnullin, and Mariia Koval
+format: pdf
+---
+
+```{r}
+#| label: setup
+#| include: false 
+
+# set code chunk option defaults
+knitr::opts_chunk$set(
+  # display code as types
+  tidy = FALSE, 
+  # slightly smaller code font
+  size = "small",
+  # do not display messages in PDF
+  message = FALSE,
+  # set default figure width and height
+  fig.width = 5, fig.height = 3) 
+
+# improve digit and NA display 
+options(scipen = 1, knitr.kable.NA = '')
+
+# load packages
+library(tidyverse)
+library(lubridate)
+library(kableExtra)
+library(dplyr)
+library(readxl)
+library(rnaturalearth)
+library(sf)
+library(stringr)
+library(countrycode)
+```
+
+## Data wrangling
+
+```{r}
+#| label: shiny-econ-starter-code
+
+#Read in the data
+ <- read.csv("raw-data/")
+ <- read_excel("raw-data/")
+
+```  
