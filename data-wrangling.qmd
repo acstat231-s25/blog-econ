@@ -22,7 +22,6 @@ knitr::opts_chunk$set(
 
 # improve digit and NA display 
 options(scipen = 1, knitr.kable.NA = '')
-
 # load packages
 if (!require('pacman')) install.packages('pacman'); library('pacman')
 pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf, 
@@ -32,31 +31,70 @@ pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf,
 ## Data wrangling
 
 ```{r}
-#| label: shiny-econ-starter-code
+#| label: load-data
 
 #Read in the data
  air <- read.csv("raw-data/air-pollution(air-pollution).csv", skip = 3)
  climate <- read.csv("raw-data/climate-change.csv", skip = 3)
  co2 <- read.csv("raw-data/co2-emissions(co2-emissions).csv", skip = 3)
-
- #assign the names of the first row to row names
+ 
+#assigned the names of the first row to row names
 co2 <- co2|>
   row_to_names(row_number = 1)
 air <- air|>
   row_to_names(row_number = 1)
 climate <- climate|>
   row_to_names(row_number = 1)
+ 
+```
+ 
 
+```{r}
+#| label: climate-data
+
+#removed an unnecessary column
 climate <- climate |>
   select(-"Indicator Code")
 
+#created a vector with variables of interest
 variables<- c("Renewable energy consumption (% of total final energy consumption)", 
               "Electricity production from oil sources (% of total)",
               "Electricity production from coal sources (% of total)",
               "Renewable electricity output (% of total electricity output)",
               "Population growth (annual %)", 
               "Forest area (% of land area)")
-
+#filtered observations with variables of interest
 climate <- climate |>
   filter(`Indicator Name` %in% variables)
 ```  
+
+```{r}
+#| label: co2-data
+
+#Load country-data from rnaturalearth and select relevant columns
+region <- ne_countries(scale = "medium", returnclass = "sf") |>
+  #Replace missing country codes (Norway and France)
+  mutate(iso_a3 = ifelse(iso_a3 == "-99", iso_a3_eh, iso_a3)) |>  
+  select(iso_a3, region_un, sovereignt) |>  #UN region classification
+  rename(`Country Code` = iso_a3, `Country Name` = sovereignt)
+
+#Merging existing dataset with the region data and coordinates for plotting
+co2 <- co2 |>
+ right_join(region, by = c("Country Code", "Country Name"))|>
+#added missing countries for plotting maps
+  group_by("Country Name") |>
+  #imputed variable name for missing data
+  mutate(`Indicator Name` = ifelse(is.na(`Indicator Name`), 
+"Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)", 
+  `Indicator Name`))|>
+  ungroup()
+```
+
+```{r}
+#| label: air-data
+
+#removed an unnecessary column
+air <- air |>
+  select(-"Indicator Code")
+
+```
