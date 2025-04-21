@@ -24,16 +24,9 @@ knitr::opts_chunk$set(
 options(scipen = 1, knitr.kable.NA = '')
 
 # load packages
-library(tidyverse)
-library(lubridate)
-library(kableExtra)
-library(dplyr)
-library(readxl)
-library(rnaturalearth)
-library(sf)
-library(stringr)
-library(countrycode)
-library(janitor)
+if (!require('pacman')) install.packages('pacman'); library('pacman')
+pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf, 
+               rnaturalearth, janitor, countrycode, stringr)
 ```
 
 ## Data wrangling
@@ -54,5 +47,16 @@ air <- air|>
 climate <- climate|>
   row_to_names(row_number = 1)
 
+climate <- climate |>
+  select(-"Indicator Code")
 
+variables<- c("Renewable energy consumption (% of total final energy consumption)", 
+              "Electricity production from oil sources (% of total)",
+              "Electricity production from coal sources (% of total)",
+              "Renewable electricity output (% of total electricity output)",
+              "Population growth (annual %)", 
+              "Forest area (% of land area)")
+
+climate <- climate |>
+  filter(`Indicator Name` %in% variables)
 ```  
