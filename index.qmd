@@ -16,18 +16,12 @@ abstract: "A brief abstract summarizing your project is required here. This abst
 options(scipen = 1, knitr.kable.NA = "")
 
 # Load necessary packages
-library(tidyverse)
-library(knitr)
-library(kableExtra)
-library(sf)       
-library(dplyr)       
-library(ggplot2)    
-library(viridis)  
+if (!require('pacman')) install.packages('pacman'); library('pacman')
+pacman::p_load(viridis, tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf, 
+               rnaturalearth, janitor, countrycode, stringr, knitr)
 
 
-
-
- co2_map <- readRDS("raw-data/co2_map.rds")
+ co2_map <- readRDS("Data/co2_map.rds")
 ```
 
 
@@ -70,7 +64,7 @@ world_91_22 <- co2_map |>
   filter(Year == c(1991, 2022))
 
 ggplot(world_91_22) +
-  geom_sf(aes(fill = co2conc), colour = "grey40", linewidth = .2) +
+  geom_sf(aes(geometry = geometry, fill = co2conc), colour = "grey40", linewidth = .2) +
   scale_fill_viridis_c(option = "viridis", na.value = "grey90",
                        name = "% change vs 1990") +
   coord_sf(crs = "+proj=robin", expand = FALSE) +  
@@ -81,8 +75,6 @@ ggplot(world_91_22) +
     strip.text      = element_text(face = "bold", size = 18)
   ) +
   labs(title = "CO₂ emissions relative to 1990: 1991 vs 2022")
-
-
 
 
 
