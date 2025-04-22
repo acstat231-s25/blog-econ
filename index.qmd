@@ -19,7 +19,12 @@ options(scipen = 1, knitr.kable.NA = "")
 library(tidyverse)
 library(knitr)
 library(kableExtra)
+library(sf)       
+library(dplyr)       
+library(ggplot2)    
+library(viridis)  
 ```
+
 
 ## Getting started
 
