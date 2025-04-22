@@ -36,23 +36,25 @@ pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf,
 #Read in the data
  air <- read.csv("raw-data/air-pollution(air-pollution).csv", skip = 3)
  climate <- read.csv("raw-data/climate-change.csv", skip = 3)
- co2 <- read.csv("raw-data/co2-emissions(co2-emissions).csv", skip = 4)
+co2 <- read.csv("raw-data/co2-emissions(co2-emissions).csv", skip = 3)
  
 #assigned the names of the first row to row names
+#removed an unnecessary column
 air <- air|>
-  row_to_names(row_number = 1)
+  row_to_names(row_number = 1)|>
+  select(-"Indicator Code")
 climate <- climate|>
-  row_to_names(row_number = 1)
+  row_to_names(row_number = 1)|>
+  select(-"Indicator Code") 
+co2 <- co2 |>
+  row_to_names(row_number = 1)|>
+  select(-"Indicator Code")
  
 ```
  
 
 ```{r}
 #| label: climate-data
-
-#removed an unnecessary column
-climate <- climate |>
-  select(-"Indicator Code")
 
 #created a vector with variables of interest
 variables<- c("Renewable energy consumption (% of total final energy consumption)", 
@@ -77,30 +79,24 @@ region <- ne_countries(scale = "medium", returnclass = "sf") |>
   rename(`Country Code` = iso_a3, `Country Name` = sovereignt)
 
 #Merging existing dataset with the region data and coordinates for plotting
-co2_cleaned <- co2 |> 
-  
-
-  # 3) Remove "X" from the year columns
-  rename_with(.cols = matches("^X(19|20)\\d{2}$"), 
-              .fn   = ~ sub("^X", "", .x)) |> 
-  # 4) Convert all year columns to numeric
-  mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |> 
-  # 5) Pivot longer: create one row per Year and Value
-  pivot_longer(
-    cols      = matches("^(19|20)\\d{2}$"),
-    names_to  = "Year",
-    values_to = "Value"
-  ) |> 
-  # 6) Pivot wider: separate columns for each Indicator.Name
+co2_cleaned <- co2 |>
+  #Convert all year columns to numeric
+  mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |>
+  #Pivot longer: create one row per Year and Value
+ pivot_longer(!c(`Country Name`, `Country Code`, `Indicator Name`), 
+              names_to  = "Year",
+              values_to = "Value" ) |> 
+  #Pivot wider: separate columns for each Indicator Name
   pivot_wider(
-    names_from  = Indicator.Name,
+    names_from  = `Indicator Name`,
     values_from = Value
   ) |> 
-  rename(co2conc = `Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)`, "Country Code" = `Country.Code`) |> 
+  rename(co2conc = `Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)`, "Country Code" = `Country Code`) |> 
   filter(co2conc < 500) |> 
   mutate(Year = as.integer(Year))
 
-co2_map <- left_join(region, co2_cleaned, by = "Country Code")
+co2_map <- co2_cleaned |>
+ right_join(region, by = c("Country Code", "Country Name"))
 
 ```
 
@@ -109,6 +105,6 @@ co2_map <- left_join(region, co2_cleaned, by = "Country Code")
 
 #removed an unnecessary column
 air <- air |>
-  select(-"Indicator Code")
+ 
 
 ```
