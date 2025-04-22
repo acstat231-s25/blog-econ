@@ -85,14 +85,10 @@ co2_cleaned <- co2 |>
   #Pivot longer: create one row per Year and Value
  pivot_longer(!c(`Country Name`, `Country Code`, `Indicator Name`), 
               names_to  = "Year",
-              values_to = "Value" ) |> 
-  #Pivot wider: separate columns for each Indicator Name
-  pivot_wider(
-    names_from  = `Indicator Name`,
-    values_from = Value
-  ) |> 
-  rename(co2conc = `Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)`, "Country Code" = `Country Code`) |> 
-  filter(co2conc < 500) |> 
+              values_to = "co2conc" ) |> 
+  rename("Country Code" = `Country Code`) |> 
+  # Cap co2conc at 500 % to avoid skewing the graph.
+  mutate(co2conc = pmin(co2conc, 500)) |> 
   mutate(Year = as.integer(Year))
 
 co2_map <- co2_cleaned |>
