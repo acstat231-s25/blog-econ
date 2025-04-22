@@ -86,13 +86,14 @@ co2_cleaned <- co2 |>
  pivot_longer(!c(`Country Name`, `Country Code`, `Indicator Name`), 
               names_to  = "Year",
               values_to = "co2conc" ) |> 
-  rename("Country Code" = `Country Code`) |> 
   # Cap co2conc at 500 % to avoid skewing the graph.
   mutate(co2conc = pmin(co2conc, 500)) |> 
   mutate(Year = as.integer(Year))
 
 co2_map <- co2_cleaned |>
  right_join(region, by = c("Country Code", "Country Name"))
+
+write_rds(co2_map, "Data/co2_map.rds")
 
 ```
 
