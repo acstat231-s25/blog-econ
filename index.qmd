@@ -23,6 +23,11 @@ library(sf)
 library(dplyr)       
 library(ggplot2)    
 library(viridis)  
+
+
+
+
+ co2_map <- readRDS("raw-data/co2_map.rds")
 ```
 
 
@@ -55,6 +60,33 @@ Climate change and sustainable development have become the topics of debate in r
 
 
 ## Introduction and context
+
+
+
+
+```{r}
+
+world_91_22 <- co2_map |> 
+  filter(Year == c(1991, 2022))
+
+ggplot(world_91_22) +
+  geom_sf(aes(fill = co2conc), colour = "grey40", linewidth = .2) +
+  scale_fill_viridis_c(option = "viridis", na.value = "grey90",
+                       name = "% change vs 1990") +
+  coord_sf(crs = "+proj=robin", expand = FALSE) +  
+  facet_wrap(~Year, ncol = 1) +           
+  theme_void(base_size = 16) +                     
+  theme(
+    legend.position = "bottom",
+    strip.text      = element_text(face = "bold", size = 18)
+  ) +
+  labs(title = "CO₂ emissions relative to 1990: 1991 vs 2022")
+
+
+
+
+
+```
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
