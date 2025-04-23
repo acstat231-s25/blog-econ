@@ -88,18 +88,10 @@ co2_cleaned <- co2 |>
               values_to = "co2conc" ) |> 
   # Cap co2conc at 500 % to avoid skewing the graph.
   mutate(co2conc = pmin(co2conc, 500)) |> 
-  mutate(Year = as.integer(Year)) |>
-  #Changed country names to align with rnaturalearth package
-  dplyr::mutate(`Country Name` = dplyr::recode(`Country Name`,
-                                        "United States" = "United States of America",
-                                        "Congo, Rep."= "Republic of the Congo",
-                                        "Cote d'Ivoire" = "Ivory Coast",
-                                        "Russian Federation" = "Russia",
-                                        "Russian Federation" = "Russia",
-                                        "Brunei Darussalam" = "Brunei"))
+  mutate(Year = as.numeric(Year)) 
 
 co2_map <- co2_cleaned |>
- right_join(region, by = c("Country Code", "Country Name"))
+ right_join(region, by = "Country Code")
 
 write_rds(co2_map, "Data/co2_map.rds")
 
