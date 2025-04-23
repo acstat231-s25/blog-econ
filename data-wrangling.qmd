@@ -103,6 +103,10 @@ climate_medians <- climate |>
 climate <- climate |>
   left_join(climate_medians, by = c("region_un", "Indicator Name")) |>
   distinct()
+
+write_rds(climate, "Data/climate.rds")
+
+names(climate)
 ```  
 
 ```{r}
