@@ -80,7 +80,29 @@ climate <- climate |>
   select(-"Country Name.y") |>
   rename(`Country Name` = `Country Name.x`)
 
-#combine yearly aggr
+#combine yearly median data by continent
+#Group countries my region, period and variable of interest
+#find the median value per continent
+climate_medians <- climate |>
+  pivot_longer(
+    cols = matches("^(19|20)\\d{2}$"),
+    names_to = "period",
+    values_to = "value"
+  ) |>
+  group_by(region_un, `Indicator Name`, period) |>
+  summarise(median_value = median(value, na.rm = TRUE)) |>
+  ungroup() |>
+  # Pivot wider to get columns for each period
+  pivot_wider(
+    names_from = period,
+    names_glue = "{period}_median", #assign the name "_median" to each variable
+    values_from = median_value
+  )
+
+#Join back to original data
+climate <- climate |>
+  left_join(climate_medians, by = c("region_un", "Indicator Name")) |>
+  distinct()
 ```  
 
 ```{r}
