@@ -125,6 +125,11 @@ co2_cleaned <- co2 |>
 co2_map <- co2_cleaned |>
  right_join(region, by = "Country Code")
 
+#remove duplicated column after merging geometry data and rename the original 
+co2_map <- co2_map |>
+  select(-"Country Name.y") |>
+  rename(`Country Name` = `Country Name.x`)
+
 write_rds(co2_map, "Data/co2_map.rds")
 
 ```
