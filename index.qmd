@@ -93,18 +93,17 @@ download.file(co2_map_url, temp_file, mode = "wb")
 co2_map <- readRDS(temp_file)
 #User Interface
 ui <- fluidPage(
-  titlePanel("CO₂ Emissions Relative to 1990"),
   sidebarLayout(
     sidebarPanel(
       sliderInput("year", "Select Year:",
-                  #Allow the user to choose a year between 1991 and 2022
-                  min = 1991, max = 2022, value = 1991,
+                  #Allow the user to choose a year between 1994 and 2022 
+                  min = 1994, max = 2022, value = 1991,
                   step = 1, sep = "", 
                   # Allow the user to animate graph
-                  animate = animationOptions(interval = 200))
+                  animate = animationOptions(interval = 1000))
     ),
     mainPanel(
-      plotOutput("mapPlot", height = "550px")
+      plotOutput("mapPlot", height = "750px")
     )
   )
 )
