@@ -79,6 +79,8 @@ climate <- climate |>
 climate <- climate |>
   select(-"Country Name.y") |>
   rename(`Country Name` = `Country Name.x`)
+
+#combine yearly aggr
 ```  
 
 ```{r}
