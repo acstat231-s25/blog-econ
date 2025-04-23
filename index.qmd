@@ -61,20 +61,22 @@ Climate change and sustainable development have become the topics of debate in r
 ```{r}
 
 world_91_22 <- co2_map |> 
-  filter(Year == c(1991, 2022))
+  filter(Year %in% c(1991, 2022))
 
 ggplot(world_91_22) +
-  geom_sf(aes(geometry = geometry, fill = co2conc), colour = "grey40", linewidth = .2) +
+  geom_sf(aes(geometry = geometry, fill = co2conc), 
+          colour = "grey40", linewidth = .2) +
   scale_fill_viridis_c(option = "viridis", na.value = "grey90",
                        name = "% change vs 1990") +
   coord_sf(crs = "+proj=robin", expand = FALSE) +  
   facet_wrap(~Year, ncol = 1) +           
   theme_void(base_size = 16) +                     
   theme(
-    legend.position = "bottom",
-    strip.text      = element_text(face = "bold", size = 18)
-  ) +
-  labs(title = "CO₂ emissions relative to 1990: 1991 vs 2022")
+  legend.position = "bottom",
+  legend.text = element_text(size = 8),  #decrease the size of % change
+  strip.text = element_text(face = "bold", size = 10)
+) +
+  labs(title = "CO2 emissions relative to 1990: 1991 vs 2022")
 
 
 
