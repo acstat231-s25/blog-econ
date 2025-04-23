@@ -44,6 +44,11 @@ format:
     # styles.css (currently empty). See the following page for more info:
     # https://quarto.org/docs/output-formats/html-themes.html#custom-themes
     css: styles.css 
+    
+resources: 
+      - shinylive-sw.js
+extensions:
+  - quarto-ext/shinylive
 
 # Add default code chunk execution options here
 execute:
