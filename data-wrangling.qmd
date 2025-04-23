@@ -56,6 +56,13 @@ co2 <- co2 |>
 ```{r}
 #| label: climate-data
 
+#Load country-data from rnaturalearth and select relevant columns
+region <- ne_countries(scale = "medium", returnclass = "sf") |>
+  #Replace missing country codes (Norway and France)
+  mutate(iso_a3 = ifelse(iso_a3 == "-99", iso_a3_eh, iso_a3)) |>  
+  select(iso_a3, region_un, sovereignt) |>  #UN region classification
+  rename(`Country Code` = iso_a3, `Country Name` = sovereignt)
+
 #created a vector with variables of interest
 variables<- c("Renewable energy consumption (% of total final energy consumption)", 
               "Electricity production from oil sources (% of total)",
@@ -65,18 +72,17 @@ variables<- c("Renewable energy consumption (% of total final energy consumption
               "Forest area (% of land area)")
 #filtered observations with variables of interest
 climate <- climate |>
-  filter(`Indicator Name` %in% variables)
+  filter(`Indicator Name` %in% variables)|>
+  right_join(region, by = c("Country Code"))
+
+#remove duplicated column after merging geometry data and rename the original 
+climate <- climate |>
+  select(-"Country Name.y") |>
+  rename(`Country Name` = `Country Name.x`)
 ```  
 
 ```{r}
 #| label: co2-data
-
-#Load country-data from rnaturalearth and select relevant columns
-region <- ne_countries(scale = "medium", returnclass = "sf") |>
-  #Replace missing country codes (Norway and France)
-  mutate(iso_a3 = ifelse(iso_a3 == "-99", iso_a3_eh, iso_a3)) |>  
-  select(iso_a3, region_un, sovereignt) |>  #UN region classification
-  rename(`Country Code` = iso_a3, `Country Name` = sovereignt)
 
 #Merging existing dataset with the region data and coordinates for plotting
 co2_cleaned <- co2 |>
@@ -89,6 +95,8 @@ co2_cleaned <- co2 |>
   # Cap co2conc at 500 % to avoid skewing the graph.
   mutate(co2conc = pmin(co2conc, 500)) |> 
   mutate(Year = as.numeric(Year)) 
+
+#This results in the creation of Country Name X and Coutry Name Y columns
 
 co2_map <- co2_cleaned |>
  right_join(region, by = "Country Code")
