@@ -6,6 +6,12 @@ author:
 - "Shamil Khusnullin"
 - "Mariia Koval"
 abstract: "A brief abstract summarizing your project is required here. This abstract, along with the first image or figure in your blog, will be used as a preview to your blog on the course's landing page for all the blogs."
+resources:
+      - shinylive-sw.js
+      - Data/co2_map.rds
+
+filters:
+  - shinylive
 ---
 
 ```{r}
@@ -21,7 +27,10 @@ pacman::p_load(viridis, tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf,
                rnaturalearth, janitor, countrycode, stringr, knitr)
 
 
- co2_map <- readRDS("Data/co2_map.rds")
+co2_map <- readRDS("Data/co2_map.rds")
+jsonlite::write_json(co2_map, "Data/co2_map.json", auto_unbox = TRUE)
+ 
+
 ```
 
 
@@ -60,31 +69,75 @@ Climate change and sustainable development have become the topics of debate in r
 
 ```{r}
 
-world_91_22 <- co2_map |> 
-  filter(Year %in% c(1991, 2022))
-
-ggplot(world_91_22) +
-  geom_sf(aes(geometry = geometry, fill = co2conc), 
-          colour = "grey40", linewidth = .2) +
-  scale_fill_viridis_c(option = "viridis", na.value = "grey90",
-                       name = "% change vs 1990") +
-  coord_sf(crs = "+proj=robin", expand = FALSE) +  
-  facet_wrap(~Year, ncol = 1) +           
-  theme_void(base_size = 16) +                     
-  theme(
-  legend.position = "bottom",
-  legend.text = element_text(size = 8),  #decrease the size of % change
-  strip.text = element_text(face = "bold", size = 10)
-) +
-  labs(title = "CO2 emissions relative to 1990: 1991 vs 2022")
-
-
 
 ```
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 600
+
+#Load the libraries inside the standalone chunk
+library(shiny)
+library(ggplot2)
+library(dplyr)
+library(sf)
+library(viridis)
+
+#URL to the RDS file
+co2_map_url <- "https://raw.githubusercontent.com/
+acstat231-s25/blog-econ/main/Data/co2_map.rds"
+
+temp_file <- tempfile(fileext = ".rds")
+download.file(co2_map_url, temp_file, mode = "wb")
+#Read the downloaded RDS file and load into the system.
+co2_map <- readRDS(temp_file)
+#User Interface
+ui <- fluidPage(
+  titlePanel("CO₂ Emissions Relative to 1990"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("year", "Select Year:",
+                  #Allow the user to choose a year between 1991 and 2022
+                  min = 1991, max = 2022, value = 1991,
+                  step = 1, sep = "", 
+                  # Allow the user to animate graph
+                  animate = animationOptions(interval = 200))
+    ),
+    mainPanel(
+      plotOutput("mapPlot", height = "550px")
+    )
+  )
+)
+
+server <- function(input, output) {
+  filtered <- reactive(co2_map %>% filter(Year == input$year))
+  output$mapPlot <- renderPlot({
+    ggplot(filtered()) +
+      geom_sf(aes(geometry = geometry, fill = co2conc),
+              colour = "grey40", linewidth = .2) +
+      scale_fill_viridis_c(option = "viridis", na.value = "grey90",
+                           name = "% change vs 1990") +
+      coord_sf(crs = "+proj=robin", expand = FALSE) +
+      theme_void(base_size = 16) +
+      theme(legend.position = "bottom",
+            legend.text = element_text(size = 8)) +
+      labs(title = paste0("CO₂ emissions relative to 1990: ", input$year))
+  })
+}
+
+shinyApp(ui, server)
+
+```
+
+
+
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 ## Research questions and motivation
+
+
+
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
