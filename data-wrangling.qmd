@@ -109,10 +109,7 @@ co2_map <- co2_map |>
 co2_map <- co2_map |>
   pivot_wider(
     names_from = Year,
-    values_from = co2conc
-  )
-
-co2_map <- co2_map |>
+    values_from = co2conc) |>
   select(-39)|>
   mutate(`1990` = 0)|>
   #Convert all year columns to numeric
