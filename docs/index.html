@@ -9,7 +9,7 @@
 <meta name="author" content="Eglah Belizor">
 <meta name="author" content="Shamil Khusnullin">
 <meta name="author" content="Mariia Koval">
-<meta name="dcterms.date" content="2025-04-23">
+<meta name="dcterms.date" content="2025-04-24">
 
 <title>Analyzing Sustainability Indicators Amidst Climate Change – Website title</title>
 <style>
@@ -23,6 +23,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -45,6 +79,11 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -168,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Last updated</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 23, 2025</p>
+      <p class="date">April 24, 2025</p>
     </div>
   </div>
   
@@ -207,15 +246,61 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="introduction-and-context" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-and-context">Introduction and context</h2>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div class="sourceCode" id="cb1" data-engine="r"><pre class="sourceCode numberSource shinylive-r number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>#| '!! shinylive warning !!': |</span>
+<span id="cb1-2"><a href="#cb1-2"></a>#|   shinylive does not work in self-contained HTML documents.</span>
+<span id="cb1-3"><a href="#cb1-3"></a>#|   Please set `embed-resources: false` in your metadata.</span>
+<span id="cb1-4"><a href="#cb1-4"></a>#| standalone: true</span>
+<span id="cb1-5"><a href="#cb1-5"></a>#| viewerHeight: 600</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>#Load the libraries inside the standalone chunk</span>
+<span id="cb1-8"><a href="#cb1-8"></a>library(shiny)</span>
+<span id="cb1-9"><a href="#cb1-9"></a>library(ggplot2)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>library(dplyr)</span>
+<span id="cb1-11"><a href="#cb1-11"></a>library(sf)</span>
+<span id="cb1-12"><a href="#cb1-12"></a>library(viridis)</span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a>#URL to the RDS file</span>
+<span id="cb1-15"><a href="#cb1-15"></a>co2_map_url &lt;- "https://raw.githubusercontent.com/</span>
+<span id="cb1-16"><a href="#cb1-16"></a>acstat231-s25/blog-econ/main/Data/co2_map.rds"</span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a>temp_file &lt;- tempfile(fileext = ".rds")</span>
+<span id="cb1-19"><a href="#cb1-19"></a>download.file(co2_map_url, temp_file, mode = "wb")</span>
+<span id="cb1-20"><a href="#cb1-20"></a>#Read the downloaded RDS file and load into the system.</span>
+<span id="cb1-21"><a href="#cb1-21"></a>co2_map &lt;- readRDS(temp_file)</span>
+<span id="cb1-22"><a href="#cb1-22"></a>#User Interface</span>
+<span id="cb1-23"><a href="#cb1-23"></a>ui &lt;- fluidPage(</span>
+<span id="cb1-24"><a href="#cb1-24"></a>  sidebarLayout(</span>
+<span id="cb1-25"><a href="#cb1-25"></a>    sidebarPanel(</span>
+<span id="cb1-26"><a href="#cb1-26"></a>      sliderInput("year", "Select Year:",</span>
+<span id="cb1-27"><a href="#cb1-27"></a>                  #Allow the user to choose a year between 1994 and 2022 </span>
+<span id="cb1-28"><a href="#cb1-28"></a>                  min = 1994, max = 2022, value = 1991,</span>
+<span id="cb1-29"><a href="#cb1-29"></a>                  step = 1, sep = "", </span>
+<span id="cb1-30"><a href="#cb1-30"></a>                  # Allow the user to animate graph</span>
+<span id="cb1-31"><a href="#cb1-31"></a>                  animate = animationOptions(interval = 1000))</span>
+<span id="cb1-32"><a href="#cb1-32"></a>    ),</span>
+<span id="cb1-33"><a href="#cb1-33"></a>    mainPanel(</span>
+<span id="cb1-34"><a href="#cb1-34"></a>      plotOutput("mapPlot", height = "750px")</span>
+<span id="cb1-35"><a href="#cb1-35"></a>    )</span>
+<span id="cb1-36"><a href="#cb1-36"></a>  )</span>
+<span id="cb1-37"><a href="#cb1-37"></a>)</span>
+<span id="cb1-38"><a href="#cb1-38"></a></span>
+<span id="cb1-39"><a href="#cb1-39"></a>server &lt;- function(input, output) {</span>
+<span id="cb1-40"><a href="#cb1-40"></a>  filtered &lt;- reactive(co2_map %&gt;% filter(Year == input$year))</span>
+<span id="cb1-41"><a href="#cb1-41"></a>  output$mapPlot &lt;- renderPlot({</span>
+<span id="cb1-42"><a href="#cb1-42"></a>    ggplot(filtered()) +</span>
+<span id="cb1-43"><a href="#cb1-43"></a>      geom_sf(aes(geometry = geometry, fill = co2conc),</span>
+<span id="cb1-44"><a href="#cb1-44"></a>              colour = "grey40", linewidth = .2) +</span>
+<span id="cb1-45"><a href="#cb1-45"></a>      scale_fill_viridis_c(option = "viridis", na.value = "grey90",</span>
+<span id="cb1-46"><a href="#cb1-46"></a>                           name = "% change vs 1990") +</span>
+<span id="cb1-47"><a href="#cb1-47"></a>      coord_sf(crs = "+proj=robin", expand = FALSE) +</span>
+<span id="cb1-48"><a href="#cb1-48"></a>      theme_void(base_size = 16) +</span>
+<span id="cb1-49"><a href="#cb1-49"></a>      theme(legend.position = "bottom",</span>
+<span id="cb1-50"><a href="#cb1-50"></a>            legend.text = element_text(size = 8)) +</span>
+<span id="cb1-51"><a href="#cb1-51"></a>      labs(title = paste0("CO₂ emissions relative to 1990: ", input$year))</span>
+<span id="cb1-52"><a href="#cb1-52"></a>  })</span>
+<span id="cb1-53"><a href="#cb1-53"></a>}</span>
+<span id="cb1-54"><a href="#cb1-54"></a></span>
+<span id="cb1-55"><a href="#cb1-55"></a>shinyApp(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 </section>
 <section id="research-questions-and-motivation" class="level2">
@@ -229,7 +314,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="yearly-data-by-environmental-indicators" class="level2">
 <h2 class="anchored" data-anchor-id="yearly-data-by-environmental-indicators">Yearly data by environmental indicators</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-<iframe src="https://mariia-koval.shinyapps.io/RaceforHumanCapital/" width="100%" height="600px" frameborder="0">
+<iframe src="INSERT-LINK-HERE" width="100%" height="600px" frameborder="0">
 </iframe>
 </section>
 <section id="clustering-by-sustainability-levels" class="level2">
