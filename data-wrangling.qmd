@@ -29,6 +29,7 @@ pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf,
 library(broom)
 library(purrr)
 library(tidyr)
+library(GGally)
 ```
 
 ## Data wrangling
@@ -246,6 +247,37 @@ clusters_2015 <- sustain_2015_c5 |>
 cluster_comparison <- clusters_1990 |>
   inner_join(clusters_2015, by = "Country Name")
 cluster_comparison
+
+# visualization choice: scatterplot matrix
+# for standardized 1990 cluster data
+sustain_1990_c5 |>
+  rename (
+      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = "Electricity production from coal sources (% of total)"
+    ) |>
+  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
+         `electric_prod_coal`, `cluster_1990`) |>
+  ggpairs(aes(color = cluster_1990)
+        , upper = list(continuous = "blank")
+        , progress = FALSE) +
+  theme(text = element_text(size = 8))
+
+# for standardized 2015 cluster data
+sustain_2015_c5 |>
+  rename (
+      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = "Electricity production from coal sources (% of total)"
+    ) |>
+  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
+         `electric_prod_coal`, `cluster_2015`) |>
+  ggpairs(aes(color = cluster_2015)
+        , upper = list(continuous = "blank")
+        , progress = FALSE) +
+  theme(text = element_text(size = 8))
 
 
 ```
