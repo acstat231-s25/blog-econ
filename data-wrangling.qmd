@@ -26,6 +26,7 @@ options(scipen = 1, knitr.kable.NA = '')
 if (!require('pacman')) install.packages('pacman'); library('pacman')
 pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf, 
                rnaturalearth, janitor, countrycode, stringr)
+library(broom)
 ```
 
 ## Data wrangling
