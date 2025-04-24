@@ -111,17 +111,23 @@ ui <- fluidPage(
 server <- function(input, output) {
   filtered <- reactive(co2_map %>% filter(Year == input$year))
   output$mapPlot <- renderPlot({
-    ggplot(filtered()) +
-      geom_sf(aes(geometry = geometry, fill = co2conc),
-              colour = "grey40", linewidth = .2) +
-      scale_fill_viridis_c(option = "viridis", na.value = "grey90",
-                           name = "% change vs 1990") +
-      coord_sf(crs = "+proj=robin", expand = FALSE) +
-      theme_void(base_size = 16) +
-      theme(legend.position = "bottom",
-            legend.text = element_text(size = 8)) +
-      labs(title = paste0("CO₂ emissions relative to 1990: ", input$year))
-  })
+  ggplot(filtered()) +
+    geom_sf(aes(geometry = geometry, fill = co2conc),
+            colour = "grey40", linewidth = .2) +
+    scale_fill_viridis_c(option = "viridis", na.value = "grey90",
+                         name = "% change vs 1990") +
+    coord_sf(
+      crs    = "+proj=robin",
+      xlim   = c(-180, 180),
+      ylim   = c(-90,  90),
+      expand = FALSE
+    ) +
+    theme_void(base_size = 16) +
+    theme(legend.position = "bottom",
+          legend.text     = element_text(size = 8)) +
+    labs(title = paste0("CO₂ emissions relative to 1990: ", input$year))
+})
+
 }
 
 shinyApp(ui, server)
@@ -175,6 +181,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 library(purrr)
 library(tidyr)
 library(GGally)
+library(broom)
 
 climate1 <- read.csv("raw-data/climate-change.csv", skip = 3)
 climate1 <- climate1 |>
@@ -316,3 +323,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 [Embedding Shiny app on the website](https://quarto.org/docs/interactive/#shiny)
 [Observe funtion in Shiny R](https://www.appsilon.com/post/observe-function-r-shiny)
+[Serverless Shiny app extension](https://quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/)
