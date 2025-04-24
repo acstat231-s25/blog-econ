@@ -171,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#changes-in-co2-emissions" id="toc-changes-in-co2-emissions" class="nav-link" data-scroll-target="#changes-in-co2-emissions">Changes in CO2 emissions</a></li>
   <li><a href="#yearly-data-by-environmental-indicators" id="toc-yearly-data-by-environmental-indicators" class="nav-link" data-scroll-target="#yearly-data-by-environmental-indicators">Yearly data by environmental indicators</a></li>
   <li><a href="#clustering-by-sustainability-levels" id="toc-clustering-by-sustainability-levels" class="nav-link" data-scroll-target="#clustering-by-sustainability-levels">Clustering by sustainability levels</a></li>
-  <li><a href="#assessing-the-odds-of-environemntal-transition" id="toc-assessing-the-odds-of-environemntal-transition" class="nav-link" data-scroll-target="#assessing-the-odds-of-environemntal-transition">Assessing the odds of environemntal transition</a></li>
+  <li><a href="#assessing-the-odds-of-environmental-transition" id="toc-assessing-the-odds-of-environmental-transition" class="nav-link" data-scroll-target="#assessing-the-odds-of-environmental-transition">Assessing the odds of environmental transition</a></li>
   <li><a href="#summary-of-policies" id="toc-summary-of-policies" class="nav-link" data-scroll-target="#summary-of-policies">Summary of policies</a></li>
   <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and discussion</a></li>
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
@@ -305,7 +305,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="research-questions-and-motivation" class="level2">
 <h2 class="anchored" data-anchor-id="research-questions-and-motivation">Research questions and motivation</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<ol type="1">
+<li>For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?</li>
+<li>Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?</li>
+<li>Considering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?</li>
+</ol>
 </section>
 <section id="changes-in-co2-emissions" class="level2">
 <h2 class="anchored" data-anchor-id="changes-in-co2-emissions">Changes in CO2 emissions</h2>
@@ -321,8 +325,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="clustering-by-sustainability-levels">Clustering by sustainability levels</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 </section>
-<section id="assessing-the-odds-of-environemntal-transition" class="level2">
-<h2 class="anchored" data-anchor-id="assessing-the-odds-of-environemntal-transition">Assessing the odds of environemntal transition</h2>
+<section id="assessing-the-odds-of-environmental-transition" class="level2">
+<h2 class="anchored" data-anchor-id="assessing-the-odds-of-environmental-transition">Assessing the odds of environmental transition</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 </section>
 <section id="summary-of-policies" class="level2">
@@ -335,6 +339,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="appendix" class="level1">
 <h1>Appendix</h1>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/kmeans-clustering-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/kmeans-clustering-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 178 × 3
+   `Country Name`              cluster_1990 cluster_2015
+   &lt;chr&gt;                       &lt;fct&gt;        &lt;fct&gt;       
+ 1 Africa Eastern and Southern 3            4           
+ 2 Africa Western and Central  2            2           
+ 3 Angola                      2            2           
+ 4 Albania                     2            2           
+ 5 Arab World                  4            3           
+ 6 United Arab Emirates        4            3           
+ 7 Argentina                   4            3           
+ 8 Armenia                     1            3           
+ 9 Australia                   3            4           
+10 Austria                     2            2           
+# ℹ 168 more rows</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/kmeans-clustering-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/kmeans-clustering-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
@@ -342,7 +411,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="bibliography" class="level2">
 <h2 class="anchored" data-anchor-id="bibliography">Bibliography</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-<p><a href="https://quarto.org/docs/interactive/#shiny">Embedding Shiny app on the website</a></p>
+<p><a href="https://quarto.org/docs/interactive/#shiny">Embedding Shiny app on the website</a> <a href="https://www.appsilon.com/post/observe-function-r-shiny">Observe funtion in Shiny R</a></p>
 
 
 </section>

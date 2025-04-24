@@ -116,7 +116,7 @@
     "href": "index.html#research-questions-and-motivation",
     "title": "Analyzing Sustainability Indicators Amidst Climate Change",
     "section": "Research questions and motivation",
-    "text": "Research questions and motivation\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+    "text": "Research questions and motivation\n\nFor policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?\nDeforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?\nConsidering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?"
   },
   {
     "objectID": "index.html#changes-in-co2-emissions",
@@ -165,7 +165,7 @@
     "href": "index.html#bibliography",
     "title": "Analyzing Sustainability Indicators Amidst Climate Change",
     "section": "Bibliography",
-    "text": "Bibliography\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nEmbedding Shiny app on the website"
+    "text": "Bibliography\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nEmbedding Shiny app on the website Observe funtion in Shiny R"
   },
   {
     "objectID": "index.html#methods",
@@ -271,5 +271,12 @@
     "title": "Blog Project Data Wrangling",
     "section": "",
     "text": "Warning in right_join(filter(climate, `Indicator Name` %in% variables), : Detected an unexpected many-to-many relationship between `x` and `y`.\nℹ Row 79 of `x` matches multiple rows in `y`.\nℹ Row 98 of `y` matches multiple rows in `x`.\nℹ If a many-to-many relationship is expected, set `relationship =\n  \"many-to-many\"` to silence this warning.\n\n\n [1] \"Country Name\"   \"Country Code\"   \"Indicator Name\" \"1990\"          \n [5] \"1991\"           \"1992\"           \"1993\"           \"1994\"          \n [9] \"1995\"           \"1996\"           \"1997\"           \"1998\"          \n[13] \"1999\"           \"2000\"           \"2001\"           \"2002\"          \n[17] \"2003\"           \"2004\"           \"2005\"           \"2006\"          \n[21] \"2007\"           \"2008\"           \"2009\"           \"2010\"          \n[25] \"2011\"           \"2012\"           \"2013\"           \"2014\"          \n[29] \"2015\"           \"2016\"           \"2017\"           \"2018\"          \n[33] \"2019\"           \"2020\"           \"2021\"           \"2022\"          \n[37] \"2023\"           \"region_un\"      \"geometry\"       \"1990_median\"   \n[41] \"1991_median\"    \"1992_median\"    \"1993_median\"    \"1994_median\"   \n[45] \"1995_median\"    \"1996_median\"    \"1997_median\"    \"1998_median\"   \n[49] \"1999_median\"    \"2000_median\"    \"2001_median\"    \"2002_median\"   \n[53] \"2003_median\"    \"2004_median\"    \"2005_median\"    \"2006_median\"   \n[57] \"2007_median\"    \"2008_median\"    \"2009_median\"    \"2010_median\"   \n[61] \"2011_median\"    \"2012_median\"    \"2013_median\"    \"2014_median\"   \n[65] \"2015_median\"    \"2016_median\"    \"2017_median\"    \"2018_median\"   \n[69] \"2019_median\"    \"2020_median\"    \"2021_median\"    \"2022_median\"   \n[73] \"2023_median\"   \n\n\n\n\nWarning in right_join(co2_cleaned, region, by = \"Country Code\"): Detected an unexpected many-to-many relationship between `x` and `y`.\nℹ Row 430 of `x` matches multiple rows in `y`.\nℹ Row 98 of `y` matches multiple rows in `x`.\nℹ If a many-to-many relationship is expected, set `relationship =\n  \"many-to-many\"` to silence this warning."
+  },
+  {
+    "objectID": "index.html#assessing-the-odds-of-environmental-transition",
+    "href": "index.html#assessing-the-odds-of-environmental-transition",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "Assessing the odds of environmental transition",
+    "text": "Assessing the odds of environmental transition\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
   }
 ]

@@ -168,6 +168,144 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 # Appendix
 
+``` {r}
+#| label: kmeans-clustering
+
+# load necessary packages
+library(purrr)
+library(tidyr)
+library(GGally)
+
+climate1 <- read.csv("raw-data/climate-change.csv", skip = 3)
+climate1 <- climate1 |>
+  row_to_names(row_number = 1)|>
+  select(-"Indicator Code") 
+
+# vector for selected variables of interest
+sustain_indicators <- c(
+  "Renewable energy consumption (% of total final energy consumption)",
+  "Renewable electricity output (% of total electricity output)",
+  "Electricity production from oil sources (% of total)",
+  "Electricity production from coal sources (% of total)")
+
+# setting up first period data frame (year 1990)
+sustainability1990 <- climate1 |>
+    filter(`Indicator Name` %in% sustain_indicators) |>
+    select(`Country Name`, `Country Code`, `Indicator Name`, `1990`) |>
+    pivot_wider(names_from = `Indicator Name`, 
+                values_from = `1990`) |>
+    drop_na()
+
+# setting up second period data frame (year 2015)
+sustainability2015 <- climate1 |>
+    filter(`Indicator Name` %in% sustain_indicators) |>
+    select(`Country Name`, `Country Code`, `Indicator Name`, `2015`) |>
+    pivot_wider(names_from = `Indicator Name`, 
+                values_from = `2015`) |>
+    drop_na()
+
+# standardize the indicator values for 1990
+sustain_1990_std <- sustainability1990 |>
+  mutate(across(where(is.numeric)
+                , ~ (.x - mean(.x)) / sd(.x)
+                , .names = "{.col}_z")) |>
+  select(ends_with("_z"))
+
+# standardize the indicator values for 2015
+sustain_2015_std <- sustainability2015 |>
+  mutate(across(where(is.numeric)
+                , ~ (.x - mean(.x)) / sd(.x)
+                , .names = "{.col}_z")) |>
+  select(ends_with("_z"))
+
+# run k-means clustering
+set.seed(231)
+
+# first, elbow plots for each year's standardized data
+elbow_1990 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_1990_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+elbow_2015 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_2015_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+
+ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 1990 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 2015 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+
+# based on the elbow plot, k = 4
+sustain_1990_kmeans4 <- sustain_1990_std |>
+  kmeans(centers = 4, nstart = 20)
+sustain_2015_kmeans4 <- sustain_2015_std |>
+  kmeans(centers = 4, nstart = 20)
+
+sustain_1990_c4 <- augment(sustain_1990_kmeans4, sustainability1990) |>
+  rename(cluster_1990 = .cluster)
+sustain_2015_c4 <- augment(sustain_2015_kmeans4, sustainability2015) |>
+  rename(cluster_2015 = .cluster)
+
+# comparing clusters
+clusters_1990 <- sustain_1990_c4 |>
+  select(`Country Name`, cluster_1990)
+clusters_2015 <- sustain_2015_c4 |>
+  select(`Country Name`, cluster_2015)
+
+cluster_comparison <- clusters_1990 |>
+  inner_join(clusters_2015, by = "Country Name")
+cluster_comparison
+
+# visualization choice: scatterplot matrix
+# for standardized 1990 cluster data
+sustain_1990_c4 |>
+  rename (
+      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = "Electricity production from coal sources (% of total)"
+    ) |>
+  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
+         `electric_prod_coal`, `cluster_1990`) |>
+  ggpairs(aes(color = cluster_1990)
+        , upper = list(continuous = "blank")
+        , progress = FALSE) +
+  theme(text = element_text(size = 8))
+
+# for standardized 2015 cluster data
+sustain_2015_c4 |>
+  rename (
+      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = "Electricity production from coal sources (% of total)"
+    ) |>
+  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
+         `electric_prod_coal`, `cluster_2015`) |>
+  ggpairs(aes(color = cluster_2015)
+        , upper = list(continuous = "blank")
+        , progress = FALSE) +
+  theme(text = element_text(size = 8))
+
+```
+
 ## Methods
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
