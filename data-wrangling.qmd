@@ -27,6 +27,8 @@ if (!require('pacman')) install.packages('pacman'); library('pacman')
 pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf, 
                rnaturalearth, janitor, countrycode, stringr)
 library(broom)
+library(purrr)
+library(tidyr)
 ```
 
 ## Data wrangling
@@ -192,6 +194,38 @@ sustain_2015_std <- sustainability2015 |>
 
 # run k-means clustering
 set.seed(231)
+
+# first, elbow plots for each year's standardized data
+elbow_1990 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_1990_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+elbow_2015 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_2015_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+
+ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 1990 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 2015 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+
 
 sustain_1990_kmeans5 <- sustain_1990_std |>
   kmeans(centers = 5, nstart = 20)
