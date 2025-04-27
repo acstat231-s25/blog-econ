@@ -58,6 +58,7 @@ format:
 
 execute:
   echo: false
+  warning: false
 
 resources:
   - shinylive-sw.js
