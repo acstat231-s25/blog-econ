@@ -4,28 +4,43 @@ project:
 
 # Can customize this section with options from the following page:
 # https://quarto.org/docs/websites/website-navigation.html
-website:
-  title: "Website title"
+  website:
+  title: "Environmental Indicators: Past, Present, Future"
+
+
   navbar:
-    left:
-      - href: index.qmd # Must be included as index.qmd
-        text: "Home"
-        icon: house # Get icon names: https://icons.getbootstrap.com/?q=home
-      # Add or remove additional pages below in desired order of appearance
-      - another-page.qmd
-      - href: yet-another-page.qmd
-        text: "Yet another page with a custom label and icon"
-        icon: arrow-through-heart-fill
-        
+    
+
+
+    right:
+      ## Add a github page or something different.
+      - text: "GitHub"
+        href: https://github.com/
+        icon: github
+        ## Use anohter qmd to talk about us and our inspirations behind the project.
+      - text: "About Us"
+        href: another-page.qmd
+        icon: envelope
+
+
 format:
   html:
+    ## Publication date
     date: last-modified
     published-title: "Last updated"
     date-format: "MMMM D, YYYY"
+
+    ## Table of contents
     toc: true
+    toc-location: left
+    toc-depth: 2
     toc-expand: true
+
+    ## Cross-refs & code
     crossrefs-hover: false
     code-line-numbers: true
+
+    ## Bibliography
     bibliography: "bib/library.bib" # Edit the contents of this file
     csl: "bib/american-statistical-association.csl"
     # Uncomment the next line if you want *all* entries in library.bib to be 
@@ -44,14 +59,12 @@ format:
     # styles.css (currently empty). See the following page for more info:
     # https://quarto.org/docs/output-formats/html-themes.html#custom-themes
     css: styles.css 
-    
-resources: 
-      - shinylive-sw.js
-extensions:
-  - quarto-ext/shinylive
 
-# Add default code chunk execution options here
 execute:
   echo: false
 
-  
+resources:
+  - shinylive-sw.js
+
+extensions:
+  - quarto-ext/shinylive
