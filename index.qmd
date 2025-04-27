@@ -8,7 +8,7 @@ author:
 abstract: "A brief abstract summarizing your project is required here. This abstract, along with the first image or figure in your blog, will be used as a preview to your blog on the course's landing page for all the blogs."
 resources:
       - shinylive-sw.js
-      - Data/co2_map.rds
+      - Data/co2_map.rds`
 
 filters:
   - shinylive
@@ -74,7 +74,7 @@ Climate change and sustainable development have become the topics of debate in r
 
 ```{shinylive-r}
 #| standalone: true
-#| viewerHeight: 700
+#| viewerHeight: 650
 
 #Load the libraries inside the standalone chunk
 library(shiny)

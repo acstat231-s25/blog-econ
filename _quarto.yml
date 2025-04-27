@@ -2,16 +2,11 @@ project:
   type: website
   output-dir: docs
 
-# Can customize this section with options from the following page:
-# https://quarto.org/docs/websites/website-navigation.html
-  website:
+website:
   title: "Environmental Indicators: Past, Present, Future"
 
 
   navbar:
-    
-
-
     right:
       ## Add a github page or something different.
       - text: "GitHub"
@@ -25,7 +20,8 @@ project:
 
 format:
   html:
-    ## Publication date
+   
+
     date: last-modified
     published-title: "Last updated"
     date-format: "MMMM D, YYYY"
