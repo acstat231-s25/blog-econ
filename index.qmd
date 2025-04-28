@@ -143,9 +143,35 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ## Yearly data by environmental indicators
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Sustainability and the state of the environment are influenced by a number of factors and can impact the development of the country. While it is difficult to capture the effect of every variable on the state of the environment, we decided to select those that cover both causes and consequences of natural disasters, including energy consumption, renewable energy production, forest area, population growth rates, and CO2 emissions. 
+For instance, forests cover roughly a third of all the land on earth. [This dashboard](https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/) allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020, but the main insights will be discussed below.
 
-[App link](https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/)
+According to the [United Nations](https://www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis), 10 million hectares of land experience deforestation annually, which is when humans convert wooded land into something different by clearing dense forests. Deforestation and forest degradation are destroying natural ecosystems, fragment wildlife habitats, and contribute to global carbon emissions. Based on the line graph provided below, Oceania and Americas have the highest percentage of forest area, while Asia is among the lowest. While Europe, Oceania, and Asia have experienced approximately a 5% increase in forest area, both Americas and Asia had a 5% decline. 
+
+```{r, warning=FALSE, fig.width=8, fig.height=5}
+
+  data1 <- data |>
+    filter(`Indicator Name` ==  "Forest area (% of land area)") |>
+    select(region_un, starts_with(c("19", "20")), ends_with("_median")) |>
+    pivot_longer(
+      cols = starts_with(c("19", "20")) & ends_with("_median"),
+      names_to = "period",
+      values_to = "value"
+    ) |>
+    mutate(period = as.integer(str_remove(period, "_median")))
+  
+ggplot(data1, aes(x = period, y = value, color = region_un)) +
+    geom_line() +
+    geom_point() +
+    labs(
+      title = paste("Forest area (% of land area)"),
+      subtitle = "Median values per year",
+      x = "Year",
+      y = "Forest area (% of land area)",
+      color = "Region"
+    ) +
+    theme_minimal()
+```
 
 ```{r, warning=FALSE, fig.width=8, fig.height=5}
 
