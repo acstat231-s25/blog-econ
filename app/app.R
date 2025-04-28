@@ -9,7 +9,6 @@ pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf,
                plotly)
 
 # =============== import data =================================================
-climate <- readRDS("Data/climate.rds")
 data <- readRDS("Data/data.rds")
 # =============================================================================
   
@@ -26,7 +25,7 @@ get_valid_groups <- function(df, group_col, year_pattern) {
     pull(!!sym(group_col))
 }
 
-valid_countries <- get_valid_groups(climate, "Country Name", "^(19|20)\\d{2}$")
+valid_countries <- get_valid_groups(data, "Country Name", "^(19|20)\\d{2}$")
 valid_medians <- get_valid_groups(data, "region_un", "^(19|20)\\d{2}_median$")
 # =============================================================================
 
@@ -69,7 +68,7 @@ ui <- dashboardPage(
                        selectizeInput(
                          "indicator_select",
                          "Choose an Indicator:",
-                         choices = sort(unique(climate$`Indicator Name`))
+                         choices = sort(unique(data$`Indicator Name`))
                        )
                 )
               ),
@@ -160,7 +159,7 @@ server <- function(input, output, session) {
     req(input$country_select)
     
     # Filter data for the selected country and get valid indicators
-    valid_indicators <- climate |>
+    valid_indicators <- data |>
       filter(`Country Name` == input$country_select) |>
       pivot_longer(cols = matches("^(19|20)\\d{2}$"), names_to = "year", 
                    values_to = "value") |>
@@ -180,7 +179,7 @@ server <- function(input, output, session) {
     
     # Filter data by selected country and indicator
       country_data <- reactive({
-        climate |>
+        data |>
           filter(`Country Name` == input$country_select,
                  `Indicator Name` == input$indicator_select) |>
           pivot_longer(
