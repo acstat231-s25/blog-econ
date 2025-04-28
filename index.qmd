@@ -23,14 +23,12 @@ options(scipen = 1, knitr.kable.NA = "")
 
 # Load necessary packages
 if (!require('pacman')) install.packages('pacman'); library('pacman')
-pacman::p_load(viridis, tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf, 
-               rnaturalearth, janitor, countrycode, stringr, knitr)
-
+pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr, 
+               broom, sf, rnaturalearth, janitor, countrycode, stringr, 
+               GGally, tidyr, kableExtra)
 
 co2_map <- readRDS("Data/co2_map.rds")
-
- 
-
+data <- readRDS("Data/data.rds")
 ```
 
 
@@ -149,6 +147,47 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 <iframe src="INSERT-LINK-HERE" width="100%" height="600px" frameborder="0"></iframe>
 
+```{r, warning=FALSE, fig.width=8, fig.height=5}
+
+plot_indicator <- function(indicator_name) {
+  data1 <- data |>
+    filter(`Indicator Name` == indicator_name) |>
+    select(region_un, starts_with(c("19", "20")), ends_with("_median")) |>
+    pivot_longer(
+      cols = starts_with(c("19", "20")) & ends_with("_median"),
+      names_to = "period",
+      values_to = "value"
+    ) |>
+    mutate(period = as.integer(str_remove(period, "_median")))
+  
+ggplot(data1, aes(x = period, y = value, color = region_un)) +
+    geom_line() +
+    geom_point() +
+    labs(
+      title = paste(indicator_name),
+      subtitle = "Median values per year",
+      x = "Year",
+      y = indicator_name,
+      color = "Region"
+    ) +
+    theme_minimal()
+}
+
+indicators <- c(
+  "Renewable energy consumption (% of total final energy consumption)", 
+  "Electricity production from oil sources (% of total)",
+  "Electricity production from coal sources (% of total)",
+  "Renewable electricity output (% of total electricity output)",
+  "Population growth (annual %)", 
+  "Forest area (% of land area)",
+  "Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)"
+)
+
+for (indicator in indicators) {
+  print(plot_indicator(indicator))
+}
+
+```
 
 ## Clustering by sustainability levels
 
@@ -170,12 +209,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ``` {r}
 #| label: kmeans-clustering
-
-# load necessary packages
-library(purrr)
-library(tidyr)
-library(GGally)
-library(broom)
 
 climate1 <- read.csv("raw-data/climate-change.csv", skip = 3)
 climate1 <- climate1 |>
@@ -318,3 +351,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 [Embedding Shiny app on the website](https://quarto.org/docs/interactive/#shiny)
 [Observe funtion in Shiny R](https://www.appsilon.com/post/observe-function-r-shiny)
 [Serverless Shiny app extension](https://quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/)
+[Functions in R](https://r4ds.had.co.nz/functions.html#function-arguments)
