@@ -8,36 +8,42 @@ pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf,
                shinythemes, DT, ggrepel, viridis, shinyWidgets, shinydashboard, 
                plotly)
 
-# --------------- import data 
+# =============== import data =================================================
 climate <- readRDS("Data/climate.rds")
 data <- readRDS("Data/data.rds")
-#get only countries with at least one non NA value for any indicator
-valid_countries <- climate|>
-  pivot_longer(cols = matches("^(19|20)\\d{2}$"), names_to = "year", values_to = "value") |>
-  group_by(`Country Name`)|>
-  summarise(non_na_count = sum(!is.na(value)))|>
-  filter(non_na_count > 0)|>
-  pull(`Country Name`)
-
-valid_medians <- data|>
-  pivot_longer(cols = matches("^(19|20)\\d{2}_median$"), names_to = "year", values_to = "value") |>
-  group_by(`region_un`)|>
-  summarise(non_na_count = sum(!is.na(value)))|>
-  filter(non_na_count > 0)|>
-  pull(`region_un`)
-
 # =============================================================================
-# User interface 
+  
+
+# =============== prepare data ================================================
+# Function to store countries with at least one non NA value for any indicator
+get_valid_groups <- function(df, group_col, year_pattern) {
+  df |>
+    pivot_longer(cols = matches(year_pattern), names_to = "year", 
+                 values_to = "value") |>
+    group_by(across(all_of(group_col))) |>
+    summarise(non_na_count = sum(!is.na(value)), .groups = "drop") |>
+    filter(non_na_count > 0) |>
+    pull(!!sym(group_col))
+}
+
+valid_countries <- get_valid_groups(climate, "Country Name", "^(19|20)\\d{2}$")
+valid_medians <- get_valid_groups(data, "region_un", "^(19|20)\\d{2}_median$")
 # =============================================================================
+
+
+
+# =============== User interface ==============================================
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Yearly changes in sustainability indicators", titleWidth = 500),
+  dashboardHeader(title = "Yearly changes in sustainability indicators", 
+                  titleWidth = 500),
   
   dashboardSidebar(collapsed = TRUE,
                    sidebarMenu(
                      menuItem("Line Graph", tabName = "line", 
                               icon = icon("chart-line")),
-                     menuItem("Line Graph by Continent", tabName = "line-region", 
+                     menuItem("Line Graph by Continent", 
+                              tabName = "line-region", 
                               icon = icon("chart-line"))
   )),
   
@@ -45,7 +51,8 @@ ui <- dashboardPage(
     tabItems(
       tabItem(tabName = "line",
               fluidRow(
-                column(12, h2("Regional Trends by Country and Indicator"), align = "center")
+                column(12, h2("Regional Trends by Country and Indicator"), 
+                       align = "center")
               ),
               fluidRow(
                 column(12,
@@ -74,7 +81,8 @@ ui <- dashboardPage(
       ),
       tabItem(tabName = "line-region",
               fluidRow(
-                column(12, h2("Regional Trends by Continent and Indicator"), align = "center")
+                column(12, h2("Regional Trends by Continent and Indicator"), 
+                       align = "center")
               ),
               fluidRow(
                 column(12,
@@ -106,28 +114,31 @@ ui <- dashboardPage(
 )
 
 # =============================================================================
-# Server
-# =============================================================================
+
+
+
+# =============== Server ======================================================
 server <- function(input, output, session) {
-  
+
+# ======== Continent tab ======================================================
   output$continentPlot <- renderPlotly({
     req(input$country_select_con, input$indicator_select_con)
     
-    #filter data by selected country and indicator
-    filtered_data1 <- data |>
-      filter(`region_un` == input$country_select_con,
-             `Indicator Name` == input$indicator_select_con)
+    continent_data <- reactive({
+      data |>
+        filter(`region_un` == input$country_select_con,
+               `Indicator Name` == input$indicator_select_con) |>
+        pivot_longer(
+          cols = matches("^(19|20)\\d{2}_median$"),
+          names_to = "year",
+          values_to = "value"
+        ) |>
+        mutate(year = as.integer(str_remove(year, "_median")))
+    })
+      
     
-    #convert year columns to long format
-    data_long <- filtered_data1 |>
-      pivot_longer(
-        cols = matches("^(19|20)\\d{2}_median$"),
-        names_to = "year",
-        values_to = "value"
-      )
-    
-    #generate plot
-    p1 <- ggplot(data_long, aes(x = year, y = value)) +
+    # Generate plot
+    p1 <- ggplot(continent_data(), aes(x = year, y = value)) +
       geom_line(color = "darkblue", size = 1) +
       geom_point(color = "darkblue", size = 2) +
       labs(
@@ -140,43 +151,48 @@ server <- function(input, output, session) {
     
     ggplotly(p1)
   })
+# =============================================================================  
   
+
+# ======== Country tab ========================================================
+# Dynamically show indicators for which data is available based on country 
   observe({
     req(input$country_select)
     
-    #filter data for the selected country and get valid indicators
+    # Filter data for the selected country and get valid indicators
     valid_indicators <- climate |>
       filter(`Country Name` == input$country_select) |>
-      pivot_longer(cols = matches("^(19|20)\\d{2}$"), names_to = "year", values_to = "value") |>
+      pivot_longer(cols = matches("^(19|20)\\d{2}$"), names_to = "year", 
+                   values_to = "value") |>
       group_by(`Indicator Name`) |>
       summarise(non_na_count = sum(!is.na(value))) |>
       filter(non_na_count > 0) |>
       pull(`Indicator Name`)  # Extract valid indicators
     
-    #update the indicator choices
-    updateSelectizeInput(session, "indicator_select", choices = valid_indicators, server = TRUE)
+    # Update the indicator choices
+    updateSelectizeInput(session, "indicator_select", 
+                         choices = valid_indicators, server = TRUE)
   })
 
   
   output$regionPlot <- renderPlotly({
     req(input$country_select, input$indicator_select)
     
-    #filter data by selected country and indicator
-    filtered_data <- climate |>
-      filter(`Country Name` == input$country_select,
-             `Indicator Name` == input$indicator_select)
+    # Filter data by selected country and indicator
+      country_data <- reactive({
+        climate |>
+          filter(`Country Name` == input$country_select,
+                 `Indicator Name` == input$indicator_select) |>
+          pivot_longer(
+            cols = matches("^(19|20)\\d{2}$"),
+            names_to = "year",
+            values_to = "value"
+          ) |>
+          mutate(year = as.integer(year))
+      })
     
-    #convert year columns to long format
-    data_long <- filtered_data |>
-      pivot_longer(
-        cols = matches("^(19|20)\\d{2}$"),
-        names_to = "year",
-        values_to = "value"
-      ) |>
-      mutate(year = as.integer(year))
-    
-    #generate plot
-    p <- ggplot(data_long, aes(x = year, y = value)) +
+    # Generate plot
+    p <- ggplot(country_data(), aes(x = year, y = value)) +
       geom_line(color = "darkblue", size = 1) +
       geom_point(color = "darkblue", size = 2) +
       labs(
@@ -189,10 +205,9 @@ server <- function(input, output, session) {
     
     ggplotly(p)
   })
- 
 }
+# ============================================================================= 
 
-# =============================================================================
-# Run the app
-# =============================================================================
+
+# ======= Run the app =========================================================
 shinyApp(ui = ui, server = server)
