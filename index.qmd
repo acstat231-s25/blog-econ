@@ -74,18 +74,20 @@ Climate change and sustainable development have become the topics of debate in r
 #| standalone: true
 #| viewerHeight: 650
 
-#Load the libraries inside the standalone chunk
+# Load required libraries inside the shinylive chunk
+
 library(shiny)
 library(ggplot2)
 library(dplyr)
 library(sf)
 library(viridis)
 
-#URL to the RDS file
+# GitHub URL to the RDS file
 co2_map_url <- "https://raw.githubusercontent.com/
 acstat231-s25/blog-econ/main/Data/co2_map.rds"
 
 temp_file <- tempfile(fileext = ".rds")
+# Download the RDS
 download.file(co2_map_url, temp_file, mode = "wb")
 #Read the downloaded RDS file and load into the system.
 co2_map <- readRDS(temp_file)
@@ -151,7 +153,7 @@ For instance, forests cover roughly a third of all the land on earth. [This dash
 According to the [United Nations](https://www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis), 10 million hectares of land experience deforestation annually, which is when humans convert wooded land into something different by clearing dense forests. Deforestation and forest degradation are destroying natural ecosystems, fragment wildlife habitats, and contribute to global carbon emissions. Based on the line graph provided below, Oceania and Americas have the highest percentage of forest area, while Asia is among the lowest. While Europe, Oceania, and Asia have experienced approximately a 5% increase in forest area, both Americas and Asia had a 5% decline. 
 
 ```{r, warning=FALSE, fig.width=8, fig.height=5}
-
+# Prepare forest area dataframe
   data1 <- data |>
     filter(`Indicator Name` ==  "Forest area (% of land area)") |>
     select(region_un, starts_with(c("19", "20")), ends_with("_median")) |>
@@ -162,6 +164,7 @@ According to the [United Nations](https://www.unep.org/news-and-stories/story/ho
     ) |>
     mutate(period = as.integer(str_remove(period, "_median")))
   
+# Plot forest area trends
 ggplot(data1, aes(x = period, y = value, color = region_un)) +
     geom_line() +
     geom_point() +
@@ -192,7 +195,7 @@ Among other sources of renewable energy are geothermal energy, which uses heat f
 An interesting observation can be made upon looking at the renewable energy consumption and production plots. There is a clear increasing trend for renewable energy output in regions, such as Oceania by 10%, Asia by 7%, and Europe by more than 20%. Africa and Americas experienced fluctuations in renewable energy output across the priod of 25 years, but were among leaders in the quantity of renewables along with Europe. The plot of renewable energy consumption reveals that Africa is an exceptional case. While other continents' renewable energy consumption levels range between 5 and 22%, Africa reached a 70% mark. In fact, Africa has an abundance of solar, wind, geothermal and bioenergy resources. While renewable sources account for nearly 22% of the electricity output, consumption of renewable energy is so high because it remains one of the least electrified regions. Maybe Africa's renewable potential be a game changer to overcome energy poverty and generate development on the continent. 
 
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
-
+# Prepare renewable electricity dataframe
  data1 <- data |>
     filter(`Indicator Name` 
       ==  c("Renewable electricity output (% of total electricity output)", 
@@ -207,7 +210,9 @@ An interesting observation can be made upon looking at the renewable energy cons
     mutate(period = as.integer(str_remove(period, "_median"))) |>
     rename()
 
+
 par(mfrow=c(1,2))
+# Plot a faceted graph on renewable energy trends 
 ggplot(data1, aes(x = period, y = value, color = region_un)) +
     geom_line() +
     geom_point() +
@@ -239,17 +244,19 @@ include_graphics("https://www.mytwintiers.com/wp-content/uploads/sites/89/2017/0
 According to data in the plots below, Oceania is heavily reliable on fossil fuels with around 60% of total electricity output coming from coal in 2015, but it shows a decreasing trend in the span of 25 years. Europe is the second largest user of coal power with about 18% of total energy output coming from it. It shows a decreasing trend as well. Americas, on the ther hand, are the largest consumers of oil energy which accounts for around 20% of total energy output. The rest of the continents have under 10% of electrivity coming from oil. Notably, while there are significant fluctuations in oil usage from year to year in all of the continents, Asia shows a clear decreasing trend in oil energy consumption. 
 
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
-
+# Prepare coal and oil electricity dataframe
 data1 <- data |>
     filter(`Indicator Name` ==  c("Electricity production from coal sources (% of total)", "Electricity production from oil sources (% of total)")) |>
-    select(region_un, `Indicator Name`, starts_with(c("19", "20")), ends_with("_median")) |>
+    select(region_un, `Indicator Name`, starts_with(c("19", "20")),
+           ends_with("_median")) |>
     pivot_longer(
       cols = starts_with(c("19", "20")) & ends_with("_median"),
       names_to = "period",
       values_to = "value"
     ) |>
     mutate(period = as.integer(str_remove(period, "_median")))
-  
+
+# Plot electricity production trends
 ggplot(data1, aes(x = period, y = value, color = region_un)) +
     geom_line() +
     geom_point() +
@@ -345,7 +352,7 @@ elbow_2015 <- tibble(k = 1:10) |>
     glanced = map(kmeans_results, glance)
   ) |>
   unnest(cols = c(glanced))
-
+# Plot an elbow graph to identify the best k value
 ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
   geom_point() + 
   geom_line() +
@@ -488,6 +495,7 @@ cluster_comparison <- sustain_2015_c4 |>
          renewable_electricity)
   
 
+# Plot a logistic regression.
 
 logit_fit <- glm(cluster_jump ~ renewable_energy +
                    electricty_oil +
