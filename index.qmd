@@ -25,7 +25,7 @@ options(scipen = 1, knitr.kable.NA = "")
 if (!require('pacman')) install.packages('pacman'); library('pacman')
 pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr, 
                broom, sf, rnaturalearth, janitor, countrycode, stringr, 
-               GGally, tidyr, kableExtra, shinylive)
+               GGally, tidyr, kableExtra, shinylive, randomForest)
 
 co2_map <- readRDS("Data/co2_map.rds")
 data <- readRDS("Data/data.rds")
@@ -518,6 +518,42 @@ summary(logit_fit)
 
 ```
 
+
+
+
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+names(sustain_2015_c4) <- c("Country_Name", "Country Code",
+  "Renew_Cons", "Renew_Elec",   "Oil_Elec", "Coal_Elec", "Cluster")
+
+# Choose a training sample of 70% 
+sample_index <- sample(1:nrow(iris), 0.7 * nrow(sustain_2015_c4))
+
+train_data <- sustain_2015_c4[sample_index, ]
+#Choose a testing sample of the remianing 30%
+test_data <- sustain_2015_c4[-sample_index, ]
+
+# Build a Forest learning algorithm
+rf_model <- randomForest(Cluster ~ Renew_Cons + Renew_Elec + Oil_Elec 
+                           + Coal_Elec,
+                         data = train_data, ntree = 100)
+
+# Draw predictions based on the previous table
+predictions <- predict(rf_model, test_data)
+
+# Confusion Matrix
+confusion_matrix <- table(Actual = test_data$Cluster, Predicted = predictions)
+print(confusion_matrix)
+
+# Calculate Accuracy
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+print(paste("Prediction Accuracy:", round(accuracy, 3)))
+
+```
+
 ## Methods
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -530,3 +566,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 * [Observe funtion in Shiny R](https://www.appsilon.com/post/observe-function-r-shiny)
 * [Serverless Shiny app extension](https://quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/)
 * [Functions in R](https://r4ds.had.co.nz/functions.html#function-arguments)
+* [randomForest](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf)
