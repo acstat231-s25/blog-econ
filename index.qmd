@@ -225,7 +225,18 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
 
 ### Electricity production from oil and coal sources
 
-Coal, crude oil, and natural gas are fossil fuels because they were formed from the fossilized plants and animals that lived millions of years ago and have a high carbon content. They were the main sources of energy used to power our houses, cars, and businesses for more than a century. Fossil fuels still play a crucial role in our lives as they account for the major part in electricity production. However, fossil fuels take their toll on ecosystems, air quality, and landscapes. Processing, unearthing, and extracting underground deposits lead to land degradation and make it impossible to restore once nutrient-rich soil. Toxic runoff into water streams resulting from fossil fuel extraction jeopardizes water ecosystems and make it unsafe for drinking.
+Coal, crude oil, and natural gas are fossil fuels because they were formed from the fossilized plants and animals that lived millions of years ago and have a high carbon content. They were the main sources of energy used to power our houses, cars, and businesses for more than a century. Fossil fuels still play a crucial role in our lives as they account for the major part in electricity production. However, fossil fuels take their toll on ecosystems, air quality, and landscapes. Processing, unearthing, and extracting underground deposits lead to land degradation and make it impossible to restore once nutrient-rich soil. Toxic runoff into water streams resulting from fossil fuel extraction jeopardizes water ecosystems and makes it unsafe for drinking. Additionally, burning fossil fuels leads to air pollution, which can have severe impacts on physical health, global warming, and ocean acidification. 
+
+```{r}
+#| fig-cap: "Image courtesy of My Twin Tiers"
+#| fig-align: center
+#| out-width: 100%
+#| fig-link: "https://www.mytwintiers.com/news-cat/international/what-are-fossil-fuels-and-when-will-they-run-out/"
+
+include_graphics("https://www.mytwintiers.com/wp-content/uploads/sites/89/2017/06/climate20change20china20factory_20999558_ver1.0.jpg?strip=1")
+```
+
+According to data in the plots below, Oceania is heavily reliable on fossil fuels with around 60% of total electricity output coming from coal in 2015, but it shows a decreasing trend in the span of 25 years. Europe is the second largest user of coal power with about 18% of total energy output coming from it. It shows a decreasing trend as well. Americas, on the ther hand, are the largest consumers of oil energy which accounts for around 20% of total energy output. The rest of the continents have under 10% of electrivity coming from oil. Notably, while there are significant fluctuations in oil usage from year to year in all of the continents, Asia shows a clear decreasing trend in oil energy consumption. 
 
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
 
