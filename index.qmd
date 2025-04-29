@@ -376,7 +376,7 @@ After the process of standardizing indicators and k-means clustering for the yea
 
 ```{r}
 
-```{r}
+
 cluster_comparison <- sustain_2015_c4 |> 
   # Join with 1990 data set
   right_join(sustain_1990_c4, by = "Country Name") |> 
