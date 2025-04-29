@@ -324,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -353,7 +353,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -381,7 +381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -424,6 +424,87 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of ‘Africa Eastern and Southern’ changed groups from 4 to 3, while the country of Argentina moved from 4 to 3.</p>
+<p>After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of ‘Africa Eastern and Southern’ changed groups from 4 to 3, while the country of Argentina moved from 4 to 3.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 178 × 3
+   `Country Name`              cluster_1990 cluster_2015
+   &lt;chr&gt;                       &lt;fct&gt;        &lt;fct&gt;       
+ 1 Africa Eastern and Southern 3            4           
+ 2 Africa Western and Central  2            2           
+ 3 Angola                      2            2           
+ 4 Albania                     2            2           
+ 5 Arab World                  4            3           
+ 6 United Arab Emirates        4            3           
+ 7 Argentina                   4            3           
+ 8 Armenia                     1            3           
+ 9 Australia                   3            4           
+10 Austria                     2            2           
+# ℹ 168 more rows</code></pre>
+</div>
+</div>
+<p>Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group’s unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster’s special characteristics, we are able to identify which groups are most sustainable and the least sustainable.</p>
+<p>In 1990: - <strong>Cluster 1 (red)</strong><br>
+- Characterized by high oil-based electricity production, but very low renewable energy consumption and renewable electricity output.<br>
+- Least sustainable: It likely represents countries heavily reliant on fossil fuels with minimal use of renewables.</p>
+<ul>
+<li><strong>Cluster 2 (green)</strong>
+<ul>
+<li>Higher levels of renewable energy consumption and electricity output, with low oil and coal electricity production.<br>
+</li>
+<li>Most sustainable: Likely represents countries investing in renewables with limited reliance on fossil fuels.</li>
+</ul></li>
+<li><strong>Cluster 3 (blue)</strong>
+<ul>
+<li>Relatively high coal-based electricity production, with moderate renewable energy consumption.<br>
+</li>
+<li>Second most sustainable: Notably high coal usage, but more renewables than Cluster 1.</li>
+</ul></li>
+<li><strong>Cluster 4 (purple)</strong>
+<ul>
+<li>Low to moderate values across all four indicators. Moderate coal usage but low in renewable energy usage.<br>
+</li>
+<li>Third most sustainable: Not a standout in fossil fuel or renewable use.</li>
+</ul></li>
+</ul>
+<p><strong>Ranking from most to least sustainable</strong>: 2, 3, 4, 1</p>
+<p>In 2015: - <strong>Cluster 1 (red)</strong><br>
+- Remains the least sustainable, although with some improvement in renewable energy consumption.</p>
+<ul>
+<li><strong>Cluster 2 (green)</strong>
+<ul>
+<li>Remains the most sustainable. Clear leader in sustainability metrics.</li>
+</ul></li>
+<li><strong>Cluster 3 (blue)</strong>
+<ul>
+<li>Reduced reliance on coal production, slight increase in renewables.<br>
+</li>
+<li>Still in second place in sustainability ranking.</li>
+</ul></li>
+<li><strong>Cluster 4 (purple)</strong>
+<ul>
+<li>Increased coal production, surpassing Cluster 3. Moderate renewable energy, low oil usage.<br>
+</li>
+<li>Still in third place in sustainability ranking.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Logistic Regression</strong></p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -449,24 +530,6 @@ Residual deviance: 187.16  on 173  degrees of freedom
 AIC: 197.16
 
 Number of Fisher Scoring iterations: 5</code></pre>
-</div>
-</div>
-<p>```</p>
-<p>Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group’s unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster’s special characteristics, we are able to identify which groups are most sustainable and the least sustainable.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
 </div>
 </div>
 <section id="methods" class="level2">

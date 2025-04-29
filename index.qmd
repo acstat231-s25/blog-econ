@@ -385,6 +385,86 @@ clusters_2015 <- sustain_2015_c4 |>
 
 After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Eastern and Southern' changed groups from 4 to 3, while the country of Argentina moved from 4 to 3.
 
+After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Eastern and Southern' changed groups from 4 to 3, while the country of Argentina moved from 4 to 3.
+
+```{r}
+cluster_comparison <- clusters_1990 |>
+  inner_join(clusters_2015, by = "Country Name")
+cluster_comparison
+```
+ 
+
+Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group's unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster's special characteristics, we are able to identify which groups are most sustainable and the least sustainable.
+
+In 1990:
+- **Cluster 1 (red)**  
+  - Characterized by high oil-based electricity production, but very low renewable energy consumption and renewable electricity output.  
+  - Least sustainable: It likely represents countries heavily reliant on fossil fuels with minimal use of renewables.
+
+- **Cluster 2 (green)**  
+  - Higher levels of renewable energy consumption and electricity output, with low oil and coal electricity production.  
+  - Most sustainable: Likely represents countries investing in renewables with limited reliance on fossil fuels.
+
+- **Cluster 3 (blue)**  
+  - Relatively high coal-based electricity production, with moderate renewable energy consumption.  
+  - Second most sustainable: Notably high coal usage, but more renewables than Cluster 1.
+
+- **Cluster 4 (purple)**  
+  - Low to moderate values across all four indicators. Moderate coal usage but low in renewable energy usage.  
+  - Third most sustainable: Not a standout in fossil fuel or renewable use.
+
+**Ranking from most to least sustainable**: 2, 3, 4, 1
+
+In 2015:
+- **Cluster 1 (red)**  
+  - Remains the least sustainable, although with some improvement in renewable energy consumption.
+
+- **Cluster 2 (green)**  
+  - Remains the most sustainable. Clear leader in sustainability metrics.
+
+- **Cluster 3 (blue)**  
+  - Reduced reliance on coal production, slight increase in renewables.  
+  - Still in second place in sustainability ranking.
+
+- **Cluster 4 (purple)**  
+  - Increased coal production, surpassing Cluster 3. Moderate renewable energy, low oil usage.  
+  - Still in third place in sustainability ranking.
+
+```{r}
+# visualization choice: scatterplot matrix
+# for standardized 1990 cluster data
+sustain_1990_c4 |>
+  rename (
+      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = "Electricity production from coal sources (% of total)"
+    ) |>
+  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
+         `electric_prod_coal`, `cluster_1990`) |>
+  ggpairs(aes(color = cluster_1990)
+        , upper = list(continuous = "blank")
+        , progress = FALSE) +
+  theme(text = element_text(size = 8))
+
+# for standardized 2015 cluster data
+sustain_2015_c4 |>
+  rename (
+      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = "Electricity production from coal sources (% of total)"
+    ) |>
+  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
+         `electric_prod_coal`, `cluster_2015`) |>
+  ggpairs(aes(color = cluster_2015)
+        , upper = list(continuous = "blank")
+        , progress = FALSE) +
+  theme(text = element_text(size = 8))
+
+```
+
+**Logistic Regression**
 ```{r}
 cluster_comparison <- sustain_2015_c4 |> 
   # Join with 1990 data set
@@ -419,43 +499,6 @@ logit_fit <- glm(cluster_jump ~ renewable_energy +
                  family = binomial())
 
 summary(logit_fit)
-
-```
-```
-
-Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group's unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster's special characteristics, we are able to identify which groups are most sustainable and the least sustainable.
-
-```{r}
-# visualization choice: scatterplot matrix
-# for standardized 1990 cluster data
-sustain_1990_c4 |>
-  rename (
-      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
-      renew_electric_output = "Renewable electricity output (% of total electricity output)",
-      electric_prod_oil = "Electricity production from oil sources (% of total)", 
-      electric_prod_coal = "Electricity production from coal sources (% of total)"
-    ) |>
-  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
-         `electric_prod_coal`, `cluster_1990`) |>
-  ggpairs(aes(color = cluster_1990)
-        , upper = list(continuous = "blank")
-        , progress = FALSE) +
-  theme(text = element_text(size = 8))
-
-# for standardized 2015 cluster data
-sustain_2015_c4 |>
-  rename (
-      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
-      renew_electric_output = "Renewable electricity output (% of total electricity output)",
-      electric_prod_oil = "Electricity production from oil sources (% of total)", 
-      electric_prod_coal = "Electricity production from coal sources (% of total)"
-    ) |>
-  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
-         `electric_prod_coal`, `cluster_2015`) |>
-  ggpairs(aes(color = cluster_2015)
-        , upper = list(continuous = "blank")
-        , progress = FALSE) +
-  theme(text = element_text(size = 8))
 
 ```
 
