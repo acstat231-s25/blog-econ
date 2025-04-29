@@ -225,6 +225,8 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
 
 ### Electricity production from oil and coal sources
 
+Coal, crude oil, and natural gas are fossil fuels because they were formed from the fossilized plants and animals that lived millions of years ago and have a high carbon content. They were the main sources of energy used to power our houses, cars, and businesses for more than a century. Fossil fuels still play a crucial role in our lives as they account for the major part in electricity production. However, fossil fuels take their toll on ecosystems, air quality, and landscapes. Processing, unearthing, and extracting underground deposits lead to land degradation and make it impossible to restore once nutrient-rich soil. Toxic runoff into water streams resulting from fossil fuel extraction jeopardizes water ecosystems and make it unsafe for drinking.
+
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
 
 data1 <- data |>
