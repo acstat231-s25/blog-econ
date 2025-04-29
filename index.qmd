@@ -273,6 +273,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 # Appendix
 
+**K-means Clustering**: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 5 cluster groups was the optimal amount to proceed with our analysis.
 ``` {r}
 #| label: kmeans-clustering
 
@@ -371,8 +372,18 @@ clusters_2015 <- sustain_2015_c4 |>
 
 cluster_comparison <- clusters_1990 |>
   inner_join(clusters_2015, by = "Country Name")
-cluster_comparison
 
+```
+
+After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Eastern and Southern' changed groups from 4 to 3, while the country of Argentina moved from 4 to 3.
+
+```{r}
+cluster_comparison
+```
+
+Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group's unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster's special characteristics, we are able to identify which groups are most sustainable and the least sustainable.
+
+```{r}
 # visualization choice: scatterplot matrix
 # for standardized 1990 cluster data
 sustain_1990_c4 |>
