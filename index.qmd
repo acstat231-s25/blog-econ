@@ -286,6 +286,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 As discussed in the earlier sections, there is a variety of indicators that change on a country to country basis and have different implications for the climate change, sustainable development, and environmental crisis mitigation. Organizations, such as United Nations, International Energy Agency, World Bank, OECD, among others, prepare reports with annual changes in countries' policy frameworks and sustainability indicators. To compare the strategies of these countries and assess the effectiveness of actions they implement, we outlined the most insightful strategies. Data-driven approach in policy-making is crucial to establishing associations and causality among many factors.
 
+### Clean energy
+
+### Air pollution
+
+### Climate mitigation
+
 
 ## Results and discussion
 
