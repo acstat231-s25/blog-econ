@@ -175,51 +175,36 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
 
 An interesting observation can be made upon looking at the renewable energy consumption and production plots. While the data for renewable energy output spans only across 25 years, there is a clear increasing trend in regions, such as Oceania by 10%, Asia by 7%, and Europe by more than 20%. Both the output and consumption of renewable energy dropped for Africa and Americas. 
 
-```{r, warning=FALSE, fig.width=8, fig.height=5}
-
-  data1 <- data |>
-    filter(`Indicator Name` ==  "Renewable electricity output (% of total electricity output)") |>
-    select(region_un, starts_with(c("19", "20")), ends_with("_median")) |>
-    pivot_longer(
-      cols = starts_with(c("19", "20")) & ends_with("_median"),
-      names_to = "period",
-      values_to = "value"
-    ) |>
-    mutate(period = as.integer(str_remove(period, "_median")))
-  
-ggplot(data1, aes(x = period, y = value, color = region_un)) +
-    geom_line() +
-    geom_point() +
-    labs(
-      title = paste("Renewable electricity output (% of total electricity output)"),
-      subtitle = "Median values per year",
-      x = "Year",
-      y = "Renewable electricity output (% of total electricity output)",
-      color = "Region"
-    ) +
-    theme_minimal()
+```{r, warning=FALSE, fig.width=10, fig.height=4}
 
  data1 <- data |>
-    filter(`Indicator Name` ==  "Renewable energy consumption (% of total final energy consumption)") |>
-    select(region_un, starts_with(c("19", "20")), ends_with("_median")) |>
+    filter(`Indicator Name` 
+      ==  c("Renewable electricity output (% of total electricity output)", 
+  "Renewable energy consumption (% of total final energy consumption)")) |>
+    select(region_un, `Indicator Name`, starts_with(c("19", "20")), 
+           ends_with("_median")) |>
     pivot_longer(
       cols = starts_with(c("19", "20")) & ends_with("_median"),
       names_to = "period",
       values_to = "value"
     ) |>
-    mutate(period = as.integer(str_remove(period, "_median")))
-  
+    mutate(period = as.integer(str_remove(period, "_median"))) |>
+    rename()
+
+par(mfrow=c(1,2))
 ggplot(data1, aes(x = period, y = value, color = region_un)) +
     geom_line() +
     geom_point() +
     labs(
-      title = paste("Renewable energy consumption (% of total final energy consumption)"),
+      title = paste("Renewable electricity output output and consumption"),
       subtitle = "Median values per year",
       x = "Year",
-      y = "Renewable energy consumption (% of total final energy consumption)",
+      y = "% of total electricity",
       color = "Region"
     ) +
-    theme_minimal()
+    theme_minimal()+ 
+    facet_wrap(~`Indicator Name`)
+
 ```
 
 ```{r, warning=FALSE, fig.width=8, fig.height=5}
