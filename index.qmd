@@ -401,6 +401,17 @@ cluster_comparison <- sustain_2015_c4 |>
          renewable_electricity)
   
 
+
+logit_fit <- glm(cluster_jump ~ renewable_energy +
+                   electricty_oil +
+                   renewable_electricity +
+                   electricity_coal,
+                 data = cluster_comparison,
+                 family = binomial())
+
+summary(logit_fit)
+
+```
 ```
 
 Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group's unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster's special characteristics, we are able to identify which groups are most sustainable and the least sustainable.
