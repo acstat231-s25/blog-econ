@@ -367,16 +367,12 @@ clusters_1990 <- sustain_1990_c4 |>
 clusters_2015 <- sustain_2015_c4 |>
   select(`Country Name`, cluster_2015)
 
-cluster_comparison <- clusters_1990 |>
-  inner_join(clusters_2015, by = "Country Name")
 
 ```
 
 After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Eastern and Southern' changed groups from 4 to 3, while the country of Argentina moved from 4 to 3.
 
 ```{r}
-
-
 cluster_comparison <- sustain_2015_c4 |> 
   # Join with 1990 data set
   right_join(sustain_1990_c4, by = "Country Name") |> 
