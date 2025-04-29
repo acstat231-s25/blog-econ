@@ -224,9 +224,8 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
 
 ```{r, warning=FALSE, fig.width=8, fig.height=5}
 
-plot_indicator <- function(indicator_name) {
-  data1 <- data |>
-    filter(`Indicator Name` == indicator_name) |>
+data1 <- data |>
+    filter(`Indicator Name` ==  "Electricity production from oil sources (% of total)") |>
     select(region_un, starts_with(c("19", "20")), ends_with("_median")) |>
     pivot_longer(
       cols = starts_with(c("19", "20")) & ends_with("_median"),
@@ -239,25 +238,35 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
     geom_line() +
     geom_point() +
     labs(
-      title = paste(indicator_name),
+      title = paste("Electricity production from oil sources (% of total)"),
       subtitle = "Median values per year",
       x = "Year",
-      y = indicator_name,
+      y = "Electricity production from oil sources (% of total)",
       color = "Region"
     ) +
     theme_minimal()
-}
 
-indicators <- c(
-  "Electricity production from oil sources (% of total)",
-  "Electricity production from coal sources (% of total)",
-  "Population growth (annual %)", 
-  "Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)"
-)
-
-for (indicator in indicators) {
-  print(plot_indicator(indicator))
-}
+data1 <- data |>
+    filter(`Indicator Name` ==  "Electricity production from coal sources (% of total)") |>
+    select(region_un, starts_with(c("19", "20")), ends_with("_median")) |>
+    pivot_longer(
+      cols = starts_with(c("19", "20")) & ends_with("_median"),
+      names_to = "period",
+      values_to = "value"
+    ) |>
+    mutate(period = as.integer(str_remove(period, "_median")))
+  
+ggplot(data1, aes(x = period, y = value, color = region_un)) +
+    geom_line() +
+    geom_point() +
+    labs(
+      title = paste("Electricity production from coal sources (% of total)"),
+      subtitle = "Median values per year",
+      x = "Year",
+      y = "Electricity production from coal sources (% of total)",
+      color = "Region"
+    ) +
+    theme_minimal()
 
 ```
 
