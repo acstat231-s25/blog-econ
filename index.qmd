@@ -246,7 +246,9 @@ According to data in the plots below, Oceania is heavily reliable on fossil fuel
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
 # Prepare coal and oil electricity dataframe
 data1 <- data |>
-    filter(`Indicator Name` ==  c("Electricity production from coal sources (% of total)", "Electricity production from oil sources (% of total)")) |>
+    filter(`Indicator Name` == 
+             c("Electricity production from coal sources (% of total)",
+               "Electricity production from oil sources (% of total)")) |>
     select(region_un, `Indicator Name`, starts_with(c("19", "20")),
            ends_with("_median")) |>
     pivot_longer(
@@ -440,10 +442,14 @@ In 2015:
 # for standardized 1990 cluster data
 sustain_1990_c4 |>
   rename (
-      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
-      renew_electric_output = "Renewable electricity output (% of total electricity output)",
-      electric_prod_oil = "Electricity production from oil sources (% of total)", 
-      electric_prod_coal = "Electricity production from coal sources (% of total)"
+      renew_energy_consume = 
+        "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output =
+        "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil =
+        "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = 
+        "Electricity production from coal sources (% of total)"
     ) |>
   select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
          `electric_prod_coal`, `cluster_1990`) |>
@@ -455,10 +461,14 @@ sustain_1990_c4 |>
 # for standardized 2015 cluster data
 sustain_2015_c4 |>
   rename (
-      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
-      renew_electric_output = "Renewable electricity output (% of total electricity output)",
-      electric_prod_oil = "Electricity production from oil sources (% of total)", 
-      electric_prod_coal = "Electricity production from coal sources (% of total)"
+      renew_energy_consume = 
+        "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = 
+        "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = 
+        "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = 
+        "Electricity production from coal sources (% of total)"
     ) |>
   select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
          `electric_prod_coal`, `cluster_2015`) |>
