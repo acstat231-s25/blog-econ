@@ -37,7 +37,7 @@ ui <- dashboardPage(
   dashboardHeader(title = "Yearly changes in sustainability indicators", 
                   titleWidth = 500),
   
-  dashboardSidebar(collapsed = TRUE,
+  dashboardSidebar(collapsed = FALSE,
                    sidebarMenu(
                      menuItem("Line Graph", tabName = "line", 
                               icon = icon("chart-line")),
