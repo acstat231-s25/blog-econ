@@ -375,7 +375,32 @@ cluster_comparison <- clusters_1990 |>
 After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Eastern and Southern' changed groups from 4 to 3, while the country of Argentina moved from 4 to 3.
 
 ```{r}
-cluster_comparison
+
+```{r}
+cluster_comparison <- sustain_2015_c4 |> 
+  # Join with 1990 data set
+  right_join(sustain_1990_c4, by = "Country Name") |> 
+  mutate(cluster_2015 = as.numeric(as.character(cluster_2015)),
+    cluster_1990 = as.numeric(as.character(cluster_1990)),
+    cluster_jump = cluster_2015 - cluster_1990,
+# If the cluster number has decreased it means that country has improved
+    cluster_jump = if_else(cluster_jump < 0, 1, 0),
+    # Compare the variables from 1990 to 2015
+    renewable_energy = 
+      `Renewable energy consumption (% of total final energy consumption).y` -
+      `Renewable energy consumption (% of total final energy consumption).x`,
+    renewable_electricity = 
+      `Renewable electricity output (% of total electricity output).y` -
+ `Renewable electricity output (% of total electricity output).x`,
+ electricty_oil = `Electricity production from oil sources (% of total).y`-
+  `Electricity production from oil sources (% of total).x`,
+ electricity_coal =
+ `Electricity production from coal sources (% of total).y` -
+   `Electricity production from coal sources (% of total).x`) |> 
+  select(electricity_coal, electricty_oil, cluster_jump, renewable_energy,
+         renewable_electricity)
+  
+
 ```
 
 Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group's unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster's special characteristics, we are able to identify which groups are most sustainable and the least sustainable.
