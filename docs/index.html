@@ -9,9 +9,9 @@
 <meta name="author" content="Eglah Belizor">
 <meta name="author" content="Shamil Khusnullin">
 <meta name="author" content="Mariia Koval">
-<meta name="dcterms.date" content="2025-04-24">
+<meta name="dcterms.date" content="2025-04-29">
 
-<title>Analyzing Sustainability Indicators Amidst Climate Change – Website title</title>
+<title>Analyzing Sustainability Indicators Amidst Climate Change – Environmental Indicators: Past, Present, Future</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -124,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Website title</span>
+    <span class="navbar-title">Environmental Indicators: Past, Present, Future</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -132,20 +132,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> <i class="bi bi-house" role="img">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
 </i> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">GitHub</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./another-page.html"> 
-<span class="menu-text">Another page</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./yet-another-page.html"> <i class="bi bi-arrow-through-heart-fill" role="img">
+    <a class="nav-link" href="./another-page.html"> <i class="bi bi-envelope" role="img">
 </i> 
-<span class="menu-text">Yet another page with a custom label and icon</span></a>
+<span class="menu-text">About Us</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -158,12 +154,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
+  <ul class="collapse">
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting started</a></li>
   <li><a href="#contents-of-the-page" id="toc-contents-of-the-page" class="nav-link" data-scroll-target="#contents-of-the-page">Contents of the page</a></li>
   <li><a href="#introduction-and-context" id="toc-introduction-and-context" class="nav-link" data-scroll-target="#introduction-and-context">Introduction and context</a></li>
@@ -181,6 +176,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   </ul>
 </nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -207,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Last updated</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 24, 2025</p>
+      <p class="date">April 29, 2025</p>
     </div>
   </div>
   
@@ -250,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2"></a>#|   shinylive does not work in self-contained HTML documents.</span>
 <span id="cb1-3"><a href="#cb1-3"></a>#|   Please set `embed-resources: false` in your metadata.</span>
 <span id="cb1-4"><a href="#cb1-4"></a>#| standalone: true</span>
-<span id="cb1-5"><a href="#cb1-5"></a>#| viewerHeight: 600</span>
+<span id="cb1-5"><a href="#cb1-5"></a>#| viewerHeight: 650</span>
 <span id="cb1-6"><a href="#cb1-6"></a></span>
 <span id="cb1-7"><a href="#cb1-7"></a>#Load the libraries inside the standalone chunk</span>
 <span id="cb1-8"><a href="#cb1-8"></a>library(shiny)</span>
@@ -279,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-31"><a href="#cb1-31"></a>                  animate = animationOptions(interval = 1000))</span>
 <span id="cb1-32"><a href="#cb1-32"></a>    ),</span>
 <span id="cb1-33"><a href="#cb1-33"></a>    mainPanel(</span>
-<span id="cb1-34"><a href="#cb1-34"></a>      plotOutput("mapPlot", height = "750px")</span>
+<span id="cb1-34"><a href="#cb1-34"></a>      plotOutput("mapPlot", height = "600px")</span>
 <span id="cb1-35"><a href="#cb1-35"></a>    )</span>
 <span id="cb1-36"><a href="#cb1-36"></a>  )</span>
 <span id="cb1-37"><a href="#cb1-37"></a>)</span>
@@ -317,9 +316,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="yearly-data-by-environmental-indicators" class="level2">
 <h2 class="anchored" data-anchor-id="yearly-data-by-environmental-indicators">Yearly data by environmental indicators</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-<iframe src="INSERT-LINK-HERE" width="100%" height="600px" frameborder="0">
-</iframe>
+<p>Sustainability and the state of the environment are influenced by a number of factors and can impact the development of the country. While it is difficult to capture the effect of every variable on the state of the environment, we decided to select those that cover both causes and consequences of natural disasters, including energy consumption, renewable energy production, forest area, population growth rates, and CO2 emissions. For instance, forests cover roughly a third of all the land on earth. <a href="https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/">This dashboard</a> allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020, but the main insights will be discussed below.</p>
+<p>According to the <a href="https://www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis">United Nations</a>, 10 million hectares of land experience deforestation annually, which is when humans convert wooded land into something different by clearing dense forests. Deforestation and forest degradation are destroying natural ecosystems, fragment wildlife habitats, and contribute to global carbon emissions. Based on the line graph provided below, Oceania and Americas have the highest percentage of forest area, while Asia is among the lowest. While Europe, Oceania, and Asia have experienced approximately a 5% increase in forest area, both Americas and Asia had a 5% decline.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>An interesting observation can be made upon looking at the renewable energy consumption and production plots. While the data for renewable energy output spans only across 25 years, there is a clear increasing trend in regions, such as Oceania by 10%, Asia by 7%, and Europe by more than 20%. Both the output and consumption of renewable energy dropped for Africa and Americas.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="clustering-by-sustainability-levels" class="level2">
 <h2 class="anchored" data-anchor-id="clustering-by-sustainability-levels">Clustering by sustainability levels</h2>
@@ -340,11 +380,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="appendix" class="level1">
 <h1>Appendix</h1>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Registered S3 method overwritten by 'GGally':
-  method from   
-  +.gg   ggplot2</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -375,26 +410,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 10 Austria                     2            2           
 # ℹ 168 more rows</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="index_files/figure-html/kmeans-clustering-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -411,7 +432,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="bibliography" class="level2">
 <h2 class="anchored" data-anchor-id="bibliography">Bibliography</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-<p><a href="https://quarto.org/docs/interactive/#shiny">Embedding Shiny app on the website</a> <a href="https://www.appsilon.com/post/observe-function-r-shiny">Observe funtion in Shiny R</a></p>
+<p><a href="https://quarto.org/docs/interactive/#shiny">Embedding Shiny app on the website</a> <a href="https://www.appsilon.com/post/observe-function-r-shiny">Observe funtion in Shiny R</a> <a href="https://quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/">Serverless Shiny app extension</a> <a href="https://r4ds.had.co.nz/functions.html#function-arguments">Functions in R</a></p>
 
 
 </section>
