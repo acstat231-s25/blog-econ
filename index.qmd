@@ -12,6 +12,7 @@ resources:
 
 filters:
   - shinylive
+  
 ---
 
 ```{r}
@@ -564,7 +565,7 @@ names(sustain_2015_c4) <- c("Country_Name", "Country Code",
   "Renew_Cons", "Renew_Elec",   "Oil_Elec", "Coal_Elec", "Cluster")
 
 # Choose a training sample of 70% 
-sample_index <- sample(1:nrow(iris), 0.7 * nrow(sustain_2015_c4))
+sample_index <- sample(1:nrow(sustain_2015_c4), 0.7 * nrow(sustain_2015_c4))
 
 train_data <- sustain_2015_c4[sample_index, ]
 #Choose a testing sample of the remianing 30%
@@ -588,13 +589,20 @@ print(paste("Prediction Accuracy:", round(accuracy, 3)))
 
 ```
 
+<iframe src="https://shamchikkhus.shinyapps.io/PredictionApp/"
+        width="100%" height="600px" frameborder="0">
+</iframe>
+
+
+
+
 ## Methods
 
 Throughout the blog, we employed a multi-step methodology combining data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We began with a series of interactive and static visualizations, including the interactive map which showed the world trend in CO2 emissions of each county. We also included line graphs for trends over time. These efforts us to explore both regional and temporal dynamics in environmental indicators.
 
 To identify groups of countries with similar sustainability profiles, we used k-means clustering on standardized indicators such as renewable energy consumption and electricity production from coal and oil. We applied the elbow method to determine the optimal number of clusters, selecting k = 4 based on the elbow plot. This helped us segment countries into more and less sustainable groups and track their transitions over time.
 
-Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 89%, demonstrating its potential to help policymakers use indicators to predict a sustainability cluster for the country in future.
+Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 86%, demonstrating its potential to help policymakers use indicators to predict a sustainability cluster for the country in future.
 
 
 ## Bibliography
