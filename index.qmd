@@ -39,25 +39,25 @@ Climate change and sustainable development have become the topics of debate in r
 
 ## Contents of the page
 
-* [Introduction and context](anchor link here)
+* [Introduction and context](#introduction-and-context)
 
-* [Research questions and motivation](anchor link here)
+* [Research questions and motivation](#research-questions-and-motivation)
 
-* [Changes in CO2 emissions](anchor link here)
+* [Changes in CO2 emissions](#changes-in-co2-emissions)
 
-* [Yearly data by environmental indicators](anchor link here)
+* [Yearly data by environmental indicators](#changes-in-co2-emissions)
 
-* [Clustering by sustainability levels](anchor link here)
+* [Clustering by sustainability levels](#changes-in-co2-emissions)
 
-* [Assessing the odds of environemntal transition](anchor link here)
+* [Assessing the odds of environemntal transition](#assessing-the-odds-of-environmental-transition)
 
-* [Summary of policies](anchor link here)
+* [Summary of policies](#assessing-the-odds-of-environmental-transition)
 
-* [Results and discussion](anchor link here)
+* [Results and discussion](#results-and-discussion)
 
-* [Appendix](anchor link here)
+* [Appendix](#methods)
 
-* [Bibliography](anchor link here)
+* [Bibliography](#bibliography)
 
 
 ## Introduction and context
@@ -69,6 +69,17 @@ Climate change and sustainable development have become the topics of debate in r
 
 
 ```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+## Research questions and motivation
+
+1. For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?
+2. Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?
+3. Considering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?
+
+## Changes in CO2 emissions
 
 ```{shinylive-r}
 #| standalone: true
@@ -97,7 +108,7 @@ ui <- fluidPage(
     sidebarPanel(
       sliderInput("year", "Select Year:",
                   #Allow the user to choose a year between 1994 and 2022 
-                  min = 1994, max = 2022, value = 1991,
+                  min = 1994, max = 2022, value = 2022,
                   step = 1, sep = "", 
                   # Allow the user to animate graph
                   animate = animationOptions(interval = 1000))
@@ -115,7 +126,8 @@ server <- function(input, output) {
       geom_sf(aes(geometry = geometry, fill = co2conc),
               colour = "grey40", linewidth = .2) +
       scale_fill_viridis_c(option = "viridis", na.value = "grey90",
-                           name = "% change vs 1990") +
+                           name = "% change vs 1990",
+                                    limits = c(-100, 500)) +
       coord_sf(crs = "+proj=robin", expand = FALSE) +
       theme_void(base_size = 16) +
       theme(legend.position = "bottom",
@@ -127,19 +139,6 @@ server <- function(input, output) {
 shinyApp(ui, server)
 
 ```
-
-
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-## Research questions and motivation
-
-1. For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?
-2. Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?
-3. Considering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?
-
-## Changes in CO2 emissions
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
