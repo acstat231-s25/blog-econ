@@ -63,13 +63,18 @@ Climate change and sustainable development have become the topics of debate in r
 
 # Introduction and context
 
-[Should add...]
+Over the past 30 years, the world has seen significant environmental changes. The effects of those changes can have drastic implications on humans, animals, and nature as a whole. To mitigate those changes, many different policies have been carried out. 
+In this blog, we’ll plot the map representing the change of CO2 over the years. We will explore the countries that have shown the most effect of CO2 change, and which countries were able to tackle the CO2 increase, but have only shown a slight increase. Furthermore, we will present the changes in other environmental factors and sustainable energy usage across the continents over the years. 
+These variables, coupled with clustering based on sustainability and logistic regression, will help us to discuss the changes that have taken place and provide future advice for policymakers on which variables they should focus on.
+
 
 # Research questions and motivation
 
 1. For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?
 2. Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?
 3. Considering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?
+
+# Changes in CO2 emissions
 
 ```{r}
 # Filter for year 2022
@@ -97,73 +102,14 @@ ggplot(co2_2022) +
 
 ```
 
-# Changes in CO2 emissions
 
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 650
+The map above shows the percentage change in CO2 emissions from 1990 to 2022. On the one side, we can see an interesting pattern: many European and North American countries reduced their emissions successfully, and their success is often attributed to policy reforms on renewable energy, the zero carbon emissions project, and energy efficiency. On the other hand, many nations in Southeast Asia have experienced significant increases in CO2 concentrations, with some countries experiencing over a 100% increase from 1990. This rapid increase in CO2 is often attributed to rapid industrialization, population growth, continued reliance on fossil fuels, and a lack of sustainable energy production
 
-# Load required libraries inside the shinylive chunk
+These rising emissions have profound implications for both humans and life on Earth. Elevated CO2 levels contribute to human health issues and can cause asthma, other respiratory conditions, and general effects on the brain, like dizziness. Moreover, the raised CO2 levels cause the greenhouse effect, which can aggravate the planet's climate change. The rapid change in climate can further threaten human infrastructure and disrupt access to healthcare services. 
+[Climate.gov](https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide)
 
-library(shiny)
-library(ggplot2)
-library(dplyr)
-library(sf)
-library(viridis)
+In the next part of the blog, we will discuss more about sustainability factors and how they affect the environment.
 
-# GitHub URL to the RDS file
-co2_map_url <- "https://raw.githubusercontent.com/
-acstat231-s25/blog-econ/main/Data/co2_map.rds"
-
-temp_file <- tempfile(fileext = ".rds")
-# Download the RDS
-download.file(co2_map_url, temp_file, mode = "wb")
-#Read the downloaded RDS file and load into the system.
-co2_map <- readRDS(temp_file)
-#User Interface
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("year", "Select Year:",
-                  #Allow the user to choose a year between 1994 and 2022 
-                  min = 1994, max = 2022, value = 2022,
-                  step = 1, sep = "", 
-                  # Allow the user to animate graph
-                  animate = animationOptions(interval = 1000))
-    ),
-    mainPanel(
-      plotOutput("mapPlot", height = "600px")
-    )
-  )
-)
-
-server <- function(input, output) {
-  filtered <- reactive(co2_map %>% filter(Year == input$year))
-  output$mapPlot <- renderPlot({
-    ggplot(filtered()) +
-      geom_sf(aes(geometry = geometry, fill = co2conc),
-              colour = "grey40", linewidth = .2) +
-      scale_fill_viridis_c(option = "viridis", na.value = "grey90",
-                           name = "% change vs 1990",
-                                    limits = c(-100, 500)) +
-      coord_sf(crs = "+proj=robin", expand = FALSE) +
-      theme_void(base_size = 16) +
-      theme(legend.position = "bottom",
-            legend.text = element_text(size = 8)) +
-      labs(title = paste0("CO₂ emissions relative to 1990: ", input$year))
-  })
-}
-
-shinyApp(ui, server)
-
-```
-
-
-The map above illustrates the percentage change in CO₂ emissions relative to 1990 for the year 2022. While many European, and North American countries have successfully reduced their emissions—thanks to policy reforms, renewable energy adoption, and energy efficiency measures—several nations in Southeast Asia have experienced significant increases, with CO₂ concentrations rising by more than 100% and even reaching numbers of 500%+ in some cases. This surge is often linked to rapid industrialization, population growth, and continued reliance on fossil fuels and lack of sustainable energy production.
-
-These rising emissions have profound implications for human health. Elevated CO2 levels contribute to climate change, which in turn exacerbates health issues such as respiratory and cardiovascular diseases, heat-related illnesses, and the spread of vector-borne diseases. For instance, increased air pollution from fossil fuel combustion is associated with higher rates of asthma and other respiratory conditions. Moreover, climate change can disrupt access to healthcare services and threaten infrastructure, posing additional risks to public health. [EPA](https://www.epa.gov/climateimpacts/climate-change-impacts-health)
-
-Addressing these challenges requires concerted efforts to reduce emissions, transition to cleaner energy sources, and implement policies that prioritize both environmental sustainability and public health.
 
 # Yearly data by environmental indicators
 
@@ -299,7 +245,18 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
 
 # Clustering by sustainability levels
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+We clustered the data between 1990 and 2015 to determine country's sustainability by 4 clusters and using the following variables:
+
+-Renewable energy consumption (% of total final energy consumption)
+
+-Renewable electricity output (% of total electricity output)
+
+-Electricity production from oil sources (% of total)
+
+-Electricity production from coal sources (% of total) 
+
+
+(See appendix to see why we've chose k=4 for clustering).
 
 ```{r}
 #| label: kmeans-clustering
@@ -370,67 +327,6 @@ world_clusters <- world |>
   left_join(clusters_1990, by = c("name" = "Country Name")) |>
   left_join(clusters_2015, by = c("name" = "Country Name"))
 
-# 1990 cluster map
-ggplot(world_clusters) +
-  geom_sf(aes(fill = as.factor(cluster_1990)), color = "black", size = 0.1) +
-  scale_fill_brewer(na.value = "grey90", name = "Cluster 1990") +
-  theme_minimal() +
-  labs(title = "Country Clusters by Sustainability Levels in 1990")
-
-# 2015 cluster map
-ggplot(world_clusters) +
-  geom_sf(aes(fill = as.factor(cluster_2015)), color = "black", size = 0.1) +
-  scale_fill_brewer(na.value = "grey90", name = "Cluster 2015") +
-  theme_minimal() +
-  labs(title = "Country Clusters by Sustainability Levels in 2015")
-
-```
-
-### Assessing the odds of environmental transition
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-# Results and discussion
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-# Appendix
-
-**K-means Clustering**: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis.
-``` {r}
-#| label: elbow-plots
-
-# first, elbow plots for each year's standardized data
-elbow_1990 <- tibble(k = 1:10) |>
-  mutate(
-    kmeans_results = map(k, ~kmeans(sustain_1990_std, .x, nstart = 20)),
-    glanced = map(kmeans_results, glance)
-  ) |>
-  unnest(cols = c(glanced))
-elbow_2015 <- tibble(k = 1:10) |>
-  mutate(
-    kmeans_results = map(k, ~kmeans(sustain_2015_std, .x, nstart = 20)),
-    glanced = map(kmeans_results, glance)
-  ) |>
-  unnest(cols = c(glanced))
-
-# Plot an elbow graph to identify the best k value
-ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
-  geom_point() + 
-  geom_line() +
-  scale_x_continuous(breaks = 1:10) +
-  labs(title = "Elbow Plot for 1990 Sustainability Data",
-       x = "Number of Clusters (k)", 
-       y = "Total Within-Cluster Sum of Squares") +
-  theme_minimal()
-ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
-  geom_point() + 
-  geom_line() +
-  scale_x_continuous(breaks = 1:10) +
-  labs(title = "Elbow Plot for 2015 Sustainability Data",
-       x = "Number of Clusters (k)", 
-       y = "Total Within-Cluster Sum of Squares") +
-  theme_minimal()
 ```
 
 After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Eastern and Southern' changed groups from 3 to 4, while the country of Argentina moved from 4 to 3.
@@ -477,48 +373,29 @@ In 2015:
 - **Cluster 4 (purple)**  
   - Increased coal production, surpassing Cluster 3. Moderate renewable energy, low oil usage.  
   - Still in third place in sustainability ranking.
-
+  
 ```{r}
-# visualization choice: scatterplot matrix
-# for standardized 1990 cluster data
-sustain_1990_c4 |>
-  rename (
-      renew_energy_consume = 
-        "Renewable energy consumption (% of total final energy consumption)",
-      renew_electric_output =
-        "Renewable electricity output (% of total electricity output)",
-      electric_prod_oil =
-        "Electricity production from oil sources (% of total)", 
-      electric_prod_coal = 
-        "Electricity production from coal sources (% of total)"
-    ) |>
-  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
-         `electric_prod_coal`, `cluster_1990`) |>
-  ggpairs(aes(color = cluster_1990)
-        , upper = list(continuous = "blank")
-        , progress = FALSE) +
-  theme(text = element_text(size = 8))
 
-# for standardized 2015 cluster data
-sustain_2015_c4 |>
-  rename (
-      renew_energy_consume = 
-        "Renewable energy consumption (% of total final energy consumption)",
-      renew_electric_output = 
-        "Renewable electricity output (% of total electricity output)",
-      electric_prod_oil = 
-        "Electricity production from oil sources (% of total)", 
-      electric_prod_coal = 
-        "Electricity production from coal sources (% of total)"
-    ) |>
-  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
-         `electric_prod_coal`, `cluster_2015`) |>
-  ggpairs(aes(color = cluster_2015)
-        , upper = list(continuous = "blank")
-        , progress = FALSE) +
-  theme(text = element_text(size = 8))
+# 1990 cluster map
+ggplot(world_clusters) +
+  geom_sf(aes(fill = as.factor(cluster_1990)), color = "black", size = 0.1) +
+  scale_fill_brewer(na.value = "grey90", name = "Cluster 1990") +
+  theme_minimal() +
+  labs(title = "Country Clusters by Sustainability Levels in 1990")
+
+# 2015 cluster map
+ggplot(world_clusters) +
+  geom_sf(aes(fill = as.factor(cluster_2015)), color = "black", size = 0.1) +
+  scale_fill_brewer(na.value = "grey90", name = "Cluster 2015") +
+  theme_minimal() +
+  labs(title = "Country Clusters by Sustainability Levels in 2015")
+
+
 
 ```
+
+
+### Assessing the odds of environmental transition
 
 **Logistic Regression**
 ```{r}
@@ -575,6 +452,53 @@ logit_fit <- glm(cluster_jump ~ renewable_energy +
 summary(logit_fit)
 
 ```
+
+# Results and discussion
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+# Appendix
+
+**K-means Clustering**: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis.
+``` {r}
+#| label: elbow-plots
+
+# first, elbow plots for each year's standardized data
+elbow_1990 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_1990_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+elbow_2015 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_2015_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+
+# Plot an elbow graph to identify the best k value
+ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 1990 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 2015 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+```
+
+
+
+
 
 ```{r}
 # Set seed for reproducibility
@@ -659,11 +583,11 @@ ggplot(co2_2015) +
 
 ## Methods
 
-Throughout the blog, we employed a multi-step methodology combining data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We began with a series of interactive and static visualizations, including the interactive map which showed the world trend in CO2 emissions of each county. We also included line graphs for trends over time. These efforts us to explore both regional and temporal dynamics in environmental indicators.
+Throughout the blog, we employed data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We began with map which showed the trend in CO2 emissions of each country. We also included line graphs for different sustainbability and nature related variables trends over time. 
 
 To identify groups of countries with similar sustainability profiles, we used k-means clustering on standardized indicators such as renewable energy consumption and electricity production from coal and oil. We applied the elbow method to determine the optimal number of clusters, selecting k = 4 based on the elbow plot. This helped us segment countries into more and less sustainable groups and track their transitions over time.
 
-Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 86%, demonstrating its potential to help policymakers use indicators to predict a sustainability cluster for the country in future.
+Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 86%.
 
 
 ## Bibliography
