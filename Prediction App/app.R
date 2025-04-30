@@ -6,7 +6,7 @@ library(tibble)
 library(broom)   
 library(janitor)
 
-# See for Reproducibility
+# Seed for Reproducibility
 set.seed(123)
 
 climate1 <- read.csv("raw-data/climate-change.csv", skip = 3)
@@ -14,7 +14,7 @@ climate1 <- climate1 |>
   row_to_names(row_number = 1)|>
   select(-"Indicator Code") 
 
-# vector for selected variables of interest
+# Vector for selected variables of interest
 sustain_indicators <- c(
   "Renewable energy consumption (% of total final energy consumption)",
   "Renewable electricity output (% of total electricity output)",
@@ -41,7 +41,7 @@ sustain_2015_kmeans4 <- sustain_2015_std |>
 sustain_2015_c4 <- augment(sustain_2015_kmeans4, sustainability2015) |>
   rename(cluster_2015 = .cluster)
 
-# Rename
+# Rename the variables
 
 names(sustain_2015_c4) <- c("Country_Name", "Country Code",
                             "Renew_Cons", "Renew_Elec",   "Oil_Elec", "Coal_Elec", "Cluster")
