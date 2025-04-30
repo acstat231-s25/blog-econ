@@ -61,11 +61,11 @@ Climate change and sustainable development have become the topics of debate in r
 * [Bibliography](#bibliography)
 
 
-## Introduction and context
+# Introduction and context
 
 [Should add...]
 
-## Research questions and motivation
+# Research questions and motivation
 
 1. For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?
 2. Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?
@@ -97,7 +97,7 @@ ggplot(co2_2022) +
 
 ```
 
-## Changes in CO2 emissions
+# Changes in CO2 emissions
 
 ```{shinylive-r}
 #| standalone: true
@@ -168,7 +168,7 @@ These rising emissions have profound implications for human health. Elevated CO2
 
 Addressing these challenges requires concerted efforts to reduce emissions, transition to cleaner energy sources, and implement policies that prioritize both environmental sustainability and public health.
 
-## Yearly data by environmental indicators
+# Yearly data by environmental indicators
 
 Sustainability and the state of the environment are influenced by a number of factors and can impact the development of the country. While it is difficult to capture the effect of every variable on the state of the environment, we decided to select those that cover both causes and consequences of natural disasters, including energy consumption, renewable energy production, forest area, population growth rates, and CO2 emissions. 
 For instance, forests cover roughly a third of all the land on earth. [This dashboard](https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/) allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020, but the main insights will be discussed below.
@@ -300,19 +300,21 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
 
 ```
 
-## Clustering by sustainability levels
+# Clustering by sustainability levels
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
-## Assessing the odds of environmental transition
+### Assessing the odds of environmental transition
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
-## Summary of policies
+# Summary of policies
 
 As discussed in the earlier sections, there is a variety of indicators that change on a country to country basis and have different implications for the climate change, sustainable development, and environmental crisis mitigation. Organizations, such as United Nations, International Energy Agency, World Bank, OECD, among others, prepare reports with annual changes in countries' policy frameworks and sustainability indicators. To compare the strategies of these countries and assess the effectiveness of actions they implement, we outlined the most insightful strategies. Data-driven approach in policy-making is crucial to establishing associations and causality among many factors.
 
 ### Clean energy
+
+
 
 ### Air pollution
 
