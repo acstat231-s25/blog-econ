@@ -29,6 +29,7 @@ pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr,
 
 co2_map <- readRDS("Data/co2_map.rds")
 data <- readRDS("Data/data.rds")
+world <- ne_countries(scale = "medium", returnclass = "sf") # world map data
 ```
 
 
@@ -154,9 +155,6 @@ server <- function(input, output) {
 }
 
 shinyApp(ui, server)
-
-
-
 
 ```
 
@@ -303,18 +301,7 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
-### Assessing the odds of environmental transition
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-# Results and discussion
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-# Appendix
-
-**K-means Clustering**: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis.
-``` {r}
+```{r}
 #| label: kmeans-clustering
 
 climate1 <- read.csv("raw-data/climate-change.csv", skip = 3)
@@ -362,37 +349,6 @@ sustain_2015_std <- sustainability2015 |>
 # run k-means clustering
 set.seed(231)
 
-# first, elbow plots for each year's standardized data
-elbow_1990 <- tibble(k = 1:10) |>
-  mutate(
-    kmeans_results = map(k, ~kmeans(sustain_1990_std, .x, nstart = 20)),
-    glanced = map(kmeans_results, glance)
-  ) |>
-  unnest(cols = c(glanced))
-elbow_2015 <- tibble(k = 1:10) |>
-  mutate(
-    kmeans_results = map(k, ~kmeans(sustain_2015_std, .x, nstart = 20)),
-    glanced = map(kmeans_results, glance)
-  ) |>
-  unnest(cols = c(glanced))
-# Plot an elbow graph to identify the best k value
-ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
-  geom_point() + 
-  geom_line() +
-  scale_x_continuous(breaks = 1:10) +
-  labs(title = "Elbow Plot for 1990 Sustainability Data",
-       x = "Number of Clusters (k)", 
-       y = "Total Within-Cluster Sum of Squares") +
-  theme_minimal()
-ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
-  geom_point() + 
-  geom_line() +
-  scale_x_continuous(breaks = 1:10) +
-  labs(title = "Elbow Plot for 2015 Sustainability Data",
-       x = "Number of Clusters (k)", 
-       y = "Total Within-Cluster Sum of Squares") +
-  theme_minimal()
-
 # based on the elbow plot, k = 4
 sustain_1990_kmeans4 <- sustain_1990_std |>
   kmeans(centers = 4, nstart = 20)
@@ -410,7 +366,71 @@ clusters_1990 <- sustain_1990_c4 |>
 clusters_2015 <- sustain_2015_c4 |>
   select(`Country Name`, cluster_2015)
 
+world_clusters <- world |>
+  left_join(clusters_1990, by = c("name" = "Country Name")) |>
+  left_join(clusters_2015, by = c("name" = "Country Name"))
 
+# 1990 cluster map
+ggplot(world_clusters) +
+  geom_sf(aes(fill = as.factor(cluster_1990)), color = "black", size = 0.1) +
+  scale_fill_brewer(na.value = "grey90", name = "Cluster 1990") +
+  theme_minimal() +
+  labs(title = "Country Clusters by Sustainability Levels in 1990")
+
+# 2015 cluster map
+ggplot(world_clusters) +
+  geom_sf(aes(fill = as.factor(cluster_2015)), color = "black", size = 0.1) +
+  scale_fill_brewer(na.value = "grey90", name = "Cluster 2015") +
+  theme_minimal() +
+  labs(title = "Country Clusters by Sustainability Levels in 2015")
+
+```
+
+### Assessing the odds of environmental transition
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+# Results and discussion
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+# Appendix
+
+**K-means Clustering**: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis.
+``` {r}
+#| label: elbow-plots
+
+# first, elbow plots for each year's standardized data
+elbow_1990 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_1990_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+elbow_2015 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_2015_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+
+# Plot an elbow graph to identify the best k value
+ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 1990 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 2015 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
 ```
 
 After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Eastern and Southern' changed groups from 3 to 4, while the country of Argentina moved from 4 to 3.
@@ -502,14 +522,31 @@ sustain_2015_c4 |>
 
 **Logistic Regression**
 ```{r}
+
+clusters_1990 <- clusters_1990 |>
+  mutate(cluster_1990 = case_when(
+    cluster_1990 == "2" ~ 4,
+    cluster_1990 == "3" ~ 3,
+    cluster_1990 == "4" ~ 2,
+    cluster_1990 == "1" ~ 1
+  ))
+
+clusters_2015 <- clusters_2015 |>
+  mutate(cluster_2015 = case_when(
+    cluster_2015 == "2" ~ 4,
+    cluster_2015 == "3" ~ 3,
+    cluster_2015 == "4" ~ 2,
+    cluster_2015 == "1" ~ 1
+  ))
+
 cluster_comparison <- sustain_2015_c4 |> 
   # Join with 1990 data set
   right_join(sustain_1990_c4, by = "Country Name") |> 
   mutate(cluster_2015 = as.numeric(as.character(cluster_2015)),
     cluster_1990 = as.numeric(as.character(cluster_1990)),
     cluster_jump = cluster_2015 - cluster_1990,
-# If the cluster number has decreased it means that country has improved
-    cluster_jump = if_else(cluster_jump < 0, 1, 0),
+# If the cluster number has increased it means that country has improved
+    cluster_jump = if_else(cluster_jump > 0, 1, 0),
     # Compare the variables from 1990 to 2015
     renewable_energy = 
       `Renewable energy consumption (% of total final energy consumption).y` -
@@ -538,10 +575,6 @@ logit_fit <- glm(cluster_jump ~ renewable_energy +
 summary(logit_fit)
 
 ```
-
-
-
-
 
 ```{r}
 # Set seed for reproducibility
