@@ -72,7 +72,8 @@ Climate change and sustainable development have become the topics of debate in r
 
 ```{r}
 # Filter for year 2022
-co2_2022 <- co2_2022 |> 
+
+co2_2022 <- st_as_sf(co2_map) |> 
   filter(Year == 2022)
 
 # Plot
@@ -84,6 +85,7 @@ ggplot(co2_2022) +
     name = "% change vs 1990",
     limits = c(-100, 500)
   ) +
+  
   coord_sf(crs = "+proj=robin", expand = FALSE) +
   theme_void(base_size = 14) +
   theme(
@@ -161,7 +163,7 @@ shinyApp(ui, server)
 
 The map above illustrates the percentage change in CO₂ emissions relative to 1990 for the year 2022. While many European, and North American countries have successfully reduced their emissions—thanks to policy reforms, renewable energy adoption, and energy efficiency measures—several nations in Southeast Asia have experienced significant increases, with CO₂ concentrations rising by more than 100% and even reaching numbers of 500%+ in some cases. This surge is often linked to rapid industrialization, population growth, and continued reliance on fossil fuels and lack of sustainble energy production.
 
-These rising emissions have profound implications for human health. Elevated CO2 levels contribute to climate change, which in turn exacerbates health issues such as respiratory and cardiovascular diseases, heat-related illnesses, and the spread of vector-borne diseases. For instance, increased air pollution from fossil fuel combustion is associated with higher rates of asthma and other respiratory conditions. Moreover, climate change can disrupt access to healthcare services and threaten infrastructure, posing additional risks to public health.[EPA](https://www.epa.gov/climateimpacts/climate-change-impacts-health)
+These rising emissions have profound implications for human health. Elevated CO2 levels contribute to climate change, which in turn exacerbates health issues such as respiratory and cardiovascular diseases, heat-related illnesses, and the spread of vector-borne diseases. For instance, increased air pollution from fossil fuel combustion is associated with higher rates of asthma and other respiratory conditions. Moreover, climate change can disrupt access to healthcare services and threaten infrastructure, posing additional risks to public health. [EPA](https://www.epa.gov/climateimpacts/climate-change-impacts-health)
 
 Addressing these challenges requires concerted efforts to reduce emissions, transition to cleaner energy sources, and implement policies that prioritize both environmental sustainability and public health.
 
@@ -198,9 +200,6 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
       color = "Region"
     ) +
     theme_minimal()
-
-
-
 
 ```
 ### Renewable energy consumption and output
@@ -591,7 +590,12 @@ print(paste("Prediction Accuracy:", round(accuracy, 3)))
 
 ## Methods
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Throughout the blog, we employed a multi-step methodology combining data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We began with a series of interactive and static visualizations, including the interactive map which showed the world trend in CO2 emissions of each county. We also included line graphs for trends over time. These efforts us to explore both regional and temporal dynamics in environmental indicators.
+
+To identify groups of countries with similar sustainability profiles, we used k-means clustering on standardized indicators such as renewable energy consumption and electricity production from coal and oil. We applied the elbow method to determine the optimal number of clusters, selecting k = 4 based on the elbow plot. This helped us segment countries into more and less sustainable groups and track their transitions over time.
+
+Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 89%, demonstrating its potential to help policymakers use indicators to predict a sustainability cluster for the country in future.
+
 
 ## Bibliography
 
