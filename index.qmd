@@ -62,8 +62,13 @@ Climate change and sustainable development have become the topics of debate in r
 
 ## Introduction and context
 
+[Should add...]
 
+## Research questions and motivation
 
+1. For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?
+2. Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?
+3. Considering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?
 
 ```{r}
 # Filter for year 2022
@@ -85,18 +90,9 @@ ggplot(co2_2022) +
     legend.position = "bottom",
     legend.text = element_text(size = 8)
   ) +
-  labs(title = "CO₂ Emissions Relative to 1990 (Year: 2022)")
+  labs(title = "2022 CO2 emission %Change relative to 1990")
 
 ```
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-## Research questions and motivation
-
-1. For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?
-2. Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?
-3. Considering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?
 
 ## Changes in CO2 emissions
 
@@ -162,7 +158,12 @@ shinyApp(ui, server)
 
 ```
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+The map above illustrates the percentage change in CO₂ emissions relative to 1990 for the year 2022. While many European, and North American countries have successfully reduced their emissions—thanks to policy reforms, renewable energy adoption, and energy efficiency measures—several nations in Southeast Asia have experienced significant increases, with CO₂ concentrations rising by more than 100% and even reaching numbers of 500%+ in some cases. This surge is often linked to rapid industrialization, population growth, and continued reliance on fossil fuels and lack of sustainble energy production.
+
+These rising emissions have profound implications for human health. Elevated CO2 levels contribute to climate change, which in turn exacerbates health issues such as respiratory and cardiovascular diseases, heat-related illnesses, and the spread of vector-borne diseases. For instance, increased air pollution from fossil fuel combustion is associated with higher rates of asthma and other respiratory conditions. Moreover, climate change can disrupt access to healthcare services and threaten infrastructure, posing additional risks to public health.[EPA](https://www.epa.gov/climateimpacts/climate-change-impacts-health)
+
+Addressing these challenges requires concerted efforts to reduce emissions, transition to cleaner energy sources, and implement policies that prioritize both environmental sustainability and public health.
 
 ## Yearly data by environmental indicators
 
