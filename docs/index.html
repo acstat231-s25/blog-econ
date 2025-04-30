@@ -9,7 +9,7 @@
 <meta name="author" content="Eglah Belizor">
 <meta name="author" content="Shamil Khusnullin">
 <meta name="author" content="Mariia Koval">
-<meta name="dcterms.date" content="2025-04-29">
+<meta name="dcterms.date" content="2025-04-30">
 
 <title>Analyzing Sustainability Indicators Amidst Climate Change – Environmental Indicators: Past, Present, Future</title>
 <style>
@@ -206,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Last updated</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 29, 2025</p>
+      <p class="date">April 30, 2025</p>
     </div>
   </div>
   
@@ -231,76 +231,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="contents-of-the-page" class="level2">
 <h2 class="anchored" data-anchor-id="contents-of-the-page">Contents of the page</h2>
 <ul>
-<li><p><a href="anchor link here">Introduction and context</a></p></li>
-<li><p><a href="anchor link here">Research questions and motivation</a></p></li>
-<li><p><a href="anchor link here">Changes in CO2 emissions</a></p></li>
-<li><p><a href="anchor link here">Yearly data by environmental indicators</a></p></li>
-<li><p><a href="anchor link here">Clustering by sustainability levels</a></p></li>
-<li><p><a href="anchor link here">Assessing the odds of environemntal transition</a></p></li>
-<li><p><a href="anchor link here">Summary of policies</a></p></li>
-<li><p><a href="anchor link here">Results and discussion</a></p></li>
-<li><p><a href="anchor link here">Appendix</a></p></li>
-<li><p><a href="anchor link here">Bibliography</a></p></li>
+<li><p><a href="#introduction-and-context">Introduction and context</a></p></li>
+<li><p><a href="#research-questions-and-motivation">Research questions and motivation</a></p></li>
+<li><p><a href="#changes-in-co2-emissions">Changes in CO2 emissions</a></p></li>
+<li><p><a href="#changes-in-co2-emissions">Yearly data by environmental indicators</a></p></li>
+<li><p><a href="#changes-in-co2-emissions">Clustering by sustainability levels</a></p></li>
+<li><p><a href="#assessing-the-odds-of-environmental-transition">Assessing the odds of environemntal transition</a></p></li>
+<li><p><a href="#assessing-the-odds-of-environmental-transition">Summary of policies</a></p></li>
+<li><p><a href="#results-and-discussion">Results and discussion</a></p></li>
+<li><p><a href="#methods">Appendix</a></p></li>
+<li><p><a href="#bibliography">Bibliography</a></p></li>
 </ul>
 </section>
 <section id="introduction-and-context" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-and-context">Introduction and context</h2>
-<div class="sourceCode" id="cb1" data-engine="r"><pre class="sourceCode numberSource shinylive-r number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>#| '!! shinylive warning !!': |</span>
-<span id="cb1-2"><a href="#cb1-2"></a>#|   shinylive does not work in self-contained HTML documents.</span>
-<span id="cb1-3"><a href="#cb1-3"></a>#|   Please set `embed-resources: false` in your metadata.</span>
-<span id="cb1-4"><a href="#cb1-4"></a>#| standalone: true</span>
-<span id="cb1-5"><a href="#cb1-5"></a>#| viewerHeight: 650</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a>#Load the libraries inside the standalone chunk</span>
-<span id="cb1-8"><a href="#cb1-8"></a>library(shiny)</span>
-<span id="cb1-9"><a href="#cb1-9"></a>library(ggplot2)</span>
-<span id="cb1-10"><a href="#cb1-10"></a>library(dplyr)</span>
-<span id="cb1-11"><a href="#cb1-11"></a>library(sf)</span>
-<span id="cb1-12"><a href="#cb1-12"></a>library(viridis)</span>
-<span id="cb1-13"><a href="#cb1-13"></a></span>
-<span id="cb1-14"><a href="#cb1-14"></a>#URL to the RDS file</span>
-<span id="cb1-15"><a href="#cb1-15"></a>co2_map_url &lt;- "https://raw.githubusercontent.com/</span>
-<span id="cb1-16"><a href="#cb1-16"></a>acstat231-s25/blog-econ/main/Data/co2_map.rds"</span>
-<span id="cb1-17"><a href="#cb1-17"></a></span>
-<span id="cb1-18"><a href="#cb1-18"></a>temp_file &lt;- tempfile(fileext = ".rds")</span>
-<span id="cb1-19"><a href="#cb1-19"></a>download.file(co2_map_url, temp_file, mode = "wb")</span>
-<span id="cb1-20"><a href="#cb1-20"></a>#Read the downloaded RDS file and load into the system.</span>
-<span id="cb1-21"><a href="#cb1-21"></a>co2_map &lt;- readRDS(temp_file)</span>
-<span id="cb1-22"><a href="#cb1-22"></a>#User Interface</span>
-<span id="cb1-23"><a href="#cb1-23"></a>ui &lt;- fluidPage(</span>
-<span id="cb1-24"><a href="#cb1-24"></a>  sidebarLayout(</span>
-<span id="cb1-25"><a href="#cb1-25"></a>    sidebarPanel(</span>
-<span id="cb1-26"><a href="#cb1-26"></a>      sliderInput("year", "Select Year:",</span>
-<span id="cb1-27"><a href="#cb1-27"></a>                  #Allow the user to choose a year between 1994 and 2022 </span>
-<span id="cb1-28"><a href="#cb1-28"></a>                  min = 1994, max = 2022, value = 1991,</span>
-<span id="cb1-29"><a href="#cb1-29"></a>                  step = 1, sep = "", </span>
-<span id="cb1-30"><a href="#cb1-30"></a>                  # Allow the user to animate graph</span>
-<span id="cb1-31"><a href="#cb1-31"></a>                  animate = animationOptions(interval = 1000))</span>
-<span id="cb1-32"><a href="#cb1-32"></a>    ),</span>
-<span id="cb1-33"><a href="#cb1-33"></a>    mainPanel(</span>
-<span id="cb1-34"><a href="#cb1-34"></a>      plotOutput("mapPlot", height = "600px")</span>
-<span id="cb1-35"><a href="#cb1-35"></a>    )</span>
-<span id="cb1-36"><a href="#cb1-36"></a>  )</span>
-<span id="cb1-37"><a href="#cb1-37"></a>)</span>
-<span id="cb1-38"><a href="#cb1-38"></a></span>
-<span id="cb1-39"><a href="#cb1-39"></a>server &lt;- function(input, output) {</span>
-<span id="cb1-40"><a href="#cb1-40"></a>  filtered &lt;- reactive(co2_map %&gt;% filter(Year == input$year))</span>
-<span id="cb1-41"><a href="#cb1-41"></a>  output$mapPlot &lt;- renderPlot({</span>
-<span id="cb1-42"><a href="#cb1-42"></a>    ggplot(filtered()) +</span>
-<span id="cb1-43"><a href="#cb1-43"></a>      geom_sf(aes(geometry = geometry, fill = co2conc),</span>
-<span id="cb1-44"><a href="#cb1-44"></a>              colour = "grey40", linewidth = .2) +</span>
-<span id="cb1-45"><a href="#cb1-45"></a>      scale_fill_viridis_c(option = "viridis", na.value = "grey90",</span>
-<span id="cb1-46"><a href="#cb1-46"></a>                           name = "% change vs 1990") +</span>
-<span id="cb1-47"><a href="#cb1-47"></a>      coord_sf(crs = "+proj=robin", expand = FALSE) +</span>
-<span id="cb1-48"><a href="#cb1-48"></a>      theme_void(base_size = 16) +</span>
-<span id="cb1-49"><a href="#cb1-49"></a>      theme(legend.position = "bottom",</span>
-<span id="cb1-50"><a href="#cb1-50"></a>            legend.text = element_text(size = 8)) +</span>
-<span id="cb1-51"><a href="#cb1-51"></a>      labs(title = paste0("CO₂ emissions relative to 1990: ", input$year))</span>
-<span id="cb1-52"><a href="#cb1-52"></a>  })</span>
-<span id="cb1-53"><a href="#cb1-53"></a>}</span>
-<span id="cb1-54"><a href="#cb1-54"></a></span>
-<span id="cb1-55"><a href="#cb1-55"></a>shinyApp(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p>[Should add…]</p>
 </section>
 <section id="research-questions-and-motivation" class="level2">
 <h2 class="anchored" data-anchor-id="research-questions-and-motivation">Research questions and motivation</h2>
@@ -309,10 +254,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?</li>
 <li>Considering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?</li>
 </ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="changes-in-co2-emissions" class="level2">
 <h2 class="anchored" data-anchor-id="changes-in-co2-emissions">Changes in CO2 emissions</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<div class="sourceCode" id="cb1" data-engine="r"><pre class="sourceCode numberSource shinylive-r number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>#| '!! shinylive warning !!': |</span>
+<span id="cb1-2"><a href="#cb1-2"></a>#|   shinylive does not work in self-contained HTML documents.</span>
+<span id="cb1-3"><a href="#cb1-3"></a>#|   Please set `embed-resources: false` in your metadata.</span>
+<span id="cb1-4"><a href="#cb1-4"></a>#| standalone: true</span>
+<span id="cb1-5"><a href="#cb1-5"></a>#| viewerHeight: 650</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a># Load required libraries inside the shinylive chunk</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a>library(shiny)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>library(ggplot2)</span>
+<span id="cb1-11"><a href="#cb1-11"></a>library(dplyr)</span>
+<span id="cb1-12"><a href="#cb1-12"></a>library(sf)</span>
+<span id="cb1-13"><a href="#cb1-13"></a>library(viridis)</span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a># GitHub URL to the RDS file</span>
+<span id="cb1-16"><a href="#cb1-16"></a>co2_map_url &lt;- "https://raw.githubusercontent.com/</span>
+<span id="cb1-17"><a href="#cb1-17"></a>acstat231-s25/blog-econ/main/Data/co2_map.rds"</span>
+<span id="cb1-18"><a href="#cb1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19"></a>temp_file &lt;- tempfile(fileext = ".rds")</span>
+<span id="cb1-20"><a href="#cb1-20"></a># Download the RDS</span>
+<span id="cb1-21"><a href="#cb1-21"></a>download.file(co2_map_url, temp_file, mode = "wb")</span>
+<span id="cb1-22"><a href="#cb1-22"></a>#Read the downloaded RDS file and load into the system.</span>
+<span id="cb1-23"><a href="#cb1-23"></a>co2_map &lt;- readRDS(temp_file)</span>
+<span id="cb1-24"><a href="#cb1-24"></a>#User Interface</span>
+<span id="cb1-25"><a href="#cb1-25"></a>ui &lt;- fluidPage(</span>
+<span id="cb1-26"><a href="#cb1-26"></a>  sidebarLayout(</span>
+<span id="cb1-27"><a href="#cb1-27"></a>    sidebarPanel(</span>
+<span id="cb1-28"><a href="#cb1-28"></a>      sliderInput("year", "Select Year:",</span>
+<span id="cb1-29"><a href="#cb1-29"></a>                  #Allow the user to choose a year between 1994 and 2022 </span>
+<span id="cb1-30"><a href="#cb1-30"></a>                  min = 1994, max = 2022, value = 2022,</span>
+<span id="cb1-31"><a href="#cb1-31"></a>                  step = 1, sep = "", </span>
+<span id="cb1-32"><a href="#cb1-32"></a>                  # Allow the user to animate graph</span>
+<span id="cb1-33"><a href="#cb1-33"></a>                  animate = animationOptions(interval = 1000))</span>
+<span id="cb1-34"><a href="#cb1-34"></a>    ),</span>
+<span id="cb1-35"><a href="#cb1-35"></a>    mainPanel(</span>
+<span id="cb1-36"><a href="#cb1-36"></a>      plotOutput("mapPlot", height = "600px")</span>
+<span id="cb1-37"><a href="#cb1-37"></a>    )</span>
+<span id="cb1-38"><a href="#cb1-38"></a>  )</span>
+<span id="cb1-39"><a href="#cb1-39"></a>)</span>
+<span id="cb1-40"><a href="#cb1-40"></a></span>
+<span id="cb1-41"><a href="#cb1-41"></a>server &lt;- function(input, output) {</span>
+<span id="cb1-42"><a href="#cb1-42"></a>  filtered &lt;- reactive(co2_map %&gt;% filter(Year == input$year))</span>
+<span id="cb1-43"><a href="#cb1-43"></a>  output$mapPlot &lt;- renderPlot({</span>
+<span id="cb1-44"><a href="#cb1-44"></a>    ggplot(filtered()) +</span>
+<span id="cb1-45"><a href="#cb1-45"></a>      geom_sf(aes(geometry = geometry, fill = co2conc),</span>
+<span id="cb1-46"><a href="#cb1-46"></a>              colour = "grey40", linewidth = .2) +</span>
+<span id="cb1-47"><a href="#cb1-47"></a>      scale_fill_viridis_c(option = "viridis", na.value = "grey90",</span>
+<span id="cb1-48"><a href="#cb1-48"></a>                           name = "% change vs 1990",</span>
+<span id="cb1-49"><a href="#cb1-49"></a>                                    limits = c(-100, 500)) +</span>
+<span id="cb1-50"><a href="#cb1-50"></a>      coord_sf(crs = "+proj=robin", expand = FALSE) +</span>
+<span id="cb1-51"><a href="#cb1-51"></a>      theme_void(base_size = 16) +</span>
+<span id="cb1-52"><a href="#cb1-52"></a>      theme(legend.position = "bottom",</span>
+<span id="cb1-53"><a href="#cb1-53"></a>            legend.text = element_text(size = 8)) +</span>
+<span id="cb1-54"><a href="#cb1-54"></a>      labs(title = paste0("CO₂ emissions relative to 1990: ", input$year))</span>
+<span id="cb1-55"><a href="#cb1-55"></a>  })</span>
+<span id="cb1-56"><a href="#cb1-56"></a>}</span>
+<span id="cb1-57"><a href="#cb1-57"></a></span>
+<span id="cb1-58"><a href="#cb1-58"></a>shinyApp(ui, server)</span>
+<span id="cb1-59"><a href="#cb1-59"></a></span>
+<span id="cb1-60"><a href="#cb1-60"></a></span>
+<span id="cb1-61"><a href="#cb1-61"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The map above illustrates the percentage change in CO₂ emissions relative to 1990 for the year 2022. While many European, and North American countries have successfully reduced their emissions—thanks to policy reforms, renewable energy adoption, and energy efficiency measures—several nations in Southeast Asia have experienced significant increases, with CO₂ concentrations rising by more than 100% and even reaching numbers of 500%+ in some cases. This surge is often linked to rapid industrialization, population growth, and continued reliance on fossil fuels and lack of sustainble energy production.</p>
+<p>These rising emissions have profound implications for human health. Elevated CO2 levels contribute to climate change, which in turn exacerbates health issues such as respiratory and cardiovascular diseases, heat-related illnesses, and the spread of vector-borne diseases. For instance, increased air pollution from fossil fuel combustion is associated with higher rates of asthma and other respiratory conditions. Moreover, climate change can disrupt access to healthcare services and threaten infrastructure, posing additional risks to public health. <a href="https://www.epa.gov/climateimpacts/climate-change-impacts-health">EPA</a></p>
+<p>Addressing these challenges requires concerted efforts to reduce emissions, transition to cleaner energy sources, and implement policies that prioritize both environmental sustainability and public health.</p>
 </section>
 <section id="yearly-data-by-environmental-indicators" class="level2">
 <h2 class="anchored" data-anchor-id="yearly-data-by-environmental-indicators">Yearly data by environmental indicators</h2>
@@ -324,7 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -353,7 +370,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -381,7 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -398,7 +415,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="summary-of-policies" class="level2">
 <h2 class="anchored" data-anchor-id="summary-of-policies">Summary of policies</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p>As discussed in the earlier sections, there is a variety of indicators that change on a country to country basis and have different implications for the climate change, sustainable development, and environmental crisis mitigation. Organizations, such as United Nations, International Energy Agency, World Bank, OECD, among others, prepare reports with annual changes in countries’ policy frameworks and sustainability indicators. To compare the strategies of these countries and assess the effectiveness of actions they implement, we outlined the most insightful strategies. Data-driven approach in policy-making is crucial to establishing associations and causality among many factors.</p>
+<section id="clean-energy" class="level3">
+<h3 class="anchored" data-anchor-id="clean-energy">Clean energy</h3>
+</section>
+<section id="air-pollution" class="level3">
+<h3 class="anchored" data-anchor-id="air-pollution">Air pollution</h3>
+<p><a href="https://www.unep.org/resources/emissions-gap-report-2024">The Emissions Gap Report 2024</a> provided by UNEP underscores the urgency in combating greenhouse gas emissions and control the project rise in global temperatures. For instance, according to the Paris Agreement, the world is determined to achieve the goal of limiting global warming to 1.5°C.</p>
+</section>
+<section id="climate-mitigation" class="level3">
+<h3 class="anchored" data-anchor-id="climate-mitigation">Climate mitigation</h3>
+</section>
 </section>
 <section id="results-and-discussion" class="level2">
 <h2 class="anchored" data-anchor-id="results-and-discussion">Results and discussion</h2>
@@ -491,14 +518,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -531,9 +558,26 @@ AIC: 197.16
 Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      Predicted
+Actual  1  2  3  4
+     1  2  1  0  1
+     2  0 21  2  0
+     3  0  1 15  1
+     4  0  2  0 10</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Prediction Accuracy: 0.857"</code></pre>
+</div>
+</div>
+<iframe src="https://shamchikkhus.shinyapps.io/PredictionApp/" width="100%" height="600px" frameborder="0">
+</iframe>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p>Throughout the blog, we employed a multi-step methodology combining data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We began with a series of interactive and static visualizations, including the interactive map which showed the world trend in CO2 emissions of each county. We also included line graphs for trends over time. These efforts us to explore both regional and temporal dynamics in environmental indicators.</p>
+<p>To identify groups of countries with similar sustainability profiles, we used k-means clustering on standardized indicators such as renewable energy consumption and electricity production from coal and oil. We applied the elbow method to determine the optimal number of clusters, selecting k = 4 based on the elbow plot. This helped us segment countries into more and less sustainable groups and track their transitions over time.</p>
+<p>Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 86%, demonstrating its potential to help policymakers use indicators to predict a sustainability cluster for the country in future.</p>
 </section>
 <section id="bibliography" class="level2">
 <h2 class="anchored" data-anchor-id="bibliography">Bibliography</h2>
@@ -543,6 +587,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <li><a href="https://www.appsilon.com/post/observe-function-r-shiny">Observe funtion in Shiny R</a></li>
 <li><a href="https://quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/">Serverless Shiny app extension</a></li>
 <li><a href="https://r4ds.had.co.nz/functions.html#function-arguments">Functions in R</a></li>
+<li><a href="https://cran.r-project.org/web/packages/randomForest/randomForest.pdf">randomForest</a></li>
 </ul>
 
 
