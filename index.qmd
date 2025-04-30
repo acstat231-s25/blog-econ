@@ -12,6 +12,8 @@ resources:
 
 filters:
   - shinylive
+href: index.qmd
+    - policies.qmd
   
 ---
 
