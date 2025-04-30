@@ -66,7 +66,26 @@ Climate change and sustainable development have become the topics of debate in r
 
 
 ```{r}
+# Filter for year 2022
+co2_2022 <- co2_2022 |> 
+  filter(Year == 2022)
 
+# Plot
+ggplot(co2_2022) +
+  geom_sf(aes(fill = co2conc), color = "grey40", linewidth = 0.2) +
+  scale_fill_viridis_c(
+    option = "viridis",
+    na.value = "grey90",
+    name = "% change vs 1990",
+    limits = c(-100, 500)
+  ) +
+  coord_sf(crs = "+proj=robin", expand = FALSE) +
+  theme_void(base_size = 14) +
+  theme(
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)
+  ) +
+  labs(title = "CO₂ Emissions Relative to 1990 (Year: 2022)")
 
 ```
 
@@ -138,6 +157,9 @@ server <- function(input, output) {
 
 shinyApp(ui, server)
 
+
+
+
 ```
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -175,6 +197,10 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
       color = "Region"
     ) +
     theme_minimal()
+
+
+
+
 ```
 ### Renewable energy consumption and output
 
