@@ -2,19 +2,16 @@
 title: "Analyzing Sustainability Indicators Amidst Climate Change"
 subtitle: "Optional subtitle"
 author: 
-- "Eglah Belizor"
-- "Shamil Khusnullin"
-- "Mariia Koval"
+  - "Eglah Belizor"
+  - "Shamil Khusnullin"
+  - "Mariia Koval"
 abstract: "A brief abstract summarizing your project is required here. This abstract, along with the first image or figure in your blog, will be used as a preview to your blog on the course's landing page for all the blogs."
 resources:
-      - shinylive-sw.js
-      - Data/co2_map.rds`
+  - shinylive-sw.js
+  - Data/co2_map.rds
 
 filters:
   - shinylive
-href: index.qmd
-    - policies.qmd
-  
 ---
 
 ```{r}
