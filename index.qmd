@@ -602,7 +602,49 @@ print(paste("Prediction Accuracy:", round(accuracy, 3)))
         width="100%" height="600px" frameborder="0">
 </iframe>
 
+```{r}
+# Filter for year 2022
+co2_2015 <- st_as_sf(co2_map) |> 
+  filter(Year == 2015) |> 
+   drop_na() 
 
+co2_2015_values <- co2_2015 |> 
+  sf::st_drop_geometry(data_all) |> 
+  select(co2conc)
+
+
+# Standardize the data
+co2_2015_scaled <- scale(co2_2015_values) 
+
+# Cluster the data
+kmeans_result <- kmeans(co2_2015_scaled, centers = 4, nstart = 25)
+
+# Insert clusters back a variable
+co2_2015$Cluster <- as.factor(kmeans_result$cluster)
+
+
+co2_2015 <- co2_2015 |> 
+ mutate(Cluster = case_when(
+  Cluster == "2" ~ 1,
+  Cluster == "3" ~ 4
+  
+))
+
+
+# Plot
+ggplot(co2_2015) +
+  geom_sf(aes(fill = Cluster), color = "grey40", linewidth = 0.2) +
+
+  
+  coord_sf(crs = "+proj=robin", expand = FALSE) +
+  theme_void(base_size = 14) +
+  theme(
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)
+  ) +
+  labs(title = "2022 CO2 emission %Change relative to 1990")
+
+```
 
 
 ## Methods
