@@ -163,7 +163,7 @@ server <- function(input, output) {
     predicted_cluster <- predict(rf_model, new_data)
     
     output$prediction <- renderText({
-      paste("Predicted Cluster:", predicted_cluster)
+      paste("The model predicts the following CO2 change:", predicted_cluster)
     })
   })
 }
