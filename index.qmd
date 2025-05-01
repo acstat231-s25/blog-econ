@@ -559,9 +559,10 @@ co2_2015$Cluster <- as.factor(kmeans_result$cluster)
 
 co2_2015 <- co2_2015 |> 
  mutate(Cluster = case_when(
-  Cluster == "2" ~ 1,
-  Cluster == "3" ~ 4
-  
+  Cluster == "1" ~ "Medium Increase",
+  Cluster == "2" ~ "Low Increase",
+  Cluster == "3" ~ " Extreme Increase",
+  Cluster == "4" ~ "High increase"
 ))
 
 
