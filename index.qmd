@@ -64,7 +64,7 @@ Climate change and sustainable development have become the topics of debate in r
 # Introduction and context
 
 Over the past 30 years, the world has seen significant environmental changes. The effects of those changes can have drastic implications on humans, animals, and nature as a whole. To mitigate those changes, many different policies have been carried out. 
-In this blog, we’ll plot the map representing the change of CO2 over the years. We will explore the countries that have shown the most effect of CO2 change, and which countries were able to tackle the CO2 increase, but have only shown a slight increase. Furthermore, we will present the changes in other environmental factors and sustainable energy usage across the continents over the years. 
+In this blog, we’ll plot the map representing the change of CO2 over the years. We will explore the countries that have shown the greater CO2 change,  which countries were able to tackle the CO2 increase, and have only shown a slight increase. Furthermore, we will present the changes in other environmental factors and sustainable energy usage across the continents over the years. 
 These variables, coupled with clustering based on sustainability and logistic regression, will help us to discuss the changes that have taken place and provide future advice for policymakers on which variables they should focus on.
 
 
