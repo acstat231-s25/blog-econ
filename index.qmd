@@ -5,7 +5,8 @@ author:
   - "Eglah Belizor"
   - "Shamil Khusnullin"
   - "Mariia Koval"
-abstract: "A brief abstract summarizing your project is required here. This abstract, along with the first image or figure in your blog, will be used as a preview to your blog on the course's landing page for all the blogs."
+abstract: "We analyze global trends in sustainability from 1990 to 2022 in terms of CO₂ emissions, renewables usage, deforestation, and fossil fuel usage. Through visualization, clustering, and logistic regression, we uncover clusters of nations by sustainability levels and how they shift over time. Europe and North America reduced emissions, while Southeast Asia grew tremendously. Growth in renewable energy and a reduction in fossil fuel usage were strong predictors of enhanced sustainability."
+
 resources:
   - shinylive-sw.js
   - Data/co2_map.rds
