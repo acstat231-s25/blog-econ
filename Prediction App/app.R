@@ -7,6 +7,8 @@ library(tibble)
 library(broom)   
 library(janitor)
 
+# Load the data
+
 co2_map <- readRDS("Data/co2_map.rds")
 climate1 <- read.csv("Data/climate-change.csv", skip = 3)
 climate1 <- climate1 |>
@@ -15,6 +17,8 @@ climate1 <- climate1 |>
 
 # Seed for Reproducibility
 set.seed(631)
+
+#Create a version with all years in one column
 
 climate_long <- climate1 |> 
   # 1) Filter for the four indicators in the image
