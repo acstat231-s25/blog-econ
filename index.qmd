@@ -341,6 +341,7 @@ cluster_comparison
 Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group's unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster's special characteristics, we are able to identify which groups are most sustainable and the least sustainable.
 
 In 1990:
+
 - **Cluster 1 (red)**  
   - Characterized by high oil-based electricity production, but very low renewable energy consumption and renewable electricity output.  
   - Least sustainable: It likely represents countries heavily reliant on fossil fuels with minimal use of renewables.
@@ -360,6 +361,7 @@ In 1990:
 **Ranking from most to least sustainable**: 2, 3, 4, 1
 
 In 2015:
+
 - **Cluster 1 (red)**  
   - Remains the least sustainable, although with some improvement in renewable energy consumption.
 
@@ -455,7 +457,6 @@ summary(logit_fit)
 
 # Results and discussion
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 # Appendix
 
