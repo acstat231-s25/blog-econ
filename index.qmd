@@ -75,8 +75,7 @@ These variables, coupled with clustering based on sustainability and logistic re
 3. Considering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?
 
 # Changes in CO2 emissions
-
-```{r}
+```{r, warning=FALSE, fig.width=8, fig.height=4}
 # Filter for year 2022
 
 co2_2022 <- st_as_sf(co2_map) |> 
@@ -91,14 +90,13 @@ ggplot(co2_2022) +
     name = "% change vs 1990",
     limits = c(-100, 500)
   ) +
-  
-  coord_sf(crs = "+proj=robin", expand = FALSE) +
   theme_void(base_size = 14) +
   theme(
     legend.position = "bottom",
+    plot.margin = unit(c(0, 0, 0, 0), "cm"),
     legend.text = element_text(size = 8)
   ) +
-  labs(title = "2022 CO2 emission %Change relative to 1990")
+  labs(title = "2022 CO2 emission %Change relative to 1990") 
 
 ```
 
