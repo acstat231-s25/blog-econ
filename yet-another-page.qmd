@@ -209,9 +209,7 @@ co2_cleaned <- co2_map |>
   drop_na() |> 
   select(`Country Code`, `Country Name`, `Year`, `co2conc`)
   
-
-
-
+# Leave only numeric variable for clustering
 co2_numeric <- co2_cleaned |> 
   select(co2conc)
 
