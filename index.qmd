@@ -336,11 +336,44 @@ cluster_comparison <- clusters_1990 |>
   inner_join(clusters_2015, by = "Country Name")
 cluster_comparison
 ```
- 
 
 Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group's unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster's special characteristics, we are able to identify which groups are most sustainable and the least sustainable.
 
+```{r}
+# visualization choice: scatterplot matrix
+# for standardized 1990 cluster data
+sustain_1990_c4 |>
+  rename (
+      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = "Electricity production from coal sources (% of total)"
+    ) |>
+  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
+         `electric_prod_coal`, `cluster_1990`) |>
+  ggpairs(aes(color = cluster_1990)
+        , upper = list(continuous = "blank")
+        , progress = FALSE) +
+  theme(text = element_text(size = 8))
+
+# for standardized 2015 cluster data
+sustain_2015_c4 |>
+  rename (
+      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = "Electricity production from coal sources (% of total)"
+    ) |>
+  select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
+         `electric_prod_coal`, `cluster_2015`) |>
+  ggpairs(aes(color = cluster_2015)
+        , upper = list(continuous = "blank")
+        , progress = FALSE) +
+  theme(text = element_text(size = 8))
+```
+
 In 1990:
+
 - **Cluster 1 (red)**  
   - Characterized by high oil-based electricity production, but very low renewable energy consumption and renewable electricity output.  
   - Least sustainable: It likely represents countries heavily reliant on fossil fuels with minimal use of renewables.
@@ -360,6 +393,7 @@ In 1990:
 **Ranking from most to least sustainable**: 2, 3, 4, 1
 
 In 2015:
+
 - **Cluster 1 (red)**  
   - Remains the least sustainable, although with some improvement in renewable energy consumption.
 
@@ -374,8 +408,9 @@ In 2015:
   - Increased coal production, surpassing Cluster 3. Moderate renewable energy, low oil usage.  
   - Still in third place in sustainability ranking.
   
-```{r}
+### Sustainability cluster map
 
+```{r}
 # 1990 cluster map
 ggplot(world_clusters) +
   geom_sf(aes(fill = as.factor(cluster_1990)), color = "black", size = 0.1) +
@@ -389,8 +424,6 @@ ggplot(world_clusters) +
   scale_fill_brewer(na.value = "grey90", name = "Cluster 2015") +
   theme_minimal() +
   labs(title = "Country Clusters by Sustainability Levels in 2015")
-
-
 
 ```
 
@@ -455,7 +488,6 @@ summary(logit_fit)
 
 # Results and discussion
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 # Appendix
 
