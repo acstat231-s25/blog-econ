@@ -313,5 +313,40 @@
     "title": "Analyzing Sustainability Indicators Amidst Climate Change",
     "section": "Machine Learning",
     "text": "Machine Learning\nFurthermore, I build a machine learning model which predicts the cluster using 4 variables that we have discussed earlier:\n-Renewable energy consumption (% of total final energy consumption)\n-Renewable electricity output (% of total electricity output)\n-Electricity production from oil sources (% of total)\n-Electricity production from coal sources (% of total)\nYou can observe the test on the actual data that the algorithm ran on, getting 78.6% accuracy.\n\n\n                   Predicted\nActual              Decrease Extreme Increase High Increase Moderate Increase\n  Decrease               417                0             4                47\n  Extreme Increase         1               10             6                 4\n  High Increase           11                6            58                38\n  Moderate Increase       55                1            15               204\n\n\n[1] \"Prediction Accuracy: 0.786\"\n\n\nFurthermore, this page allows the policymakers to see how their proposed energy use system will impact the CO2 levels"
+  },
+  {
+    "objectID": "methodology.html",
+    "href": "methodology.html",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "",
+    "text": "Data used in this project comes from datasets accessed through the World Bank. Climate change indicators are retrieved from the Climate Change dataset. We selected 6 variables, including Renewable energy consumption (% of total final energy consumption), Electricity production from oil sources (% of total), Electricity production from coal sources (% of total), Renewable electricity output (% of total electricity output), Population growth (annual %), Forest area (% of land area). Data on individual countries spans across the 1990 - 2022 year period. Some countries have NA values for all or certain variables if the information is not updated regularly. In order to plot and analyze carbon emissions data, we used the Carbon dioxide (CO2) emissions data from the World Bank. It contains observations for each country on emissions within the 1991-2023 year period."
+  },
+  {
+    "objectID": "methodology.html#data-collection",
+    "href": "methodology.html#data-collection",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "",
+    "text": "Data used in this project comes from datasets accessed through the World Bank. Climate change indicators are retrieved from the Climate Change dataset. We selected 6 variables, including Renewable energy consumption (% of total final energy consumption), Electricity production from oil sources (% of total), Electricity production from coal sources (% of total), Renewable electricity output (% of total electricity output), Population growth (annual %), Forest area (% of land area). Data on individual countries spans across the 1990 - 2022 year period. Some countries have NA values for all or certain variables if the information is not updated regularly. In order to plot and analyze carbon emissions data, we used the Carbon dioxide (CO2) emissions data from the World Bank. It contains observations for each country on emissions within the 1991-2023 year period."
+  },
+  {
+    "objectID": "methodology.html#data-wrangling",
+    "href": "methodology.html#data-wrangling",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "Data wrangling",
+    "text": "Data wrangling\nBefore proceeding to the analysis, we cleaned up the data and combined rows of the two datasets. Specifically, we removed unused columns, selected variables of interest, imputed geographic data to plot the map outlines, filtered relevant years and calculated median values for each of the continents. For the k-means clustering, we normalized the data to amke sure the variables are on the same scale. Using an elbow plot, we identified the optimal number of clusters and added cluster assignments. Cluster assignments are created for 2-year periods to compare how countries are distributed across the indicators and years."
+  },
+  {
+    "objectID": "methodology.html#data-analysis",
+    "href": "methodology.html#data-analysis",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "Data analysis",
+    "text": "Data analysis\nAfter wrangling, we mapped changes in CO2 emissions, using sf and ggplot2 packages. We plot time-series data on indicators of interest, and built a Shiny app allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020. We used purr and broom packages to iterate over different values of k when generating elbow plots, and tidy up the k-means output. After fitting the clusters, we fit a logistic regression to analyze cluster assignments and predict future outcomes by country."
+  },
+  {
+    "objectID": "methodology.html#limitations",
+    "href": "methodology.html#limitations",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "Limitations",
+    "text": "Limitations"
   }
 ]
