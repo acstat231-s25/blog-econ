@@ -15,7 +15,9 @@ website:
       - text: "Policies"
         href: policies.qmd
       - text: "More interactivity"
-        href: yet-another-page.qmd
+        href: interactivity.qmd
+      - text: "Methodology"
+        href: methodology.qmd
 
 
 format:
