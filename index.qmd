@@ -114,7 +114,7 @@ In the next part of the blog, we will discuss more about sustainability factors 
 Sustainability and the state of the environment are influenced by a number of factors and can impact the development of the country. While it is difficult to capture the effect of every variable on the state of the environment, we decided to select those that cover both causes and consequences of natural disasters, including energy consumption, renewable energy production, forest area, population growth rates, and CO2 emissions. 
 For instance, forests cover roughly a third of all the land on earth. [This dashboard](https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/) allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020, but the main insights will be discussed below.
 
-### Deforestation
+## Deforestation
 
 According to the [United Nations](https://www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis), 10 million hectares of land experience deforestation annually, which is when humans convert wooded land into something different by clearing dense forests. Deforestation and forest degradation are destroying natural ecosystems, fragment wildlife habitats, and contribute to global carbon emissions. Based on the line graph provided below, Oceania and Americas have the highest percentage of forest area, while Asia is among the lowest. While Europe, Oceania, and Asia have experienced approximately a 5% increase in forest area, both Americas and Asia had a 5% decline. 
 
@@ -144,7 +144,7 @@ ggplot(data1, aes(x = period, y = value, color = region_un)) +
     theme_minimal()
 
 ```
-### Renewable energy consumption and output
+## Renewable energy consumption and output
 
 Today's global energy crisis has highlighted the urgency for using renewable energy sources. They are replenished at the higher level than are consumed. For example, solar energy and wind are among them. The rate at which solar energy is taken by the Earth is about [10,000 times](https://www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf) greater than the rate at which people consume such energy. Wind energy uses the kinetic energy of moving air by using large turbines located on land or in sea- or freshwater. Taller turbines and larger motor diameters that were developed in recent decades allow for maximization of electricity produced. 
 
@@ -161,12 +161,18 @@ Among other sources of renewable energy are geothermal energy, which uses heat f
 
 Energy consumption and production plots reveal a clear increasing trend for renewable energy output in regions, such as Oceania by 10%, Asia by 7%, and Europe by more than 20%. Africa and Americas experienced fluctuations in renewable energy output across the priod of 25 years, but were among leaders in the quantity of renewables along with Europe. The plot of renewable energy consumption reveals that Africa is an exceptional case. While other continents' renewable energy consumption levels range between 5 and 22%, Africa reached a 70% mark. In fact, Africa has an abundance of solar, wind, geothermal and bioenergy resources. While renewable sources account for nearly 22% of the electricity output, consumption of renewable energy is so high because it remains one of the least electrified regions. Maybe Africa's renewable potential be a game changer to overcome energy poverty and generate development on the continent. 
 
+::: {.panel-tabset}
+
+### Renewable electricity output
+
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
 # Prepare renewable electricity dataframe
  data1 <- data |>
     filter(`Indicator Name` 
       ==  c("Renewable electricity output (% of total electricity output)", 
-  "Renewable energy consumption (% of total final energy consumption)")) |>
+         "Renewable energy consumption (% of total final energy consumption)",
+         "Electricity production from coal sources (% of total)",
+               "Electricity production from oil sources (% of total)")) |>
     select(region_un, `Indicator Name`, starts_with(c("19", "20")), 
            ends_with("_median")) |>
     pivot_longer(
@@ -177,25 +183,43 @@ Energy consumption and production plots reveal a clear increasing trend for rene
     mutate(period = as.integer(str_remove(period, "_median"))) |>
     rename()
 
-
-par(mfrow=c(1,2))
 # Plot a faceted graph on renewable energy trends 
-ggplot(data1, aes(x = period, y = value, color = region_un)) +
+ggplot(data1 |> filter(`Indicator Name` == 
+      "Renewable electricity output (% of total electricity output)"),
+      aes(x = period, y = value, color = region_un)) +
     geom_line() +
     geom_point() +
     labs(
-      title = paste("Renewable electricity output output and consumption"),
+      title = paste("Renewable electricity output output"),
       subtitle = "Median values per year",
       x = "Year",
       y = "% of total electricity",
       color = "Region"
     ) +
-    theme_minimal()+ 
-    facet_wrap(~`Indicator Name`)
-
+    theme_minimal()
 ```
 
-### Electricity production from oil and coal sources
+### Renewable energy consumption
+
+```{r, warning=FALSE, fig.width=10, fig.height=4}
+ggplot(data1 |> filter(`Indicator Name` == 
+      "Renewable energy consumption (% of total final energy consumption)"),
+      aes(x = period, y = value, color = region_un)) +
+    geom_line() +
+    geom_point() +
+    labs(
+      title = paste("Renewable energy consumption"),
+      subtitle = "Median values per year",
+      x = "Year",
+      y = "% of total energy consumption",
+      color = "Region"
+    ) +
+    theme_minimal()
+
+```
+:::
+
+## Electricity production from oil and coal sources
 
 Coal, crude oil, and natural gas are fossil fuels because they were formed from the fossilized plants and animals that lived millions of years ago and have a high carbon content. They were the main sources of energy used to power our houses, cars, and businesses for more than a century. Fossil fuels still play a crucial role in our lives as they account for the major part in electricity production. However, fossil fuels take their toll on ecosystems, air quality, and landscapes. Processing, unearthing, and extracting underground deposits lead to land degradation and make it impossible to restore once nutrient-rich soil. Toxic runoff into water streams resulting from fossil fuel extraction jeopardizes water ecosystems and makes it unsafe for drinking. Additionally, burning fossil fuels leads to air pollution, which can have severe impacts on physical health, global warming, and ocean acidification. 
 
@@ -210,36 +234,49 @@ include_graphics("https://www.mytwintiers.com/wp-content/uploads/sites/89/2017/0
 
 According to data in the plots below, Oceania is heavily reliable on fossil fuels with around 60% of total electricity output coming from coal in 2015, but it shows a decreasing trend in the span of 25 years. Europe is the second largest user of coal power with about 18% of total energy output coming from it. It shows a decreasing trend as well. Americas, on the ther hand, are the largest consumers of oil energy which accounts for around 20% of total energy output. The rest of the continents have under 10% of electrivity coming from oil. Notably, while there are significant fluctuations in oil usage from year to year in all of the continents, Asia shows a clear decreasing trend in oil energy consumption. 
 
-```{r, warning=FALSE, fig.width=10, fig.height=4}
-# Prepare coal and oil electricity dataframe
-data1 <- data |>
-    filter(`Indicator Name` == 
-             c("Electricity production from coal sources (% of total)",
-               "Electricity production from oil sources (% of total)")) |>
-    select(region_un, `Indicator Name`, starts_with(c("19", "20")),
-           ends_with("_median")) |>
-    pivot_longer(
-      cols = starts_with(c("19", "20")) & ends_with("_median"),
-      names_to = "period",
-      values_to = "value"
-    ) |>
-    mutate(period = as.integer(str_remove(period, "_median")))
+::: {.panel-tabset}
 
-# Plot electricity production trends
-ggplot(data1, aes(x = period, y = value, color = region_un)) +
+### Electricity production from oil sources
+
+```{r, warning=FALSE, fig.width=10, fig.height=4}
+# Plot a faceted graph on renewable energy trends 
+ggplot(data1 |> filter(`Indicator Name` == 
+      "Electricity production from oil sources (% of total)"),
+      aes(x = period, y = value, color = region_un)) +
     geom_line() +
     geom_point() +
     labs(
       title = paste("Electricity production from oil sources (% of total)"),
       subtitle = "Median values per year",
       x = "Year",
-      y = "Electricity production from oil sources (% of total)",
+      y = "% of total",
       color = "Region"
     ) +
-    theme_minimal()+ 
-    facet_wrap(~`Indicator Name`)
+    theme_minimal()
 
 ```
+
+### Electricity production from coal sources
+
+```{r, warning=FALSE, fig.width=10, fig.height=4}
+# Plot a faceted graph on renewable energy trends 
+ggplot(data1 |> filter(`Indicator Name` == 
+      "Electricity production from coal sources (% of total)"),
+      aes(x = period, y = value, color = region_un)) +
+    geom_line() +
+    geom_point() +
+    labs(
+      title = paste("Electricity production from coal sources (% of total)"),
+      subtitle = "Median values per year",
+      x = "Year",
+      y = "% of total",
+      color = "Region"
+    ) +
+    theme_minimal()
+
+```
+
+:::
 
 # Clustering by sustainability levels
 

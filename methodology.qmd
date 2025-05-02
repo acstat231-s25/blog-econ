@@ -5,7 +5,6 @@ author:
   - "Eglah Belizor"
   - "Shamil Khusnullin"
   - "Mariia Koval"
-abstract: "This page allows user to dive deeper into the content of our blog."
 resources:
   - shinylive-sw.js
   - Data/co2_map.rds
@@ -16,7 +15,7 @@ filters:
 
 ## Data collection
 
-Data used in this project comes from datasets accessed through the [World Bank](https://www.worldbank.org/ext/en/home). Climate change indicators are retrieved from the [Climate Change dataset](https://data.worldbank.org/topic/climate-change). We selected 6 variables, including `Renewable energy consumption (% of total final energy consumption)`, `Electricity production from oil sources (% of total)`, `Electricity production from coal sources (% of total)`, `Renewable electricity output (% of total electricity output)`, `Population growth (annual %)`, `Forest area (% of land area)`. Data on individual countries spans across the 1990 - 2022 year period. Some countries have NA values for all or certain variables if the information is not updated regularly.
+Data used in this project comes from datasets accessed through the [World Bank](https://www.worldbank.org/ext/en/home). Climate change indicators are retrieved from the [Climate Change dataset](https://data.worldbank.org/topic/climate-change). We selected 6 variables, including Renewable energy consumption (% of total final energy consumption), Electricity production from oil sources (% of total), Electricity production from coal sources (% of total), Renewable electricity output (% of total electricity output), Population growth (annual %), Forest area (% of land area). Data on individual countries spans across the 1990 - 2022 year period. Some countries have NA values for all or certain variables if the information is not updated regularly.
 In order to plot and analyze carbon emissions data, we used the [Carbon dioxide (CO2) emissions](https://data.worldbank.org/indicator/EN.GHG.CO2.ZG.AR5) data from the World Bank. It contains observations for each country on emissions within the 1991-2023 year period.
 
 
