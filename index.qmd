@@ -35,8 +35,6 @@ world <- ne_countries(scale = "medium", returnclass = "sf") # world map data
 
 * [Research questions and motivation](#research-questions-and-motivation)
 
-* [Changes in CO2 emissions](#changes-in-co2-emissions)
-
 * [Yearly data by environmental indicators](#changes-in-co2-emissions)
 
 * [Clustering by sustainability levels](#changes-in-co2-emissions)
@@ -56,41 +54,6 @@ These variables, coupled with clustering based on sustainability and logistic re
 1. For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?
 2. Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?
 3. Considering data from at least two periods, how likely is a country to advance to a more sustainable cluster based on its indicator values?
-
-# Changes in CO2 emissions
-```{r, warning=FALSE, fig.width=8, fig.height=4}
-# Filter for year 2022
-
-co2_2022 <- st_as_sf(co2_map) |> 
-  filter(Year == 2022)
-
-# Plot
-ggplot(co2_2022) +
-  geom_sf(aes(fill = co2conc), color = "grey40", linewidth = 0.2) +
-  scale_fill_viridis_c(
-    option = "viridis",
-    na.value = "grey90",
-    name = "% change vs 1990",
-    limits = c(-100, 500)
-  ) +
-  theme_void(base_size = 14) +
-  theme(
-    legend.position = "bottom",
-    plot.margin = unit(c(0, 0, 0, 0), "cm"),
-    legend.text = element_text(size = 8)
-  ) +
-  labs(title = "2022 CO2 emission %Change relative to 1990") 
-
-```
-
-
-The map above shows the percentage change in CO2 emissions from 1990 to 2022. On the one side, we can see an interesting pattern: many European and North American countries reduced their emissions successfully, and their success is often attributed to policy reforms on renewable energy, the zero carbon emissions project, and energy efficiency. On the other hand, many nations in Southeast Asia have experienced significant increases in CO2 concentrations, with some countries experiencing over a 100% increase from 1990. This rapid increase in CO2 is often attributed to rapid industrialization, population growth, continued reliance on fossil fuels, and a lack of sustainable energy production
-
-These rising emissions have profound implications for both humans and life on Earth. Elevated CO2 levels contribute to human health issues and can cause asthma, other respiratory conditions, and general effects on the brain, like dizziness. Moreover, the raised CO2 levels cause the greenhouse effect, which can aggravate the planet's climate change. The rapid change in climate can further threaten human infrastructure and disrupt access to healthcare services. 
-[Climate.gov](https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide)
-
-In the next part of the blog, we will discuss more about sustainability factors and how they affect the environment.
-
 
 # Yearly data by environmental indicators
 
@@ -141,6 +104,38 @@ p <- ggplot(data1 |>
 ggplotly(p, tooltip = "text")
 
 ```
+## Changes in CO2 emissions
+```{r, warning=FALSE, fig.width=8, fig.height=4}
+# Filter for year 2022
+
+co2_2022 <- st_as_sf(co2_map) |> 
+  filter(Year == 2022)
+
+# Plot
+ggplot(co2_2022) +
+  geom_sf(aes(fill = co2conc), color = "grey40", linewidth = 0.2) +
+  scale_fill_viridis_c(
+    option = "viridis",
+    na.value = "grey90",
+    name = "% change vs 1990",
+    limits = c(-100, 500)
+  ) +
+  theme_void(base_size = 14) +
+  theme(
+    legend.position = "bottom",
+    plot.margin = unit(c(0, 0, 0, 0), "cm"),
+    legend.text = element_text(size = 8)
+  ) +
+  labs(title = "2022 CO2 emission %Change relative to 1990") 
+
+```
+
+
+The map above shows the percentage change in CO2 emissions from 1990 to 2022. On the one side, we can see an interesting pattern: many European and North American countries reduced their emissions successfully, and their success is often attributed to policy reforms on renewable energy, the zero carbon emissions project, and energy efficiency. On the other hand, many nations in Southeast Asia have experienced significant increases in CO2 concentrations, with some countries experiencing over a 100% increase from 1990. This rapid increase in CO2 is often attributed to rapid industrialization, population growth, continued reliance on fossil fuels, and a lack of sustainable energy production
+
+These rising emissions have profound implications for both humans and life on Earth. Elevated CO2 levels contribute to human health issues and can cause asthma, other respiratory conditions, and general effects on the brain, like dizziness. Moreover, the raised CO2 levels cause the greenhouse effect, which can aggravate the planet's climate change. The rapid change in climate can further threaten human infrastructure and disrupt access to healthcare services. 
+[Climate.gov](https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide)
+
 ## Renewable energy consumption and output
 
 Today's global energy crisis has highlighted the urgency for using renewable energy sources. They are replenished at the higher level than are consumed. For example, solar energy and wind are among them. The rate at which solar energy is taken by the Earth is about [10,000 times](https://www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf) greater than the rate at which people consume such energy. Wind energy uses the kinetic energy of moving air by using large turbines located on land or in sea- or freshwater. Taller turbines and larger motor diameters that were developed in recent decades allow for maximization of electricity produced. 
