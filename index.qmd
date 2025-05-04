@@ -29,11 +29,6 @@ world <- ne_countries(scale = "medium", returnclass = "sf") # world map data
 ```
 
 
-## Getting started
-
-Climate change and sustainable development have become the topics of debate in recent years. Countries use different policies to identify and target respective ecological challenges. It is important to admit that geographical location, development level and reliance on resources have different effects on green transition efforts. In this blog we will explore how countries' sustainability levels have changed since 1990, what regions share ecological indicators, and what policies are key to improve the environment in these places.
-
-
 ## Contents of the page
 
 * [Introduction and context](#introduction-and-context)
@@ -46,15 +41,7 @@ Climate change and sustainable development have become the topics of debate in r
 
 * [Clustering by sustainability levels](#changes-in-co2-emissions)
 
-* [Assessing the odds of environemntal transition](#assessing-the-odds-of-environmental-transition)
-
-* [Summary of policies](#assessing-the-odds-of-environmental-transition)
-
-* [Results and discussion](#results-and-discussion)
-
-* [Appendix](#methods)
-
-* [Bibliography](#bibliography)
+* [References](#references)
 
 
 # Introduction and context
@@ -508,64 +495,6 @@ ggplot(world_clusters) +
 ```
 
 
-### Assessing the odds of environmental transition
-
-**Logistic Regression**
-```{r}
-
-clusters_1990 <- clusters_1990 |>
-  mutate(cluster_1990 = case_when(
-    cluster_1990 == "2" ~ 4,
-    cluster_1990 == "3" ~ 3,
-    cluster_1990 == "4" ~ 2,
-    cluster_1990 == "1" ~ 1
-  ))
-
-clusters_2015 <- clusters_2015 |>
-  mutate(cluster_2015 = case_when(
-    cluster_2015 == "2" ~ 4,
-    cluster_2015 == "3" ~ 3,
-    cluster_2015 == "4" ~ 2,
-    cluster_2015 == "1" ~ 1
-  ))
-
-cluster_comparison <- sustain_2015_c4 |> 
-  # Join with 1990 data set
-  right_join(sustain_1990_c4, by = "Country Name") |> 
-  mutate(cluster_2015 = as.numeric(as.character(cluster_2015)),
-    cluster_1990 = as.numeric(as.character(cluster_1990)),
-    cluster_jump = cluster_2015 - cluster_1990,
-# If the cluster number has increased it means that country has improved
-    cluster_jump = if_else(cluster_jump > 0, 1, 0),
-    # Compare the variables from 1990 to 2015
-    renewable_energy = 
-      `Renewable energy consumption (% of total final energy consumption).y` -
-      `Renewable energy consumption (% of total final energy consumption).x`,
-    renewable_electricity = 
-      `Renewable electricity output (% of total electricity output).y` -
- `Renewable electricity output (% of total electricity output).x`,
- electricty_oil = `Electricity production from oil sources (% of total).y`-
-  `Electricity production from oil sources (% of total).x`,
- electricity_coal =
- `Electricity production from coal sources (% of total).y` -
-   `Electricity production from coal sources (% of total).x`) |> 
-  select(electricity_coal, electricty_oil, cluster_jump, renewable_energy,
-         renewable_electricity)
-  
-
-# Plot a logistic regression.
-
-logit_fit <- glm(cluster_jump ~ renewable_energy +
-                   electricty_oil +
-                   renewable_electricity +
-                   electricity_coal,
-                 data = cluster_comparison,
-                 family = binomial())
-
-summary(logit_fit)
-
-```
-
 The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis.
 
 ``` {r}
@@ -604,12 +533,7 @@ ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
   theme_minimal()
 ```
 
-# Results and discussion
-
-
-## Limitations
-
-## References
+# References
 
 **Web Sources & Reports**
 
