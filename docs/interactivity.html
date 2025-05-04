@@ -189,14 +189,14 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="classifying-co₂-changes" class="level2">
 <h2 class="anchored" data-anchor-id="classifying-co₂-changes">Classifying CO₂ changes</h2>
-<p>Next, we clustered the changes of CO₂ starting from 1991 up to 2015. Clustering on just one variable (percent change in CO₂ relative to 1990) makes the analysis very clear and direct and eliminates extra bias. By letting a clustering algorithm find its own group boundaries, we avoid guessing where “moderate” or “extreme” really begin. Instead, the data itself creates four natural clusters:</p>
+<p>Next, we clustered the changes of CO₂ starting from 1991 up to 2015. Clustering on just one variable (percent change in CO₂ relative to 1990) makes the analysis very clear and direct and eliminates extra bias. By letting a clustering algorithm find its own group boundaries, we avoid guessing where levels (such as “moderate” or “extreme”) really begin. Instead, the data itself creates four natural clusters:</p>
 <ul>
 <li><p>Cluster 1: decrease or slight increase (&lt;23.92% increase)</p></li>
 <li><p>Cluster 2: moderate increase (up to 119.4%)</p></li>
 <li><p>Cluster 3: high increase (up to 255%)</p></li>
 <li><p>Cluster 4: extreme increase (above 255%)</p></li>
 </ul>
-<p>The plotted graph below should represent how these clusters looked like in 2015. You can compare this graph with the interactive map, choosing the year 2015, and see how clustering maps the graph.</p>
+<p>The plotted graph below should represent how these clusters looked like in 2015. You can compare this graph with the interactive map, choosing the year 2015, and gain a deeper comprehension on how the data is clustered.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -209,13 +209,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="predicting-co₂-based-on-electricity-production-variables." class="level2">
 <h2 class="anchored" data-anchor-id="predicting-co₂-based-on-electricity-production-variables.">Predicting CO₂ based on electricity production variables.</h2>
-<p>Furthermore, I build a machine learning model which predicts the cluster using 4 variables that we have discussed earlier:</p>
-<p>-Renewable energy consumption (% of total final energy consumption)</p>
-<p>-Renewable electricity output (% of total electricity output)</p>
-<p>-Electricity production from oil sources (% of total)</p>
-<p>-Electricity production from coal sources (% of total)</p>
-<p>You can observe the test on the actual data that the algorithm ran on, getting 72.5% accuracy.</p>
-<p>Rows show actual clusters and columns show predicted clusters, and the number of correctly predicted clusters lay on the diagonal.</p>
+<p>We trained a supervised random forest model to predict each country’s CO₂ level change cluster using five predictors: renewable consumption, renewable electricity output, oil‐based electricity, gas‐based electricity, and coal‐based electricity. For training, we used the long CO₂ level change data set covering yearly values from 1991 through 2014.</p>
+<p>To evaluate performance, we held out the 2015 observations entirely and then asked the trained model to predict each country’s 2015 cluster. The resulting confusion matrix (shown below) compares actual versus predicted clusters: rows are the true cluster, columns are the model’s guess, and the diagonal entries are correct classifications.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -269,14 +264,17 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
+<p>We calcualted overall accuracy by dividing number of correct guesses by total number of classification. The predicted accurace was 0.725, meaning the model correctly placed about 72.5% of countries into their true 2015 cluster. Most decreases/slight increases and high‐increase cases were recovered well, though a few countries were confused between neighboring categories.</p>
+<p>Of course, this approach has limitations. By focusing on only five energy variables, the model misses other drivers of CO₂ change-economic growth, the neigbhoring contries contributing to CO₂ change, or policy interventions. For example Ethiopia illustrates this: despite nearly 100% renewable consumption and electricity generation, its CO₂ levels still rose, so the model misclassified it. This counterintuitive result reminds us that no predictor set is perfect, and further work could include additional socioeconomic variables to capture the full complexity of emissions trends.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Prediction Accuracy: 0.725"</code></pre>
 </div>
 </div>
-<p>Furthermore, the algoritm below allows the policymakers to see how their proposed energy use system will impact the CO2 levels</p>
+<p>You can test the alogorithm below:</p>
 <iframe src="https://shamchikkhus.shinyapps.io/PredictionApp/" width="100%" height="700px" frameborder="0">
 </iframe>
+<p><small> Disclaimer: this algorithm is only 72.5% accurate and can produce inaccurate results </small></p>
 
 
 </section>

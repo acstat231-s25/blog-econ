@@ -31,7 +31,6 @@ climate_long <- readRDS("Data/climate_long.rds")
 
 
 ## Interactive Map
-
 The CO₂ levels change is a gradual process that happens over the year. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions. 
 
 
@@ -43,7 +42,7 @@ The CO₂ levels change is a gradual process that happens over the year. To bett
 
 
 ## Classifying CO₂ changes
-Next, we clustered the changes of CO₂ starting from 1991 up to 2015. Clustering on just one variable (percent change in CO₂ relative to 1990) makes the analysis very clear and direct and eliminates extra bias. By letting a clustering algorithm find its own group boundaries, we avoid guessing where “moderate” or “extreme” really begin. Instead, the data itself creates four natural clusters:
+Next, we clustered the changes of CO₂ starting from 1991 up to 2015. Clustering on just one variable (percent change in CO₂ relative to 1990) makes the analysis very clear and direct and eliminates extra bias. By letting a clustering algorithm find its own group boundaries, we avoid guessing where levels (such as “moderate” or “extreme”) really begin. Instead, the data itself creates four natural clusters:
 
 * Cluster 1: decrease or slight increase (<23.92% increase)
 
@@ -57,7 +56,7 @@ Next, we clustered the changes of CO₂ starting from 1991 up to 2015. Clusterin
 * Cluster 4: extreme increase (above 255%)
 
 
-The plotted graph below should represent how these clusters looked like in 2015. You can compare this graph with the interactive map, choosing the year 2015, and see how clustering maps the graph.
+The plotted graph below should represent how these clusters looked like in 2015. You can compare this graph with the interactive map, choosing the year 2015, and gain a deeper comprehension on how the data is clustered.
 
 ```{r}
 # Seed for Reproducibility
@@ -155,19 +154,9 @@ predictions <- predict(rf_model, test_data)
 ```
 ## Predicting CO₂ based on electricity production variables.
 
-Furthermore, I build a machine learning model which predicts the cluster using 4 variables that we have discussed earlier:
+We trained a supervised random forest model to predict each country’s CO₂ level change cluster using five predictors: renewable consumption, renewable electricity output, oil‐based electricity, gas‐based electricity, and coal‐based electricity. For training, we used the long CO₂ level change data set covering yearly values from 1991 through 2014.
 
--Renewable energy consumption (% of total final energy consumption)
-
--Renewable electricity output (% of total electricity output)
-
--Electricity production from oil sources (% of total)
-
--Electricity production from coal sources (% of total) 
-
-You can observe the test on the actual data that the algorithm ran on, getting 72.5% accuracy.
-
-Rows show actual clusters and columns show predicted clusters, and the number of correctly predicted clusters lay on the diagonal.
+To evaluate performance, we held out the 2015 observations entirely and then asked the trained model to predict each country’s 2015 cluster. The resulting confusion matrix (shown below) compares actual versus predicted clusters: rows are the true cluster, columns are the model’s guess, and the diagonal entries are correct classifications.
 
 ```{r}
 # Confusion Matrix
@@ -177,6 +166,9 @@ kable(confusion_matrix, caption = "Confusion Matrix (Predicted vs Actual)")
 
 ```
 
+We calcualted overall accuracy by dividing number of correct guesses by total number of classification. The predicted accurace was 0.725, meaning the model correctly placed about 72.5% of countries into their true 2015 cluster. Most decreases/slight increases and high‐increase cases were recovered well, though a few countries were confused between neighboring categories.
+
+Of course, this approach has limitations. By focusing on only five energy variables, the model misses other drivers of CO₂ change-economic growth, the neigbhoring contries contributing to CO₂ change, or policy interventions. For example Ethiopia illustrates this: despite nearly 100% renewable consumption and electricity generation, its CO₂ levels still rose, so the model misclassified it. This counterintuitive result reminds us that no predictor set is perfect, and further work could include additional socioeconomic variables to capture the full complexity of emissions trends.
 
 ```{r}
 # Calculate Accuracy
@@ -185,8 +177,10 @@ print(paste("Prediction Accuracy:", round(accuracy, 3)))
 
 ```
 
-Furthermore, the algoritm below allows the policymakers to see how their proposed energy use system will impact the CO2 levels 
+You can test the alogorithm below:
 
 <iframe src="https://shamchikkhus.shinyapps.io/PredictionApp/"
         width="100%" height="700px" frameborder="0">
 </iframe>
+
+<small> Disclaimer: this algorithm is only 72.5% accurate and can produce inaccurate results </small>

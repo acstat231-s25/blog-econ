@@ -88,13 +88,13 @@ ui <- fluidPage(
     sidebarPanel(
       sliderInput("renew_cons", "Renewable Consumption (%)",
                   min = 0, max = 100, value = 50),
-      sliderInput("renew_elec", "Renewable Electricity Output (%)",
+      sliderInput("renew_elec", "Electricity production from Renewable sources (%)",
                   min = 0, max = 100, value = 50),
-      sliderInput("oil_elec", "Electricity from Oil (%)", min = 0,
+      sliderInput("oil_elec", "Electricity production from Oil (%)", min = 0,
                   max = 100, value = 30),
-      sliderInput("coal_elec", "Electricity from Coal (%)", min = 0,
+      sliderInput("coal_elec", "Electricity production from Coal (%)", min = 0,
                   max = 100, value = 10),
-      sliderInput("gas_elec", "Electricity from gas (%)", min = 0,
+      sliderInput("gas_elec", "Electricity production from gas (%)", min = 0,
                   max = 100, value = 10),
       actionButton("predictBtn", "Predict Cluster")
     ),
