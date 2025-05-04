@@ -611,19 +611,11 @@ To identify groups of countries with similar sustainability profiles, we used k-
 Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 86%.
 
 
-## Bibliography
+## References
 
-Additional information used:
+**Web Sources & Reports**
 
-* [Methane Alert and Response System (MARS)](https://www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system) - A global initiative led by UNEP to detect and address major methane leaks in near real-time.</li>
-* [The Emissions Gap Report 2024](https://www.unep.org/resources/emissions-gap-report-2024) - Annual report analyzing the gap between current climate pledges and the emissions reductions needed to meet global climate targets.</li>
-* [How Halting Deforestation Helps Fight Climate Change](https://www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis) - UNEP article exploring the role of forest conservation in mitigating the climate crisis.</li>
-* [Solar Energy’s Climate Impact: IPCC Report](https://www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf) - Assessment of solar energy’s potential to reduce emissions, stating its impact can be 10,000 times more beneficial than fossil fuels.</li>
-
-Helpful Resources:
-
-* [Embedding Shiny app on the website](https://quarto.org/docs/interactive/#shiny)
-* [Observe funtion in Shiny R](https://www.appsilon.com/post/observe-function-r-shiny)
-* [Serverless Shiny app extension](https://quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/)
-* [Functions in R](https://r4ds.had.co.nz/functions.html#function-arguments)
-* [randomForest](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf)
+* 3 Direct Solar Energy, www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf. Accessed 4 May 2025. 
+* “How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, * www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis. Accessed 4 May 2025. 
+* United Nations. “Emissions Gap Report 2024.” UNEP, www.unep.org/resources/emissions-gap-report-2024. Accessed 4 May 2025. 
+* United Nations. “Methane Alert and Response System (MARS).” UNEP, www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system. Accessed 4 May 2025. 

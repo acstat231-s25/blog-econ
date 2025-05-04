@@ -28,3 +28,26 @@ Before proceeding to the analysis, we cleaned up the data and combined rows of t
 After wrangling, we mapped changes in CO2 emissions, using `sf` and `ggplot2` packages. We plot time-series data on indicators of interest, and built a [Shiny app](https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/) allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020. We used `purr` and `broom` packages to iterate over different values of k when generating elbow plots, and tidy up the k-means output. After fitting the clusters, we fit a logistic regression to analyze cluster assignments and predict future outcomes by country.
 
 ## Limitations
+
+## References
+
+**Web Sources & Reports**
+
+* 3 Direct Solar Energy, www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf. Accessed 4 May 2025. 
+* “How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, * www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis. Accessed 4 May 2025. 
+* United Nations. “Emissions Gap Report 2024.” UNEP, www.unep.org/resources/emissions-gap-report-2024. Accessed 4 May 2025. 
+* United Nations. “Methane Alert and Response System (MARS).” UNEP, www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system. Accessed 4 May 2025. 
+
+**Datasets**
+
+* World Bank. Climate Change. World Bank, https://data.worldbank.org/topic/climate-change. Accessed 4 May 2025.
+* World Bank. Carbon Dioxide (CO₂) Emissions (EN.GHG.CO2.ZG.AR5). World Bank, https://data.worldbank.org/indicator/EN.GHG.CO2.ZG.AR5. Accessed 4 May 2025.
+
+**R Packages & Technical Resources**
+
+* Chang, Winston. “Shinylive Extension.” Quarto, 25 Oct. 2022, quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/. 
+* Grolemund, Hadley Wickham and Garrett. “R for Data Science.” 19 Functions, r4ds.had.co.nz/functions.html#function-arguments. Accessed 4 May 2025. 
+* “Interactivity.” Quarto, quarto.org/docs/interactive/#shiny. Accessed 4 May 2025. 
+* Radečić, Dario. “Observe Function in R Shiny - How to Implement a Reactive Observer.” RSS, www.appsilon.com/post/observe-function-r-shiny. Accessed 4 May 2025. 
+* “Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept. 2024, cran.r-project.org/web/packages/randomForest/. 
+* Various authors. R Packages Used: viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr, broom, sf, rnaturalearth, janitor, countrycode, stringr, GGally, tidyr, kableExtra, shinylive, randomForest, plotly.
