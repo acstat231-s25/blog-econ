@@ -59,17 +59,16 @@ Next, we clustered the changes of CO₂ starting from 1991 up to 2015. Clusterin
 
 The plotted graph below should represent how these clusters looked like in 2015. You can compare this graph with the interactive map, choosing the year 2015, and see how clustering maps the graph.
 
-```{r, warning=FALSE, fig.width=8, fig.height=4}
+```{r}
 # Seed for Reproducibility
 set.seed(631)
 
 # Remove geometry and delete NA values
 co2_cleaned <- co2_map |> 
-  sf::st_drop_geometry(data_all) |> 
   drop_na() |> 
-  select(`Country Code`, `Country Name`, `Year`, `co2conc`)
+  select(`Country Code`, `Country Name`, `Year`, `co2conc`, geometry)
   
-
+# Choose only co2conc
 co2_numeric <- co2_cleaned |> 
   select(co2conc)
 
@@ -90,7 +89,7 @@ co2_final <- co2_cleaned |>
 co2_final <- co2_final |> 
   mutate(Cluster = case_when(
     Cluster == "1" ~ "Extreme Increase",
-    Cluster == "2" ~ "Decrease",
+    Cluster == "2" ~ "Decrease/Slight Increase",
     Cluster == "3" ~ "Moderate Increase",
     Cluster == "4" ~ "High Increase"
   )) 
@@ -101,11 +100,41 @@ co2_final <- co2_final |>
 
 
 
-co2_final1 <- co2_final |> 
-  mutate(sum = Renew_Elec + Oil_Elec + Coal_Elec + Gas_Elec)
+```
+
+```{r, warning=FALSE, fig.width=8, fig.height=4}
+
+#Filter Year 2015
+
+co2_2015 <- co2_final |> 
+  filter(Year == 2015)
 
 
-set.seed(213)
+# Custom color mapping
+cluster_colors <- c(
+  "Extreme Increase"  = "#d73027",  
+  "High Increase"     = "#fc8d59",
+  "Moderate Increase" = "#fee08b",  
+  "Decrease/Slight Increase" = "#1a9850" 
+)
+
+co2_2015 <- st_as_sf(co2_2015)
+# Plot
+ggplot(co2_2015) +
+  geom_sf(aes(fill = Cluster), color = "grey40", linewidth = 0.2) +
+  coord_sf(crs = "+proj=robin", expand = FALSE) +
+  scale_fill_manual(values = cluster_colors)+
+  theme_void(base_size = 14) +
+  theme(
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)
+  ) +
+  labs(title = "2015 CO2 emission Change relative to 1990")
+
+```
+
+```{r}
+set.seed(150)
 
 # Train data on values from 1990 to 2014
 train_data <- co2_final[co2_final$Year != 2015, ]
@@ -136,23 +165,28 @@ Furthermore, I build a machine learning model which predicts the cluster using 4
 
 -Electricity production from coal sources (% of total) 
 
-You can observe the test on the actual data that the algorithm ran on, getting 78.6% accuracy.
+You can observe the test on the actual data that the algorithm ran on, getting 72.5% accuracy.
+
+Rows show actual clusters and columns show predicted clusters, and the number of correctly predicted clusters lay on the diagonal.
 
 ```{r}
-
 # Confusion Matrix
 confusion_matrix <- table(Actual = test_data$Cluster, Predicted = predictions)
-print(confusion_matrix)
+# Kable package to print the Matrix
+kable(confusion_matrix, caption = "Confusion Matrix (Predicted vs Actual)")
 
+```
+
+
+```{r}
 # Calculate Accuracy
 accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 print(paste("Prediction Accuracy:", round(accuracy, 3)))
 
-
 ```
 
-Furthermore, this page allows the policymakers to see how their proposed energy use system will impact the CO2 levels 
+Furthermore, the algoritm below allows the policymakers to see how their proposed energy use system will impact the CO2 levels 
 
 <iframe src="https://shamchikkhus.shinyapps.io/PredictionApp/"
-        width="100%" height="600px" frameborder="0">
+        width="100%" height="700px" frameborder="0">
 </iframe>

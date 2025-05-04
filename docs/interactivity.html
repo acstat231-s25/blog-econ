@@ -97,20 +97,20 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./policies.html"> 
-<span class="menu-text">Policies</span></a>
+    <a class="nav-link" href="./sustainability-clusters.html"> 
+<span class="menu-text">Sustainability Clusters</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./interactivity.html" aria-current="page"> 
 <span class="menu-text">CO₂ Analysis</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./methodology.html"> 
-<span class="menu-text">Methodology</span></a>
+    <a class="nav-link" href="./policies.html"> 
+<span class="menu-text">Policies</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./sustainability-clusters.html"> 
-<span class="menu-text">Sustainability Clusters</span></a>
+    <a class="nav-link" href="./methodology.html"> 
+<span class="menu-text">Methodology</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -197,6 +197,15 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Cluster 4: extreme increase (above 255%)</p></li>
 </ul>
 <p>The plotted graph below should represent how these clusters looked like in 2015. You can compare this graph with the interactive map, choosing the year 2015, and see how clustering maps the graph.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="interactivity_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="predicting-co₂-based-on-electricity-production-variables." class="level2">
 <h2 class="anchored" data-anchor-id="predicting-co₂-based-on-electricity-production-variables.">Predicting CO₂ based on electricity production variables.</h2>
@@ -205,22 +214,68 @@ ul.task-list li input[type="checkbox"] {
 <p>-Renewable electricity output (% of total electricity output)</p>
 <p>-Electricity production from oil sources (% of total)</p>
 <p>-Electricity production from coal sources (% of total)</p>
-<p>You can observe the test on the actual data that the algorithm ran on, getting 78.6% accuracy.</p>
+<p>You can observe the test on the actual data that the algorithm ran on, getting 72.5% accuracy.</p>
+<p>Rows show actual clusters and columns show predicted clusters, and the number of correctly predicted clusters lay on the diagonal.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Confusion Matrix (Predicted vs Actual)</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 17%">
+<col style="width: 14%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Decrease/Slight Increase</th>
+<th style="text-align: right;">Extreme Increase</th>
+<th style="text-align: right;">High Increase</th>
+<th style="text-align: right;">Moderate Increase</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Decrease/Slight Increase</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Extreme Increase</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">High Increase</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moderate Increase</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>                   Predicted
-Actual              Decrease Extreme Increase High Increase Moderate Increase
-  Decrease                55                1             1                 0
-  Extreme Increase         9               16            10                 1
-  High Increase           10                1            22                 0
-  Moderate Increase        6                2             1                 3</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Prediction Accuracy: 0.696"</code></pre>
+<pre><code>[1] "Prediction Accuracy: 0.725"</code></pre>
 </div>
 </div>
-<p>Furthermore, this page allows the policymakers to see how their proposed energy use system will impact the CO2 levels</p>
-<iframe src="https://shamchikkhus.shinyapps.io/PredictionApp/" width="100%" height="600px" frameborder="0">
+<p>Furthermore, the algoritm below allows the policymakers to see how their proposed energy use system will impact the CO2 levels</p>
+<iframe src="https://shamchikkhus.shinyapps.io/PredictionApp/" width="100%" height="700px" frameborder="0">
 </iframe>
 
 
