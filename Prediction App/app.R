@@ -8,57 +8,8 @@ library(broom)
 library(janitor)
 
 # Load the data
-
 co2_map <- readRDS("Data/co2_map.rds")
-climate1 <- read.csv("Data/climate-change.csv", skip = 3)
-climate1 <- climate1 |>
-  row_to_names(row_number = 1)|>
-  select(-"Indicator Code") 
-
-# Seed for Reproducibility
-set.seed(631)
-
-#Create a version with all years in one column
-
-climate_long <- climate1 |> 
-  # 1) Filter for the four indicators in the image
-  filter(
-    `Indicator Name` %in% c(
-      "Renewable energy consumption (% of total final energy consumption)",
-      "Renewable electricity output (% of total electricity output)",
-      "Electricity production from oil sources (% of total)",
-      "Electricity production from coal sources (% of total)",
-      "Electricity production from natural gas sources (% of total)"
-    )
-  ) |> 
-  # 2) Keep only the essential columns
-  select(
-    "Country Code",
-    "Country Name",
-    "Indicator Name",
-    matches("^(19|20)\\d{2}$")
-  ) |> 
-  
-  mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |> 
-  # 5) Pivot longer to get Year and Value
-  pivot_longer(
-    cols      = matches("^(19|20)\\d{2}$"),
-    names_to  = "Year",
-    values_to = "Value"
-  ) |> 
-  # 6) Pivot wider to separate each indicator into its own column
-  pivot_wider(
-    names_from  = `Indicator Name`,
-    values_from = Value
-  ) |> 
-  drop_na() |> 
-  mutate(Year = as.numeric(Year))
-
-names(climate_long) <- c("Country Code", "Country Name", "Year",
-                         "Renew_Cons", "Renew_Elec",   "Oil_Elec", "Gas_Elec",
-                         "Coal_Elec")
-
-
+climate_long <- readRDS("Data/climate_long.rds")
 
 # Remove geometry and delete NA values
 co2_cleaned <- co2_map |> 
@@ -67,15 +18,17 @@ co2_cleaned <- co2_map |>
   select(`Country Code`, `Country Name`, `Year`, `co2conc`)
   
 
-
-
 co2_numeric <- co2_cleaned |> 
   select(co2conc)
 
-# Scale the data
+# Normalize the data
 co2_scaled <- scale(co2_numeric) 
 
 # Clustering
+
+# Seed for Reproducibility
+set.seed(631)
+
 kmeans_result <- kmeans(co2_scaled, centers = 4, nstart = 25)
 
 co2_cleaned$Cluster <- as.factor(kmeans_result$cluster)
@@ -97,7 +50,7 @@ co2_final <- co2_final |>
   mutate(Cluster = as.factor(Cluster))
 
 # Set Seed fed for data training
-set.seed(213)
+set.seed(150)
 
 # Train data on values from 1990 to 2014
 train_data <- co2_final[co2_final$Year != 2015, ]
@@ -121,8 +74,6 @@ print(confusion_matrix)
 # Calculate Accuracy
 accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 print(paste("Prediction Accuracy:", round(accuracy, 3)))
-
-
 
 # ShinyApp
 

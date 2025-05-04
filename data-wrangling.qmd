@@ -89,12 +89,11 @@ co2_cleaned <- co2 |>
  pivot_longer(!c(`Country Name`, `Country Code`, `Indicator Name`), 
               names_to  = "Year",
               values_to = "co2conc" ) |> 
-  # Cap co2conc at 500 % to avoid skewing the graph.
+# Cap co2conc at 500 % to avoid outliers
   mutate(co2conc = pmin(co2conc, 500)) |> 
   mutate(Year = as.numeric(Year)) 
 
 #This results in the creation of Country Name X and Coutry Name Y columns
-
 co2_map <- co2_cleaned |>
  right_join(region, by = "Country Code")
 
@@ -102,6 +101,7 @@ co2_map <- co2_cleaned |>
 co2_map <- co2_map |>
   select(-"Country Name.y") |>
   rename(`Country Name` = `Country Name.x`) 
+write_rds(co2_map, "Data/co2_map.rds")
 
 ```
 
@@ -275,6 +275,53 @@ sustain_2015_c5 |>
         , upper = list(continuous = "blank")
         , progress = FALSE) +
   theme(text = element_text(size = 8))
+
+
+```
+
+```{r}
+#| label: climate_long
+#Create a version with all years in one column
+climate_long <- climate1 |> 
+  # 1) Filter for the four indicators in the image
+  filter(
+    `Indicator Name` %in% c(
+      "Renewable energy consumption (% of total final energy consumption)",
+      "Renewable electricity output (% of total electricity output)",
+      "Electricity production from oil sources (% of total)",
+      "Electricity production from coal sources (% of total)",
+      "Electricity production from natural gas sources (% of total)"
+    )
+  ) |> 
+  # 2) Keep only the essential columns
+  select(
+    "Country Code",
+    "Country Name",
+    "Indicator Name",
+    matches("^(19|20)\\d{2}$")
+  ) |> 
+  
+  mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |> 
+  # 5) Pivot longer to get Year and Value
+  pivot_longer(
+    cols      = matches("^(19|20)\\d{2}$"),
+    names_to  = "Year",
+    values_to = "Value"
+  ) |> 
+  # 6) Pivot wider to separate each indicator into its own column
+  pivot_wider(
+    names_from  = `Indicator Name`,
+    values_from = Value
+  ) |> 
+  drop_na() |> 
+  mutate(Year = as.numeric(Year))
+
+names(climate_long) <- c("Country Code", "Country Name", "Year",
+                         "Renew_Cons", "Renew_Elec",   "Oil_Elec", "Gas_Elec",
+                         "Coal_Elec")
+
+
+write_rds(climate_long, "Data/climate_long.rds")
 
 
 ```
