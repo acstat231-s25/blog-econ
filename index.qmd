@@ -570,6 +570,42 @@ summary(logit_fit)
 
 ```
 
+``` {r}
+#| label: elbow-plots
+
+# first, elbow plots for each year's standardized data
+elbow_1990 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_1990_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+elbow_2015 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_2015_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+
+# Plot an elbow graph to identify the best k value
+ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 1990 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 2015 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+```
+
 # Results and discussion
 
 
