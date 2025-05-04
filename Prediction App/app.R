@@ -27,7 +27,8 @@ climate_long <- climate1 |>
       "Renewable energy consumption (% of total final energy consumption)",
       "Renewable electricity output (% of total electricity output)",
       "Electricity production from oil sources (% of total)",
-      "Electricity production from coal sources (% of total)"
+      "Electricity production from coal sources (% of total)",
+      "Electricity production from natural gas sources (% of total)"
     )
   ) |> 
   # 2) Keep only the essential columns
@@ -54,7 +55,7 @@ climate_long <- climate1 |>
   mutate(Year = as.numeric(Year))
 
 names(climate_long) <- c("Country Code", "Country Name", "Year",
-                         "Renew_Cons", "Renew_Elec",   "Oil_Elec",
+                         "Renew_Cons", "Renew_Elec",   "Oil_Elec", "Gas_Elec",
                          "Coal_Elec")
 
 
@@ -97,17 +98,20 @@ co2_final <- co2_final |>
 
 
 
+co2_final1 <- co2_final |> 
+  mutate(sum = Renew_Elec + Oil_Elec + Coal_Elec + Gas_Elec)
+
+set.seed(213)
+
+# Train data on values from 1990 to 2014
+train_data <- co2_final[co2_final$Year != 2015, ]
 
 
-# Choose a training sample of 70% 
-sample_index <- sample(1:nrow(co2_final), 0.7 * nrow(co2_final))
-
-train_data <- co2_final[sample_index, ]
-#Choose a testing sample of the remaining 30%
-test_data <- co2_final[-sample_index, ]
+# Test data based on 2015
+test_data <- co2_final[co2_final$Year == 2015,] 
 
 # Build a Forest learning algorithm
-rf_model <- randomForest(Cluster ~ Renew_Cons + Renew_Elec + Oil_Elec 
+rf_model <- randomForest(Cluster ~ Renew_Cons + Renew_Elec + Oil_Elec + Gas_Elec
                          + Coal_Elec,
                          data = train_data, ntree = 100)
 
@@ -121,6 +125,8 @@ print(confusion_matrix)
 # Calculate Accuracy
 accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 print(paste("Prediction Accuracy:", round(accuracy, 3)))
+
+
 
 
 
@@ -142,7 +148,9 @@ ui <- fluidPage(
       sliderInput("oil_elec", "Electricity from Oil (%)", min = 0,
                   max = 100, value = 30),
       sliderInput("coal_elec", "Electricity from Coal (%)", min = 0,
-                  max = 100, value = 30),
+                  max = 100, value = 10),
+      sliderInput("gas_elec", "Electricity from gas (%)", min = 0,
+                  max = 100, value = 10),
       actionButton("predictBtn", "Predict Cluster")
     ),
     
@@ -160,14 +168,19 @@ server <- function(input, output) {
       Renew_Cons = input$renew_cons,
       Renew_Elec = input$renew_elec,
       Oil_Elec   = input$oil_elec,
-      Coal_Elec  = input$coal_elec
+      Coal_Elec  = input$coal_elec,
+      Gas_Elec  = input$gas_elec
     )
     
     # Predict cluster using trained rf_model
     predicted_cluster <- predict(rf_model, new_data)
     
     output$prediction <- renderText({
-      paste("The model predicts the following CO2 change:", predicted_cluster)
+      if (input$coal_elec +  input$oil_elec + input$renew_elec 
+          + input$gas_elec > 100 ) {
+        paste("The electricity production shouldn't add up to more than 100")
+      } else{
+      paste("The model predicts the following CO2 change:", predicted_cluster)}
     })
   })
 }
