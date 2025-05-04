@@ -271,7 +271,8 @@ p3 <- ggplot(data1 |>
     y = "Electricity production from oil sources (% of total)",
     color = "Region"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  xlim(c(1990, 2015))
 
 # Convert to interactive plotly object with hover
 ggplotly(p3, tooltip = "text")
@@ -298,7 +299,8 @@ p4 <- ggplot(data1 |>
     y = "Electricity production from coal sources (% of total)",
     color = "Region"
   ) +
-  theme_minimal()
+  theme_minimal() + 
+  xlim(c(1990, 2015))
 
 # Convert to interactive plotly object with hover
 ggplotly(p4, tooltip = "text")
