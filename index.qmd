@@ -146,10 +146,10 @@ p <- ggplot(data1 |>
  geom_line(aes(group = region_un), alpha = 0.5) +
   geom_point() +
   labs(
-    title = "Forest area (% of land area)",
+    title = "Forest area",
     subtitle = "Median values per year",
     x = "Year",
-    y = "Forest area (% of land area)",
+    y = "% of land area",
     color = "Region"
   ) +
   theme_minimal()
@@ -179,7 +179,7 @@ Energy consumption and production plots reveal a clear increasing trend for rene
 
 ### Renewable electricity output
 
-```{r, warning=FALSE, fig.width=10, fig.height=4}
+```{r, warning=FALSE, fig.width=10, fig.height=5}
 
 # Plot renewable electricity output
 p1 <- ggplot(data1 |> 
@@ -192,10 +192,10 @@ p1 <- ggplot(data1 |>
  geom_line(aes(group = region_un), alpha = 0.5) +
   geom_point() +
   labs(
-    title = "Renewable electricity output (% of total electricity output)",
+    title = "Renewable electricity output",
     subtitle = "Median values per year",
     x = "Year",
-    y = "Renewable electricity output (% of total electricity output)",
+    y = "% of total electricity",
     color = "Region"
   ) +
   theme_minimal()
@@ -206,7 +206,7 @@ ggplotly(p1, tooltip = "text")
 
 ### Renewable energy consumption
 
-```{r, warning=FALSE, fig.width=10, fig.height=4}
+```{r, warning=FALSE, fig.width=10, fig.height=5}
 
 # Plot renewable electricity output
 p2 <- ggplot(data1 |> 
@@ -219,10 +219,10 @@ p2 <- ggplot(data1 |>
  geom_line(aes(group = region_un), alpha = 0.5) +
   geom_point() +
   labs(
-    title = "Renewable energy consumption (% of total final energy consumption)",
+    title = "Renewable energy consumption",
     subtitle = "Median values per year",
     x = "Year",
-    y = "Renewable energy consumption (% of total final energy consumption)",
+    y = "% of total energy consumption",
     color = "Region"
   ) +
   theme_minimal()
@@ -252,7 +252,7 @@ According to data in the plots below, Oceania is heavily reliable on fossil fuel
 
 ### Electricity production from oil sources
 
-```{r, warning=FALSE, fig.width=10, fig.height=4}
+```{r, warning=FALSE, fig.width=10, fig.height=5}
 
 # Plot renewable electricity output
 p3 <- ggplot(data1 |> 
@@ -265,10 +265,10 @@ p3 <- ggplot(data1 |>
  geom_line(aes(group = region_un), alpha = 0.5) +
   geom_point() +
   labs(
-    title = "Electricity production from oil sources (% of total)",
+    title = "Electricity production from oil sources",
     subtitle = "Median values per year",
     x = "Year",
-    y = "Electricity production from oil sources (% of total)",
+    y = "% of total",
     color = "Region"
   ) +
   theme_minimal() +
@@ -280,7 +280,7 @@ ggplotly(p3, tooltip = "text")
 
 ### Electricity production from coal sources
 
-```{r, warning=FALSE, fig.width=10, fig.height=4}
+```{r, warning=FALSE, fig.width=10, fig.height=5}
 
 # Plot renewable electricity output
 p4 <- ggplot(data1 |> 
@@ -293,10 +293,10 @@ p4 <- ggplot(data1 |>
  geom_line(aes(group = region_un), alpha = 0.5) +
   geom_point() +
   labs(
-    title = "Electricity production from coal sources (% of total)",
+    title = "Electricity production from coal sources",
     subtitle = "Median values per year",
     x = "Year",
-    y = "Electricity production from coal sources (% of total)",
+    y = "% of total",
     color = "Region"
   ) +
   theme_minimal() + 
