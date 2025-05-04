@@ -8,8 +8,6 @@ author:
 resources:
   - Data/co2_map.rds
 
-filters:
-  - shinylive
 ---
 
 ## Data collection

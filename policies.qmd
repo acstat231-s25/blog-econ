@@ -8,10 +8,6 @@ abstract: "We analyze global trends in sustainability from 1990 to 2022 in terms
 
 resources:
       - Data/co2_map.rds`
-
-filters:
-  - shinylive
-  
 ---
 
 # Summary of policies
