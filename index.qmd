@@ -119,19 +119,27 @@ For instance, forests cover roughly a third of all the land on earth. [This dash
 According to the [United Nations](https://www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis), 10 million hectares of land experience deforestation annually, which is when humans convert wooded land into something different by clearing dense forests. Deforestation and forest degradation are destroying natural ecosystems, fragment wildlife habitats, and contribute to global carbon emissions. Based on the line graph provided below, Oceania and Americas have the highest percentage of forest area, while Asia is among the lowest. While Europe, Oceania, and Asia have experienced approximately a 5% increase in forest area, both Americas and Asia had a 5% decline. 
 
 ```{r, warning=FALSE, fig.width=8, fig.height=5}
-# Prepare forest area dataframe
-  data1 <- data |>
-    filter(`Indicator Name` ==  "Forest area (% of land area)") |>
-    select(region_un, starts_with(c("19", "20")), ends_with("_median")) |>
+# Prepare renewable electricity dataframe
+ data1 <- data |>
+    filter(`Indicator Name` 
+      ==  c("Renewable electricity output (% of total electricity output)", 
+         "Renewable energy consumption (% of total final energy consumption)",
+         "Electricity production from coal sources (% of total)",
+               "Electricity production from oil sources (% of total)", 
+         "Forest area (% of land area)")) |>
+    select(region_un, `Indicator Name`, starts_with(c("19", "20")), 
+           ends_with("_median")) |>
     pivot_longer(
       cols = starts_with(c("19", "20")) & ends_with("_median"),
       names_to = "period",
       values_to = "value"
     ) |>
-    mutate(period = as.integer(str_remove(period, "_median")))
+    mutate(period = as.integer(str_remove(period, "_median"))) |>
+    rename()
   
 # Plot forest area trends
-ggplot(data1, aes(x = period, y = value, color = region_un)) +
+ggplot(data1 |> filter(`Indicator Name` ==  "Forest area (% of land area)"), 
+                       aes(x = period, y = value, color = region_un)) +
     geom_line() +
     geom_point() +
     labs(
@@ -166,22 +174,6 @@ Energy consumption and production plots reveal a clear increasing trend for rene
 ### Renewable electricity output
 
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
-# Prepare renewable electricity dataframe
- data1 <- data |>
-    filter(`Indicator Name` 
-      ==  c("Renewable electricity output (% of total electricity output)", 
-         "Renewable energy consumption (% of total final energy consumption)",
-         "Electricity production from coal sources (% of total)",
-               "Electricity production from oil sources (% of total)")) |>
-    select(region_un, `Indicator Name`, starts_with(c("19", "20")), 
-           ends_with("_median")) |>
-    pivot_longer(
-      cols = starts_with(c("19", "20")) & ends_with("_median"),
-      names_to = "period",
-      values_to = "value"
-    ) |>
-    mutate(period = as.integer(str_remove(period, "_median"))) |>
-    rename()
 
 # Plot a faceted graph on renewable energy trends 
 ggplot(data1 |> filter(`Indicator Name` == 
