@@ -14,10 +14,12 @@ website:
         href: index.qmd
       - text: "Policies"
         href: policies.qmd
-      - text: "More interactivity"
+      - text: "CO₂ Analysis"
         href: interactivity.qmd
       - text: "Methodology"
         href: methodology.qmd
+      - text: "Sustainability Clusters"
+        href: sustainability-clusters.qmd
 
 
 format:
