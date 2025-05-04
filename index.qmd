@@ -25,7 +25,7 @@ options(scipen = 1, knitr.kable.NA = "")
 if (!require('pacman')) install.packages('pacman'); library('pacman')
 pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr, 
                broom, sf, rnaturalearth, janitor, countrycode, stringr, 
-               GGally, tidyr, kableExtra, shinylive, randomForest)
+               GGally, tidyr, kableExtra, shinylive, randomForest, plotly)
 
 co2_map <- readRDS("Data/co2_map.rds")
 data <- readRDS("Data/data.rds")
@@ -138,18 +138,24 @@ According to the [United Nations](https://www.unep.org/news-and-stories/story/ho
     rename()
   
 # Plot forest area trends
-ggplot(data1 |> filter(`Indicator Name` ==  "Forest area (% of land area)"), 
-                       aes(x = period, y = value, color = region_un)) +
-    geom_line() +
-    geom_point() +
-    labs(
-      title = paste("Forest area (% of land area)"),
-      subtitle = "Median values per year",
-      x = "Year",
-      y = "Forest area (% of land area)",
-      color = "Region"
-    ) +
-    theme_minimal()
+p <- ggplot(data1 |> 
+              filter(`Indicator Name` ==  "Forest area (% of land area)"), 
+                       aes(x = period, y = value, color = region_un,
+                text = paste("Year:", period,
+                             "<br>Forest area (%):", round(value, 2)))) +
+ geom_line(aes(group = region_un), alpha = 0.5) +
+  geom_point() +
+  labs(
+    title = "Forest area (% of land area)",
+    subtitle = "Median values per year",
+    x = "Year",
+    y = "Forest area (% of land area)",
+    color = "Region"
+  ) +
+  theme_minimal()
+
+# Convert to interactive plotly object with hover
+ggplotly(p, tooltip = "text")
 
 ```
 ## Renewable energy consumption and output
@@ -175,38 +181,54 @@ Energy consumption and production plots reveal a clear increasing trend for rene
 
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
 
-# Plot a faceted graph on renewable energy trends 
-ggplot(data1 |> filter(`Indicator Name` == 
-      "Renewable electricity output (% of total electricity output)"),
-      aes(x = period, y = value, color = region_un)) +
-    geom_line() +
-    geom_point() +
-    labs(
-      title = paste("Renewable electricity output output"),
-      subtitle = "Median values per year",
-      x = "Year",
-      y = "% of total electricity",
-      color = "Region"
-    ) +
-    theme_minimal()
+# Plot renewable electricity output
+p1 <- ggplot(data1 |> 
+              filter(`Indicator Name` == 
+              "Renewable electricity output (% of total electricity output)"), 
+                       aes(x = period, y = value, color = region_un,
+                text = paste("Year:", period,
+                             "<br>Renewable electricity output (%):", 
+                             round(value, 2)))) +
+ geom_line(aes(group = region_un), alpha = 0.5) +
+  geom_point() +
+  labs(
+    title = "Renewable electricity output (% of total electricity output)",
+    subtitle = "Median values per year",
+    x = "Year",
+    y = "Renewable electricity output (% of total electricity output)",
+    color = "Region"
+  ) +
+  theme_minimal()
+
+# Convert to interactive plotly object with hover
+ggplotly(p1, tooltip = "text")
 ```
 
 ### Renewable energy consumption
 
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
-ggplot(data1 |> filter(`Indicator Name` == 
-      "Renewable energy consumption (% of total final energy consumption)"),
-      aes(x = period, y = value, color = region_un)) +
-    geom_line() +
-    geom_point() +
-    labs(
-      title = paste("Renewable energy consumption"),
-      subtitle = "Median values per year",
-      x = "Year",
-      y = "% of total energy consumption",
-      color = "Region"
-    ) +
-    theme_minimal()
+
+# Plot renewable electricity output
+p2 <- ggplot(data1 |> 
+              filter(`Indicator Name` == 
+              "Renewable energy consumption (% of total final energy consumption)"), 
+                       aes(x = period, y = value, color = region_un,
+                text = paste("Year:", period,
+                             "<br>Renewable energy consumption (%):", 
+                             round(value, 2)))) +
+ geom_line(aes(group = region_un), alpha = 0.5) +
+  geom_point() +
+  labs(
+    title = "Renewable energy consumption (% of total final energy consumption)",
+    subtitle = "Median values per year",
+    x = "Year",
+    y = "Renewable energy consumption (% of total final energy consumption)",
+    color = "Region"
+  ) +
+  theme_minimal()
+
+# Convert to interactive plotly object with hover
+ggplotly(p2, tooltip = "text")
 
 ```
 :::
@@ -231,41 +253,55 @@ According to data in the plots below, Oceania is heavily reliable on fossil fuel
 ### Electricity production from oil sources
 
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
-# Plot a faceted graph on renewable energy trends 
-ggplot(data1 |> filter(`Indicator Name` == 
-      "Electricity production from oil sources (% of total)"),
-      aes(x = period, y = value, color = region_un)) +
-    geom_line() +
-    geom_point() +
-    labs(
-      title = paste("Electricity production from oil sources (% of total)"),
-      subtitle = "Median values per year",
-      x = "Year",
-      y = "% of total",
-      color = "Region"
-    ) +
-    theme_minimal()
 
+# Plot renewable electricity output
+p3 <- ggplot(data1 |> 
+              filter(`Indicator Name` == 
+              "Electricity production from oil sources (% of total)"), 
+                       aes(x = period, y = value, color = region_un,
+                text = paste("Year:", period,
+                             "<br>Electricity production from oil sources (%):", 
+                             round(value, 2)))) +
+ geom_line(aes(group = region_un), alpha = 0.5) +
+  geom_point() +
+  labs(
+    title = "Electricity production from oil sources (% of total)",
+    subtitle = "Median values per year",
+    x = "Year",
+    y = "Electricity production from oil sources (% of total)",
+    color = "Region"
+  ) +
+  theme_minimal()
+
+# Convert to interactive plotly object with hover
+ggplotly(p3, tooltip = "text")
 ```
 
 ### Electricity production from coal sources
 
 ```{r, warning=FALSE, fig.width=10, fig.height=4}
-# Plot a faceted graph on renewable energy trends 
-ggplot(data1 |> filter(`Indicator Name` == 
-      "Electricity production from coal sources (% of total)"),
-      aes(x = period, y = value, color = region_un)) +
-    geom_line() +
-    geom_point() +
-    labs(
-      title = paste("Electricity production from coal sources (% of total)"),
-      subtitle = "Median values per year",
-      x = "Year",
-      y = "% of total",
-      color = "Region"
-    ) +
-    theme_minimal()
 
+# Plot renewable electricity output
+p4 <- ggplot(data1 |> 
+              filter(`Indicator Name` == 
+              "Electricity production from coal sources (% of total)"), 
+                       aes(x = period, y = value, color = region_un,
+                text = paste("Year:", period,
+                             "<br>Electricity production from coal (%):", 
+                             round(value, 2)))) +
+ geom_line(aes(group = region_un), alpha = 0.5) +
+  geom_point() +
+  labs(
+    title = "Electricity production from coal sources (% of total)",
+    subtitle = "Median values per year",
+    x = "Year",
+    y = "Electricity production from coal sources (% of total)",
+    color = "Region"
+  ) +
+  theme_minimal()
+
+# Convert to interactive plotly object with hover
+ggplotly(p4, tooltip = "text")
 ```
 
 :::
