@@ -562,54 +562,7 @@ summary(logit_fit)
 # Results and discussion
 
 
-# Appendix
-
-**K-means Clustering**: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis.
-``` {r}
-#| label: elbow-plots
-
-# first, elbow plots for each year's standardized data
-elbow_1990 <- tibble(k = 1:10) |>
-  mutate(
-    kmeans_results = map(k, ~kmeans(sustain_1990_std, .x, nstart = 20)),
-    glanced = map(kmeans_results, glance)
-  ) |>
-  unnest(cols = c(glanced))
-elbow_2015 <- tibble(k = 1:10) |>
-  mutate(
-    kmeans_results = map(k, ~kmeans(sustain_2015_std, .x, nstart = 20)),
-    glanced = map(kmeans_results, glance)
-  ) |>
-  unnest(cols = c(glanced))
-
-# Plot an elbow graph to identify the best k value
-ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
-  geom_point() + 
-  geom_line() +
-  scale_x_continuous(breaks = 1:10) +
-  labs(title = "Elbow Plot for 1990 Sustainability Data",
-       x = "Number of Clusters (k)", 
-       y = "Total Within-Cluster Sum of Squares") +
-  theme_minimal()
-ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
-  geom_point() + 
-  geom_line() +
-  scale_x_continuous(breaks = 1:10) +
-  labs(title = "Elbow Plot for 2015 Sustainability Data",
-       x = "Number of Clusters (k)", 
-       y = "Total Within-Cluster Sum of Squares") +
-  theme_minimal()
-```
-
-
-## Methods
-
-Throughout the blog, we employed data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We began with map which showed the trend in CO2 emissions of each country. We also included line graphs for different sustainbability and nature related variables trends over time. 
-
-To identify groups of countries with similar sustainability profiles, we used k-means clustering on standardized indicators such as renewable energy consumption and electricity production from coal and oil. We applied the elbow method to determine the optimal number of clusters, selecting k = 4 based on the elbow plot. This helped us segment countries into more and less sustainable groups and track their transitions over time.
-
-Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 86%.
-
+## Limitations
 
 ## References
 
