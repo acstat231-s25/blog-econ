@@ -398,8 +398,19 @@ After the process of standardizing indicators and k-means clustering for the yea
 
 ```{r}
 cluster_comparison <- clusters_1990 |>
-  inner_join(clusters_2015, by = "Country Name")
-cluster_comparison
+  inner_join(clusters_2015, by = "Country Name") |>
+  rename(`1990 Cluster` = `cluster_1990`,
+         `2015 Cluster` = `cluster_2015`)
+
+# kable table
+cluster_comparison |>
+  kbl(booktabs = TRUE, align = "l") |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = TRUE,
+    position = "center",
+    font_size = 12) |> 
+  scroll_box(width = "500px", height = "200px")
 ```
 
 Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group's unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster's special characteristics, we are able to identify which groups are most sustainable and the least sustainable.
