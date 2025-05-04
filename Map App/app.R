@@ -12,13 +12,13 @@ ui <- fluidPage(
     sidebarPanel(
       sliderInput("year", "Select Year:",
                   #Allow the user to choose a year between 1994 and 2022 
-                  min = 1994, max = 2022, value = 2022,
+                  min = 1991, max = 2022, value = 1991,
                   step = 1, sep = "", 
                   # Allow the user to animate graph
                   animate = animationOptions(interval = 1000))
     ),
     mainPanel(
-      plotOutput("mapPlot", height = "750px")
+      plotOutput("mapPlot", width = "800px", height = "400px")
     )
   )
 )

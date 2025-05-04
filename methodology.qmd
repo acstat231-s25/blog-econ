@@ -6,11 +6,8 @@ author:
   - "Shamil Khusnullin"
   - "Mariia Koval"
 resources:
-  - shinylive-sw.js
   - Data/co2_map.rds
 
-filters:
-  - shinylive
 ---
 
 ## Data collection

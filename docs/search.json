@@ -390,5 +390,40 @@
     "title": "Analyzing Sustainability Indicators Amidst Climate Change",
     "section": "References",
     "text": "References\nWeb Sources & Reports\n\n3 Direct Solar Energy, www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf. Accessed 4 May 2025.\n“How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, * www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis. Accessed 4 May 2025.\nUnited Nations. “Emissions Gap Report 2024.” UNEP, www.unep.org/resources/emissions-gap-report-2024. Accessed 4 May 2025.\nUnited Nations. “Methane Alert and Response System (MARS).” UNEP, www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system. Accessed 4 May 2025."
+  },
+  {
+    "objectID": "interactivity.html",
+    "href": "interactivity.html",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "",
+    "text": "The CO₂ levels change is a gradual process that happens over the year. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions.\nUse the slider below the map to select a specific year and observe the changes in CO₂ emissions compared to previous years. This allows you to closely examine how individual countries have increased or decreased their emissions over time. If you want full automated visualization: Click the play button to animate the map and watch the year-by-year evolution of global CO₂ emissions."
+  },
+  {
+    "objectID": "interactivity.html#interactive-map",
+    "href": "interactivity.html#interactive-map",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "",
+    "text": "The CO₂ levels change is a gradual process that happens over the year. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions.\nUse the slider below the map to select a specific year and observe the changes in CO₂ emissions compared to previous years. This allows you to closely examine how individual countries have increased or decreased their emissions over time. If you want full automated visualization: Click the play button to animate the map and watch the year-by-year evolution of global CO₂ emissions."
+  },
+  {
+    "objectID": "interactivity.html#map-by-clustering",
+    "href": "interactivity.html#map-by-clustering",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "Map by clustering",
+    "text": "Map by clustering\nContinuing on the topic of clusters, I’ve decided the cluster the 2015 CO2 data and plot the graph based on 4 levels of CO₂ change. The new graph gives a clear persepctive on how countries’ CO₂ levels have changed. For example, the decrease in CO₂ is prelevant in the developed countries, while the developing countries have experienced moderate to extreme CO2 levels increase. This increase can be atrributed to a very rapid industralization happening in those counties."
+  },
+  {
+    "objectID": "interactivity.html#machine-learning",
+    "href": "interactivity.html#machine-learning",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "Machine Learning",
+    "text": "Machine Learning\nFurthermore, I build a machine learning model which predicts the cluster using 4 variables that we have discussed earlier:\n-Renewable energy consumption (% of total final energy consumption)\n-Renewable electricity output (% of total electricity output)\n-Electricity production from oil sources (% of total)\n-Electricity production from coal sources (% of total)\nYou can observe the test on the actual data that the algorithm ran on, getting 78.6% accuracy.\n\n\n                   Predicted\nActual              Decrease Extreme Increase High Increase Moderate Increase\n  Decrease               417                0             4                47\n  Extreme Increase         1               10             6                 4\n  High Increase           11                6            58                38\n  Moderate Increase       55                1            15               204\n\n\n[1] \"Prediction Accuracy: 0.786\"\n\n\nFurthermore, this page allows the policymakers to see how their proposed energy use system will impact the CO2 levels"
+  },
+  {
+    "objectID": "index.html#limitations",
+    "href": "index.html#limitations",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "Limitations",
+    "text": "Limitations"
   }
 ]
