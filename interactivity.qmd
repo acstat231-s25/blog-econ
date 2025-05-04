@@ -26,6 +26,10 @@ pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr,
 co2_map <- readRDS("Data/co2_map.rds")
 data <- readRDS("Data/data.rds")
 world <- ne_countries(scale = "medium", returnclass = "sf") # world map data
+climate1 <- read.csv("Data/climate-change.csv", skip = 3)
+climate1 <- climate1 |>
+  row_to_names(row_number = 1)|>
+  select(-"Indicator Code") 
 ```
 
 
@@ -42,75 +46,29 @@ The CO₂ levels change is a gradual process that happens over the year. To bett
 
 
 
-## Map by clustering
+## Classifying CO₂ changes
 
-We have clustered
-Continuing on the topic of clusters, I've decided the cluster the 2015 CO2 data and plot the graph based on 4 levels of CO₂ change. The new graph gives a clear persepctive on how countries' CO₂ levels have changed. For example, the decrease in CO₂ is prelevant in the developed countries, while the developing countries have experienced moderate to extreme CO2 levels increase. This increase can be atrributed to a very rapid industralization happening in those counties.
+Next, we clustered the changes of CO₂ starting from 1991 up to 2015. Clustering on just one variable (percent change in CO₂ relative to 1990) makes the analysis very clear and direct and eliminates extra bias. By letting a clustering algorithm find its own group boundaries, we avoid guessing where “moderate” or “extreme” really begin. Instead, the data itself creates four natural clusters:
+
+* Cluster 1: decrease or slight increase (<23.92% increase)
+
+
+* Cluster 2: moderate increase (up to 119.4%)
+
+
+* Cluster 3: high increase (up to 255%)
+
+
+* Cluster 4: extreme increase (above 255%)
+
+
+The plotted graph below should represent how these clusters looked like in 2015. You can compare this graph with the interactive map, choosing the year 2015, and see how clustering maps the graph.
 
 ```{r, warning=FALSE, fig.width=8, fig.height=4}
-# Set seed for reproducibility
-set.seed(631)
-# Filter for year 2022
-co2_2015 <- st_as_sf(co2_map) |> 
-  filter(Year == 2015) |> 
-   drop_na() 
-
-co2_2015_values <- co2_2015 |> 
-  sf::st_drop_geometry(data_all) |> 
-  select(co2conc)
-
-
-# Standardize the data
-co2_2015_scaled <- scale(co2_2015_values) 
-
-# Cluster the data
-kmeans_result <- kmeans(co2_2015_scaled, centers = 4, nstart = 25)
-
-# Insert clusters back a variable
-co2_2015$Cluster <- as.factor(kmeans_result$cluster)
-
-
-co2_2015 <- co2_2015 |> 
- mutate(Cluster = case_when(
- Cluster == "1" ~ "Moderate Increase",
-    Cluster == "2" ~ "Extreme Increase",
-    Cluster == "3" ~ "Decrease/Slight Increase",
-    Cluster == "4" ~ "High Increase",
-))
-
-# Custom color mapping
-cluster_colors <- c(
-  "Extreme Increase"  = "#d73027",  
-  "High Increase"     = "#fc8d59",
-  "Moderate Increase" = "#fee08b",  
-  "Decrease/Slight Increase" = "#1a9850" 
-)
-
-# Plot
-ggplot(co2_2015) +
-  geom_sf(aes(fill = Cluster), color = "grey40", linewidth = 0.2) +
-  coord_sf(crs = "+proj=robin", expand = FALSE) +
-  scale_fill_manual(values = cluster_colors)+
-  theme_void(base_size = 14) +
-  theme(
-    legend.position = "bottom",
-    legend.text = element_text(size = 8)
-  ) +
-  labs(title = "2015 CO2 emission Change relative to 1990")
-
-```
-
-```{r}
 # Seed for Reproducibility
 set.seed(631)
 
-# Download the data
-
-co2_map <- readRDS("raw-data/co2_map.rds")
-climate1 <- read.csv("raw-data/climate-change.csv", skip = 3)
-climate1 <- climate1 |>
-  row_to_names(row_number = 1)|>
-  select(-"Indicator Code") 
+#Create a version with all years in one column
 
 climate_long <- climate1 |> 
   # 1) Filter for the four indicators in the image
@@ -119,7 +77,8 @@ climate_long <- climate1 |>
       "Renewable energy consumption (% of total final energy consumption)",
       "Renewable electricity output (% of total electricity output)",
       "Electricity production from oil sources (% of total)",
-      "Electricity production from coal sources (% of total)"
+      "Electricity production from coal sources (% of total)",
+      "Electricity production from natural gas sources (% of total)"
     )
   ) |> 
   # 2) Keep only the essential columns
@@ -146,7 +105,7 @@ climate_long <- climate1 |>
   mutate(Year = as.numeric(Year))
 
 names(climate_long) <- c("Country Code", "Country Name", "Year",
-                         "Renew_Cons", "Renew_Elec",   "Oil_Elec",
+                         "Renew_Cons", "Renew_Elec",   "Oil_Elec", "Gas_Elec",
                          "Coal_Elec")
 
 
@@ -157,7 +116,9 @@ co2_cleaned <- co2_map |>
   drop_na() |> 
   select(`Country Code`, `Country Name`, `Year`, `co2conc`)
   
-# Leave only numeric variable for clustering
+
+
+
 co2_numeric <- co2_cleaned |> 
   select(co2conc)
 
@@ -187,25 +148,32 @@ co2_final <- co2_final |>
 
 
 
+co2_final1 <- co2_final |> 
+  mutate(sum = Renew_Elec + Oil_Elec + Coal_Elec + Gas_Elec)
 
 
-# Choose a training sample of 70% 
-sample_index <- sample(1:nrow(co2_final), 0.7 * nrow(co2_final))
 
-train_data <- co2_final[sample_index, ]
-#Choose a testing sample of the remaining 30%
-test_data <- co2_final[-sample_index, ]
+
+set.seed(213)
+
+# Train data on values from 1990 to 2014
+train_data <- co2_final[co2_final$Year != 2015, ]
+
+
+# Test data based on 2015
+test_data <- co2_final[co2_final$Year == 2015,] 
 
 # Build a Forest learning algorithm
-rf_model <- randomForest(Cluster ~ Renew_Cons + Renew_Elec + Oil_Elec 
+# Use 4 different variables to predict a cluser
+rf_model <- randomForest(Cluster ~ Renew_Cons + Renew_Elec + Oil_Elec + Gas_Elec
                          + Coal_Elec,
                          data = train_data, ntree = 100)
 
-# Draw predictions based on the previous table
+# Draw predictions for 2015 based on the model.
 predictions <- predict(rf_model, test_data)
 
 ```
-## Machine Learning
+## Predicting CO₂ based on electricity production variables.
 
 Furthermore, I build a machine learning model which predicts the cluster using 4 variables that we have discussed earlier:
 

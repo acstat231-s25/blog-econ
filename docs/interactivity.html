@@ -124,8 +124,8 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#interactive-map" id="toc-interactive-map" class="nav-link active" data-scroll-target="#interactive-map">Interactive Map</a></li>
-  <li><a href="#map-by-clustering" id="toc-map-by-clustering" class="nav-link" data-scroll-target="#map-by-clustering">Map by clustering</a></li>
-  <li><a href="#machine-learning" id="toc-machine-learning" class="nav-link" data-scroll-target="#machine-learning">Machine Learning</a></li>
+  <li><a href="#classifying-co₂-changes" id="toc-classifying-co₂-changes" class="nav-link" data-scroll-target="#classifying-co₂-changes">Classifying CO₂ changes</a></li>
+  <li><a href="#predicting-co₂-based-on-electricity-production-variables." id="toc-predicting-co₂-based-on-electricity-production-variables." class="nav-link" data-scroll-target="#predicting-co₂-based-on-electricity-production-variables.">Predicting CO₂ based on electricity production variables.</a></li>
   </ul>
 </nav>
 </nav>
@@ -183,9 +183,16 @@ ul.task-list li input[type="checkbox"] {
 <iframe src="https://shamchikkhus.shinyapps.io/MapApp/" width="100%" height="600px" frameborder="0">
 </iframe>
 </section>
-<section id="map-by-clustering" class="level2">
-<h2 class="anchored" data-anchor-id="map-by-clustering">Map by clustering</h2>
-<p>Continuing on the topic of clusters, I’ve decided the cluster the 2015 CO2 data and plot the graph based on 4 levels of CO₂ change. The new graph gives a clear persepctive on how countries’ CO₂ levels have changed. For example, the decrease in CO₂ is prelevant in the developed countries, while the developing countries have experienced moderate to extreme CO2 levels increase. This increase can be atrributed to a very rapid industralization happening in those counties.</p>
+<section id="classifying-co₂-changes" class="level2">
+<h2 class="anchored" data-anchor-id="classifying-co₂-changes">Classifying CO₂ changes</h2>
+<p>Next, we clustered the changes of CO₂ starting from 1991 up to 2015. Clustering on just one variable (percent change in CO₂ relative to 1990) makes the analysis very clear and direct and eliminates extra bias. By letting a clustering algorithm find its own group boundaries, we avoid guessing where “moderate” or “extreme” really begin. Instead, the data itself creates four natural clusters:</p>
+<ul>
+<li><p>Cluster 1: decrease or slight increase (&lt;23.92% increase)</p></li>
+<li><p>Cluster 2: moderate increase (up to 119.4%)</p></li>
+<li><p>Cluster 3: high increase (up to 255%)</p></li>
+<li><p>Cluster 4: extreme increase (above 255%)</p></li>
+</ul>
+<p>The plotted graph below should represent how these clusters looked like in 2015. You can compare this graph with the interactive map, choosing the year 2015, and see how clustering maps the graph.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -196,8 +203,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="machine-learning" class="level2">
-<h2 class="anchored" data-anchor-id="machine-learning">Machine Learning</h2>
+<section id="predicting-co₂-based-on-electricity-production-variables." class="level2">
+<h2 class="anchored" data-anchor-id="predicting-co₂-based-on-electricity-production-variables.">Predicting CO₂ based on electricity production variables.</h2>
 <p>Furthermore, I build a machine learning model which predicts the cluster using 4 variables that we have discussed earlier:</p>
 <p>-Renewable energy consumption (% of total final energy consumption)</p>
 <p>-Renewable electricity output (% of total electricity output)</p>

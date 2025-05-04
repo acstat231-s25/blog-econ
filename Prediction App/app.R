@@ -96,11 +96,7 @@ co2_final <- co2_final |>
 co2_final <- co2_final |> 
   mutate(Cluster = as.factor(Cluster))
 
-
-
-co2_final1 <- co2_final |> 
-  mutate(sum = Renew_Elec + Oil_Elec + Coal_Elec + Gas_Elec)
-
+# Set Seed fed for data training
 set.seed(213)
 
 # Train data on values from 1990 to 2014
@@ -128,9 +124,7 @@ print(paste("Prediction Accuracy:", round(accuracy, 3)))
 
 
 
-
-
-
+# ShinyApp
 
 library(shiny)
 library(randomForest)
