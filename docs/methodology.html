@@ -125,9 +125,11 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#data-collection" id="toc-data-collection" class="nav-link active" data-scroll-target="#data-collection">Data collection</a></li>
   <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data wrangling</a></li>
-  <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data analysis</a></li>
-  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -180,13 +182,16 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="data-wrangling">Data wrangling</h2>
 <p>Before proceeding to the analysis, we cleaned up the data and combined rows of the two datasets. Specifically, we removed unused columns, selected variables of interest, imputed geographic data to plot the map outlines, filtered relevant years and calculated median values for each of the continents. For the k-means clustering, we normalized the data to amke sure the variables are on the same scale. Using an elbow plot, we identified the optimal number of clusters and added cluster assignments. Cluster assignments are created for 2-year periods to compare how countries are distributed across the indicators and years.</p>
 </section>
-<section id="data-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="data-analysis">Data analysis</h2>
-<p>After wrangling, we mapped changes in CO2 emissions, using <code>sf</code> and <code>ggplot2</code> packages. We plot time-series data on indicators of interest, and built a <a href="https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/">Shiny app</a> allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020. We used <code>purr</code> and <code>broom</code> packages to iterate over different values of k when generating elbow plots, and tidy up the k-means output. After fitting the clusters, we fit a logistic regression to analyze cluster assignments and predict future outcomes by country.</p>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<p>After wrangling, we mapped changes in CO2 emissions, using <code>sf</code> and <code>ggplot2</code> packages. We plot time-series data on indicators of interest, and built a <a href="https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/">Shiny app</a> allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020.</p>
+<p>Throughout the blog, we employed data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We began with map which showed the trend in CO2 emissions of each country. We also included line graphs for different sustainbability and nature related variables trends over time.</p>
+<p>To identify groups of countries with similar sustainability profiles, we used k-means clustering on standardized indicators such as renewable energy consumption and electricity production from coal and oil. We applied the elbow method to determine the optimal number of clusters, selecting k = 4 based on the elbow plot. This helped us segment countries into more and less sustainable groups and track their transitions over time.</p>
+<p>Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 86%.</p>
 </section>
-<section id="limitations" class="level2">
-<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
-</section>
+<section id="appendix" class="level1">
+<h1>Appendix</h1>
+<p><strong>K-means Clustering</strong>: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis. <img src="images/elb1.jpg" class="img-fluid" alt="Elbow Plot for 1990 Sustainability Data"> <img src="images/elb2.jpg" class="img-fluid" alt="Elbow Plot for 2015 Sustainability Data"></p>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <p><strong>Web Sources &amp; Reports</strong></p>
@@ -212,6 +217,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
