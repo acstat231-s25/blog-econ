@@ -12,15 +12,14 @@ website:
     left:
       - text: "Home"
         href: index.qmd
-      - text: "Policies"
-        href: policies.qmd
-      - text: "CO₂ Analysis"
-        href: interactivity.qmd
-      - text: "Methodology"
-        href: methodology.qmd
       - text: "Sustainability Clusters"
         href: sustainability-clusters.qmd
-
+      - text: "CO₂ Analysis"
+        href: interactivity.qmd
+      - text: "Policies"
+        href: policies.qmd
+      - text: "Methodology"
+        href: methodology.qmd
 
 format:
   html:
