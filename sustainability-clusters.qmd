@@ -40,7 +40,7 @@ We clustered the data between 1990 and 2015 to determine country's sustainabilit
 
 (See [Appendix](#appendix) to see why we've chosen k=4 for clustering).
 
-```{r}
+```{r, fig.show='hide'}
 #| label: kmeans-clustering
 
 climate1 <- read.csv("raw-data/climate-change.csv", skip = 3)
@@ -88,7 +88,38 @@ sustain_2015_std <- sustainability2015 |>
 # run k-means clustering
 set.seed(231)
 
-# based on the elbow plot, k = 4
+# first, elbow plots for each year's standardized data
+elbow_1990 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_1990_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+elbow_2015 <- tibble(k = 1:10) |>
+  mutate(
+    kmeans_results = map(k, ~kmeans(sustain_2015_std, .x, nstart = 20)),
+    glanced = map(kmeans_results, glance)
+  ) |>
+  unnest(cols = c(glanced))
+
+ggplot(elbow_1990, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 1990 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
+  geom_point() + 
+  geom_line() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(title = "Elbow Plot for 2015 Sustainability Data",
+       x = "Number of Clusters (k)", 
+       y = "Total Within-Cluster Sum of Squares") +
+  theme_minimal()
+
+# based on the elbow plot, k = 4 (output was hidden from this page but image of the plots can be found in Appendix)
 sustain_1990_kmeans4 <- sustain_1990_std |>
   kmeans(centers = 4, nstart = 20)
 sustain_2015_kmeans4 <- sustain_2015_std |>
