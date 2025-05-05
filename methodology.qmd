@@ -32,25 +32,26 @@ To identify groups of countries with similar sustainability profiles, we used k-
 **K-means Clustering**: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis.
 ![Elbow Plot for 1990 Sustainability Data](images/elb1.jpg)
 ![Elbow Plot for 2015 Sustainability Data](images/elb2.jpg)
-## References
+
+# References
 
 **Web Sources & Reports**
 
-* 3 Direct Solar Energy, www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf. Accessed 4 May 2025. 
-* “How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, * www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis. Accessed 4 May 2025. 
-* United Nations. “Emissions Gap Report 2024.” UNEP, www.unep.org/resources/emissions-gap-report-2024. Accessed 4 May 2025. 
-* United Nations. “Methane Alert and Response System (MARS).” UNEP, www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system. Accessed 4 May 2025. 
+* 3 Direct Solar Energy, [www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf](www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf). Accessed 4 May 2025. 
+* “How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, [www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis](www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis). Accessed 4 May 2025. 
+* United Nations. “Emissions Gap Report 2024.” UNEP, [www.unep.org/resources/emissions-gap-report-2024](www.unep.org/resources/emissions-gap-report-2024). Accessed 4 May 2025. 
+* United Nations. “Methane Alert and Response System (MARS).” UNEP, [www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system](www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system). Accessed 4 May 2025. 
 
 **Datasets**
 
-* World Bank. Climate Change. World Bank, https://data.worldbank.org/topic/climate-change. Accessed 4 May 2025.
-* World Bank. Carbon Dioxide (CO₂) Emissions (EN.GHG.CO2.ZG.AR5). World Bank, https://data.worldbank.org/indicator/EN.GHG.CO2.ZG.AR5. Accessed 4 May 2025.
+* World Bank. Climate Change. World Bank, [https://data.worldbank.org/topic/climate-change](https://data.worldbank.org/topic/climate-change). Accessed 4 May 2025.
+* World Bank. Carbon Dioxide (CO₂) Emissions (EN.GHG.CO2.ZG.AR5). World Bank, [https://data.worldbank.org/indicator/EN.GHG.CO2.ZG.AR5](https://data.worldbank.org/indicator/EN.GHG.CO2.ZG.AR5). Accessed 4 May 2025.
 
 **R Packages & Technical Resources**
 
-* Chang, Winston. “Shinylive Extension.” Quarto, 25 Oct. 2022, quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/. 
-* Grolemund, Hadley Wickham and Garrett. “R for Data Science.” 19 Functions, r4ds.had.co.nz/functions.html#function-arguments. Accessed 4 May 2025. 
+* Chang, Winston. “Shinylive Extension.” Quarto, 25 Oct. 2022, [quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/](quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/). 
+* Grolemund, Hadley Wickham and Garrett. “R for Data Science.” 19 Functions, [r4ds.had.co.nz/functions.html#function-arguments](r4ds.had.co.nz/functions.html#function-arguments). Accessed 4 May 2025. 
 * “Interactivity.” Quarto, quarto.org/docs/interactive/#shiny. Accessed 4 May 2025. 
-* Radečić, Dario. “Observe Function in R Shiny - How to Implement a Reactive Observer.” RSS, www.appsilon.com/post/observe-function-r-shiny. Accessed 4 May 2025. 
-* “Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept. 2024, https://cran.r-project.org/web/packages/randomForest/randomForest.pdf. 
+* Radečić, Dario. “Observe Function in R Shiny - How to Implement a Reactive Observer.” RSS, [www.appsilon.com/post/observe-function-r-shiny](www.appsilon.com/post/observe-function-r-shiny). Accessed 4 May 2025. 
+* “Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept. 2024, [https://cran.r-project.org/web/packages/randomForest/randomForest.pdf](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf). 
 * Various authors. R Packages Used: viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr, broom, sf, rnaturalearth, janitor, countrycode, stringr, GGally, tidyr, kableExtra, shinylive, randomForest, plotly.
