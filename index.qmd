@@ -124,7 +124,7 @@ ggplot(co2_2022) +
     plot.margin = unit(c(0, 0, 0, 0), "cm"),
     legend.text = element_text(size = 8)
   ) +
-  labs(title = "2022 CO2 emission %Change relative to 1990") 
+  labs(title = "Percentage change in CO2 emissions in 2022 compared to 1990") 
 
 ```
 
