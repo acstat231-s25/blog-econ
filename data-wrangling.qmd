@@ -43,9 +43,17 @@ co2 <- read.csv("raw-data/co2-emissions(co2-emissions).csv", skip = 3)
 climate <- climate|>
   row_to_names(row_number = 1)|>
   select(-"Indicator Code") 
+
 co2 <- co2 |>
   row_to_names(row_number = 1)|>
-  select(-"Indicator Code")
+  select(-"Indicator Code") |>
+  #added a new column needed for further merging
+  mutate(`1990` = 0) |> 
+  #capped observations to limit influence of outliers
+  mutate(across(matches("^(19|20)\\d{2}$"), ~ pmin(., 500)))
+
+#merge two datasets
+data <- rbind(co2, climate)
  
 ```
  
@@ -67,57 +75,22 @@ variables <-
               "Electricity production from coal sources (% of total)",
               "Renewable electricity output (% of total electricity output)",
               "Population growth (annual %)", 
-              "Forest area (% of land area)")
+              "Forest area (% of land area)",
+"Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)")
 
 #filtered observations with variables of interest
-climate <- climate |>
+data <- data |>
   filter(`Indicator Name` %in% variables)|>
-  right_join(region, by = c("Country Code"))
-
+  right_join(region, by = c("Country Code"))|>
 #remove duplicated column after merging geometry data and rename the original 
-climate <- climate |>
   select(-"Country Name.y") |>
-  rename(`Country Name` = `Country Name.x`)
+  rename(`Country Name` = `Country Name.x`)|>
+  #Convert all year columns to numeric
+  mutate(across(matches("^(19|20)\\d{2}$"), ~ as.numeric(.)))
+
 ```  
 
 ```{r}
-#| label: co2-data
-
-#Merging existing dataset with the region data and coordinates for plotting
-co2_cleaned <- co2 |>
-  #Convert all year columns to numeric
-  mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |>
-  #Pivot longer: create one row per Year and Value
- pivot_longer(!c(`Country Name`, `Country Code`, `Indicator Name`), 
-              names_to  = "Year",
-              values_to = "co2conc" ) |> 
-# Cap co2conc at 500 % to avoid outliers
-  mutate(co2conc = pmin(co2conc, 500)) |> 
-  mutate(Year = as.numeric(Year)) 
-
-#This results in the creation of Country Name X and Coutry Name Y columns
-co2_map <- co2_cleaned |>
- right_join(region, by = "Country Code")
-
-#remove duplicated column after merging geometry data and rename the original 
-co2_map <- co2_map |>
-  select(-"Country Name.y") |>
-  rename(`Country Name` = `Country Name.x`) 
-
-```
-
-```{r}
-co2_map <- co2_map |>
-  pivot_wider(
-    names_from = Year,
-    values_from = co2conc) |>
-  select(-39)|>
-  mutate(`1990` = 0)|>
-  #Convert all year columns to numeric
-  mutate(across(matches("^(19|20)\\d{2}$"), ~ as.numeric(.))) 
-
-
-data <- rbind(co2_map, climate)
 
 #combine yearly median data by continent
 climate_medians <- data |>
