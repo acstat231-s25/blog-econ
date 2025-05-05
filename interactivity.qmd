@@ -158,6 +158,7 @@ We trained a supervised random forest model to predict each country’s CO₂ le
 
 To evaluate performance, we held out the 2015 observations entirely and then asked the trained model to predict each country’s 2015 cluster. The resulting confusion matrix (shown below) compares actual versus predicted clusters: rows are the true cluster, columns are the model’s guess, and the diagonal entries are correct classifications.
 
+
 ```{r}
 # Confusion Matrix
 confusion_matrix <- table(Actual = test_data$Cluster, Predicted = predictions)
@@ -166,7 +167,7 @@ kable(confusion_matrix, caption = "Confusion Matrix (Predicted vs Actual)")
 
 ```
 
-We calcualted overall accuracy by dividing number of correct guesses by total number of classification. The predicted accurace was 0.725, meaning the model correctly placed about 72.5% of countries into their true 2015 cluster. Most decreases/slight increases and high‐increase cases were recovered well, though a few countries were confused between neighboring categories.
+We calcualted overall accuracy by dividing number of correct guesses by total number of classification. The predicted accuracy was 0.725, meaning the model correctly placed about 72.5% of countries into their true 2015 cluster. Most decreases/slight increases and high‐increase cases were recovered well, though a few countries were confused between neighboring categories.
 
 Of course, this approach has limitations. By focusing on only five energy variables, the model misses other drivers of CO₂ change-economic growth, the neigbhoring contries contributing to CO₂ change, or policy interventions. For example Ethiopia illustrates this: despite nearly 100% renewable consumption and electricity generation, its CO₂ levels still rose, so the model misclassified it. This counterintuitive result reminds us that no predictor set is perfect, and further work could include additional socioeconomic variables to capture the full complexity of emissions trends.
 
