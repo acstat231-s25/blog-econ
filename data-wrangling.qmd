@@ -103,7 +103,6 @@ co2_map <- co2_cleaned |>
 co2_map <- co2_map |>
   select(-"Country Name.y") |>
   rename(`Country Name` = `Country Name.x`) 
-write_rds(co2_map, "Data/co2_map.rds")
 
 ```
 
@@ -121,15 +120,15 @@ co2_map <- co2_map |>
 data <- rbind(co2_map, climate)
 
 #combine yearly median data by continent
-#Group countries my region, period and variable of interest
 climate_medians <- data |>
   pivot_longer(
     cols = matches("^(19|20)\\d{2}$"),
     names_to = "period",
     values_to = "value"
   ) |>
-  #find the median value per continent
+  #Group countries my region, period and variable of interest
   group_by(region_un, `Indicator Name`, period) |>
+    #find the median value per continent
   summarise(median_value = median(value, na.rm = TRUE)) |>
   ungroup() |>
   # Pivot wider to get columns for each period
