@@ -25,6 +25,9 @@ After wrangling, we mapped changes in CO2 emissions, using `sf` and `ggplot2` pa
 
 To identify groups of countries with similar sustainability profiles, we used k-means clustering on standardized indicators such as renewable energy consumption and electricity production from coal and oil. We applied the elbow method to determine the optimal number of clusters, selecting k = 4 based on the elbow plot. This helped us segment countries into more and less sustainable groups and track their transitions over time.
 
+To evaluate limits for each of the 4 levels in which each CO₂ level changes relative to the 1990 fall, we clustered the data set based on k = 4. The clustering process eliminates the guessing process for the limits and allows the algorithm to decide how to naturally classify each CO₂ level change. Next, we used `randomForest ' supervised learning based on 100 trees to predict the CO₂ level change cluster based on 5 different energy variables. We trained the model based on the data of CO₂ levels change from 1991 to 2014. Next, we used the 2015 CO₂ level clusters to test the algorithm. The predicted accuracy was 72.5 %. A user can test the algorithm on their own by using the embedded [Shiny app](https://shamchikkhus.shinyapps.io/PredictionApp/)
+
+
 # Appendix
 
 **K-means Clustering**: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis.
