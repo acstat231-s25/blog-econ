@@ -14,7 +14,7 @@ data <- readRDS("Data/data.rds")
   
 
 # =============== prepare data ================================================
-# Function to store countries with at least one non NA value for any indicator
+# Filters groups (countries or continents) with at least one non-NA value
 get_valid_groups <- function(df, group_col, year_pattern) {
   df |>
     pivot_longer(cols = matches(year_pattern), names_to = "year", 
@@ -22,9 +22,10 @@ get_valid_groups <- function(df, group_col, year_pattern) {
     group_by(across(all_of(group_col))) |>
     summarise(non_na_count = sum(!is.na(value)), .groups = "drop") |>
     filter(non_na_count > 0) |>
-    pull(!!sym(group_col))
+    pull(!!sym(group_col)) # Return names of valid groups
 }
 
+# Get countries and continent medians with valid data
 valid_countries <- get_valid_groups(data, "Country Name", "^(19|20)\\d{2}$")
 valid_medians <- get_valid_groups(data, "region_un", "^(19|20)\\d{2}_median$")
 # =============================================================================
@@ -48,6 +49,7 @@ ui <- dashboardPage(
   
   dashboardBody(
     tabItems(
+# ========== Country tab UI ==========
       tabItem(tabName = "line",
               fluidRow(
                 column(12, h2("Regional Trends by Country and Indicator"), 
@@ -78,6 +80,7 @@ ui <- dashboardPage(
                 )
               )
       ),
+# ========== Continent tab UI ==========
       tabItem(tabName = "line-region",
               fluidRow(
                 column(12, h2("Regional Trends by Continent and Indicator"), 
@@ -123,6 +126,7 @@ server <- function(input, output, session) {
   output$continentPlot <- renderPlotly({
     req(input$country_select_con, input$indicator_select_con)
     
+    # Prepare filtered and reshaped data
     continent_data <- reactive({
       data |>
         filter(`region_un` == input$country_select_con,
