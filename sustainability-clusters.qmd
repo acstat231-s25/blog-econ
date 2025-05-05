@@ -105,20 +105,17 @@ clusters_1990 <- sustain_1990_c4 |>
   select(`Country Name`, cluster_1990)
 clusters_2015 <- sustain_2015_c4 |>
   select(`Country Name`, cluster_2015)
-
-world_clusters <- world |>
-  left_join(clusters_1990, by = c("name" = "Country Name")) |>
-  left_join(clusters_2015, by = c("name" = "Country Name"))
-
 ```
 
-After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Eastern and Southern' changed groups from 3 to 4, while the country of Argentina moved from 4 to 3.
+After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Western and Central' changed groups from 3 to 2, while the country of Argentina moved from 4 to 3.
 
 ```{r}
 cluster_comparison <- clusters_1990 |>
   inner_join(clusters_2015, by = "Country Name") |>
   rename(`1990 Cluster` = `cluster_1990`,
-         `2015 Cluster` = `cluster_2015`)
+         `2015 Cluster` = `cluster_2015`) |>
+  mutate(Moved = `1990 Cluster` != `2015 Cluster`) #Count how many countries moved clusters
+
 
 # kable table
 cluster_comparison |>
@@ -223,24 +220,69 @@ In 2015:
   
 ## Sustainability cluster map
 
+Holistic Summary of cluster data based on the world map: From the available data, there were more countries and regions in the 'least sustainable' group (34) than countries in the 'most sustainable' group (19) in 1990. The most countries were in the 'moderately sustainable' group (40). By 2015, more countries entered the most sustainable group (43), while the least sustainable countries were the smallest group (14). See the Appendix for more information on the exact amount of countries in each group for both periods.
+Interestingly, there is much regional and economic diversity in countries who share the same group. In 2015, many Sub-Saharan African countries were most sustainable along with countries like Canada, Brazil, and Scandinavia (Denmark, Norway, Sweden, Finland).
+
 ::: {.panel-tabset}
 
 ### 1990 Map
 ```{r}
+world_clusters <- world |>
+  left_join(clusters_1990, by = c("name" = "Country Name")) |>
+  left_join(clusters_2015, by = c("name" = "Country Name"))
+
 ggplot(world_clusters) +
-  geom_sf(aes(fill = as.factor(cluster_1990)), color = "black", size = 0.1) +
-  scale_fill_brewer(na.value = "grey90", name = "1990 Cluster") +
+  geom_sf(aes(fill = factor(cluster_1990, levels = c(1, 4, 3, 2))), 
+          color = "black", size = 0.1) +
+  scale_fill_manual(
+    na.value = "grey90",
+    name = "1990 Cluster",
+    values = c(
+      "1" = "#FF0000",   # Least Sustainable (red)
+      "4" = "#FF9900",   # Low-Moderate (orange)
+      "3" = "#FFFF00",   # Moderate (yellow)
+      "2" = "#33CC33"    # Most Sustainable (green)
+    ),
+    labels = c(
+      "Least Sustainable", 
+      "Low-Moderate Sustainability", 
+      "Moderately Sustainable", 
+      "Most Sustainable"
+    )
+  ) +
   theme_minimal() +
   labs(title = "Country Clusters by Sustainability Levels in 1990")
+
 ```
 
 ### 2015 Map
 ```{r}
 ggplot(world_clusters) +
-  geom_sf(aes(fill = as.factor(cluster_2015)), color = "black", size = 0.1) +
-  scale_fill_brewer(na.value = "grey90", name = "2015 Cluster") +
+  geom_sf(aes(fill = factor(cluster_2015, levels = c(1, 4, 3, 2))), 
+          color = "black", size = 0.1) +
+  scale_fill_manual(
+    name = "2015 Cluster",
+    values = c(
+      "1" = "#FF0000",
+      "4" = "#FF9900",
+      "3" = "#FFFF00",
+      "2" = "#33CC33"   
+    ),
+    labels = c(
+      "Least Sustainable", 
+      "Low-Moderate Sustainability", 
+      "Moderately Sustainable", 
+      "Most Sustainable"
+    ),
+    na.value = "grey90"
+  ) +
   theme_minimal() +
   labs(title = "Country Clusters by Sustainability Levels in 2015")
 ```
 
 :::
+
+## References
+* https://cran.r-project.org/web/packages/rnaturalearth/vignettes/rnaturalearth.html
+* https://html-color-codes.com/
+

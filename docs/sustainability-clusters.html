@@ -133,6 +133,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#scatterplot-matrices-of-sustainability-indicators-by-cluster" id="toc-scatterplot-matrices-of-sustainability-indicators-by-cluster" class="nav-link" data-scroll-target="#scatterplot-matrices-of-sustainability-indicators-by-cluster">Scatterplot matrices of sustainability indicators by cluster</a></li>
   <li><a href="#sustainability-cluster-map" id="toc-sustainability-cluster-map" class="nav-link" data-scroll-target="#sustainability-cluster-map">Sustainability cluster map</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -187,7 +188,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Electricity production from coal sources (% of total)</p></li>
 </ul>
 <p>(See <a href="#appendix">Appendix</a> to see why we’ve chose k=4 for clustering).</p>
-<p>After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of ‘Africa Eastern and Southern’ changed groups from 3 to 4, while the country of Argentina moved from 4 to 3.</p>
+<p>After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of ‘Africa Western and Central’ changed groups from 3 to 2, while the country of Argentina moved from 4 to 3.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; overflow-x: scroll; width:500px; ">
@@ -197,6 +198,7 @@ ul.task-list li input[type="checkbox"] {
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">Country Name</th>
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">1990 Cluster</th>
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">2015 Cluster</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">Moved</th>
 </tr>
 </thead>
 <tbody>
@@ -204,891 +206,1069 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">Africa Eastern and Southern</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Africa Western and Central</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Angola</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Albania</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Arab World</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">United Arab Emirates</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Argentina</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Armenia</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Australia</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Austria</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Azerbaijan</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Belgium</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Benin</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Bangladesh</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Bulgaria</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Bahrain</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Bosnia and Herzegovina</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Belarus</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Bolivia</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Brazil</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Brunei Darussalam</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Botswana</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Canada</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Central Europe and the Baltics</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Switzerland</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Chile</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">China</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Cote d'Ivoire</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Cameroon</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Congo, Dem. Rep.</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Congo, Rep.</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Colombia</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Costa Rica</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Cuba</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Cyprus</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Czechia</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Germany</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Denmark</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Dominican Republic</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Algeria</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">East Asia &amp; Pacific (excluding high income)</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Early-demographic dividend</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">East Asia &amp; Pacific</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Europe &amp; Central Asia (excluding high income)</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Europe &amp; Central Asia</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Ecuador</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Egypt, Arab Rep.</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Euro area</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Spain</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Estonia</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ethiopia</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">European Union</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Fragile and conflict affected situations</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Finland</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">France</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Gabon</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">United Kingdom</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Georgia</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ghana</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Gibraltar</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Greece</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Guatemala</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">High income</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Hong Kong SAR, China</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Honduras</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Heavily indebted poor countries (HIPC)</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Croatia</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Haiti</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Hungary</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">IBRD only</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">IDA &amp; IBRD total</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">IDA total</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">IDA blend</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Indonesia</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">IDA only</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">India</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ireland</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Iran, Islamic Rep.</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Iraq</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Iceland</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Israel</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Italy</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Jamaica</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Jordan</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Japan</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kazakhstan</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Kenya</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kyrgyz Republic</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Korea, Rep.</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kuwait</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Latin America &amp; Caribbean (excluding high income)</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Lebanon</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Libya</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Latin America &amp; Caribbean</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Least developed countries: UN classification</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Sri Lanka</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Lower middle income</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Low &amp; middle income</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Late-demographic dividend</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Lithuania</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Luxembourg</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Latvia</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Morocco</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Moldova</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Middle East &amp; North Africa</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mexico</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Middle income</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">North Macedonia</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Malta</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Myanmar</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Middle East &amp; North Africa (excluding high income)</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mongolia</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Mozambique</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mauritius</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Malaysia</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">North America</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Nigeria</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Nicaragua</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Netherlands</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Norway</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Nepal</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">New Zealand</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">OECD members</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Oman</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Other small states</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Pakistan</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Panama</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Peru</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Philippines</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Poland</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Pre-demographic dividend</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Korea, Dem. People's Rep.</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Portugal</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Paraguay</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Post-demographic dividend</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Qatar</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Romania</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Russian Federation</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">South Asia</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Saudi Arabia</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Sudan</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Senegal</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Singapore</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">El Salvador</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Serbia</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Sub-Saharan Africa (excluding high income)</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Sub-Saharan Africa</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Small states</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Slovak Republic</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Slovenia</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Sweden</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Syrian Arab Republic</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">East Asia &amp; Pacific (IDA &amp; IBRD countries)</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Europe &amp; Central Asia (IDA &amp; IBRD countries)</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Togo</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Thailand</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Tajikistan</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Turkmenistan</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Latin America &amp; the Caribbean (IDA &amp; IBRD countries)</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Middle East &amp; North Africa (IDA &amp; IBRD countries)</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">South Asia (IDA &amp; IBRD)</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Sub-Saharan Africa (IDA &amp; IBRD countries)</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Trinidad and Tobago</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Tunisia</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Turkiye</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Tanzania</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ukraine</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Upper middle income</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Uruguay</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">United States</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Uzbekistan</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Venezuela, RB</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Viet Nam</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">World</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Yemen, Rep.</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">South Africa</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Zambia</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Zimbabwe</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">2</td>
+<td style="text-align: left;">TRUE</td>
 </tr>
 </tbody>
 </table>
@@ -1180,6 +1360,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sustainability-cluster-map" class="level2">
 <h2 class="anchored" data-anchor-id="sustainability-cluster-map">Sustainability cluster map</h2>
+<p>Holistic Summary of cluster data based on the world map: From the available data, there were more countries and regions in the ‘least sustainable’ group (34) than countries in the ‘most sustainable’ group (19) in 1990. The most countries were in the ‘moderately sustainable’ group (40). By 2015, more countries entered the most sustainable group (43), while the least sustainable countries were the smallest group (14). See the Appendix for more information on the exact amount of countries in each group for both periods. Interestingly, there is much regional and economic diversity in countries who share the same group. In 2015, many Sub-Saharan African countries were most sustainable along with countries like Canada, Brazil, and Scandinavia (Denmark, Norway, Sweden, Finland).</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">1990 Map</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">2015 Map</a></li></ul>
 <div class="tab-content">
@@ -1207,6 +1388,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>https://cran.r-project.org/web/packages/rnaturalearth/vignettes/rnaturalearth.html</li>
+<li>https://html-color-codes.com/</li>
+</ul>
 
 
 </section>
