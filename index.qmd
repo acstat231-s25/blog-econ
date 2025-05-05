@@ -42,18 +42,18 @@ world <- ne_countries(scale = "medium", returnclass = "sf") # world map data
 
 Over the past 30 years, the world has seen significant environmental changes. The effects of those changes can have drastic implications on humans, animals, and nature as a whole. To mitigate those changes, many different policies have been carried out. 
 In this blog, we’ll plot the map representing the change of CO2 over the years. We will explore the countries that have shown the greater CO2 change,  which countries were able to tackle the CO2 increase, and have only shown a slight increase. Furthermore, we will present the changes in other environmental factors and sustainable energy usage across the continents over the years. 
-These variables, coupled with clustering based on sustainability and logistic regression, will help us to discuss the changes that have taken place and provide future advice for policymakers on which variables they should focus on.
+These variables, coupled with clustering based on sustainability, will help us to discuss the changes that have taken place and provide future advice for policymakers on which variables they should focus on.
 
 
 # Research questions and motivation
 
-1. For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?
-2. Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact countries differently?
+1. Deforestation and massive population growth are two examples of major problems contributing to climate change, yet they disproportionately affect some countries. To what degree do certain sustainability indicators impact regions differently?
+2. For policymakers to create efficient sustainability policies that mitigate climate change, it may be helpful to know which countries are performing on similar levels or exhibiting similar demographic trends and characteristics. Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources?
 3. Can energy usage variables be used to predict the CO₂ level change?
 
 # Yearly data by environmental indicators
 
-Sustainability and the state of the environment are influenced by a number of factors and can impact the development of the country. While it is difficult to capture the effect of every variable on the state of the environment, we decided to select those that cover both causes and consequences of natural disasters, including energy consumption, renewable energy production, forest area, population growth rates, and CO2 emissions. 
+Sustainability and the state of the environment are influenced by a number of factors and can impact the development of the country. While it is difficult to capture the effect of every variable on the state of the environment, we decided to select those that cover both causes and consequences of natural disasters, including energy consumption, renewable energy production, forest area, population growth rates, and CO₂ emissions. 
 For instance, forests cover roughly a third of all the land on earth. [This dashboard](https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/) allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020, but the main insights will be discussed below.
 
 ## Deforestation
