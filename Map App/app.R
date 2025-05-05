@@ -1,12 +1,26 @@
-# Load required libraries inside the shinylive chunk
-
+# Load required libraries 
 library(shiny)
 library(ggplot2)
 library(dplyr)
 library(sf)
 library(viridis)
 
-co2_map <- readRDS("Data/co2_map.rds")
+data <- readRDS("Data/data.rds")
+# Create a long CO2 df version:
+co2_map <- data |> 
+  filter(`Indicator Name` == 
+"Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)")|> 
+  select(1:36, geometry) |> 
+  mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |>
+  #Pivot longer: create one row per Year and Value
+  pivot_longer(!c(`Country Name`, `Country Code`, `Indicator Name`, geometry), 
+               names_to  = "Year",
+               values_to = "co2conc" ) |> 
+  # Cap co2conc at 500 % to avoid outliers
+  mutate(co2conc = pmin(co2conc, 500)) |> 
+  mutate(Year = as.numeric(Year)) 
+
+
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
@@ -41,5 +55,3 @@ server <- function(input, output) {
 }
 
 shinyApp(ui, server)
-
-

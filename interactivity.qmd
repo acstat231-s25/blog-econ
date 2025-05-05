@@ -20,15 +20,27 @@ if (!require('pacman')) install.packages('pacman'); library('pacman')
 pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr, 
                broom, sf, rnaturalearth, janitor, countrycode, stringr, 
                GGally, tidyr, kableExtra, shinylive, randomForest)
-
-co2_map <- readRDS("Data/co2_map.rds")
 data <- readRDS("Data/data.rds")
 climate_long <- readRDS("Data/climate_long.rds")
+# Create a long CO2 df version:
+co2_map <- data |> 
+  filter(`Indicator Name` == 
+"Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)")|> 
+  select(1:36, geometry) |> 
+  mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |>
+  #Pivot longer: create one row per Year and Value
+  pivot_longer(!c(`Country Name`, `Country Code`, `Indicator Name`, geometry), 
+               names_to  = "Year",
+               values_to = "co2conc" ) |> 
+  # Cap co2conc at 500 % to avoid outliers
+  mutate(co2conc = pmin(co2conc, 500)) |> 
+  mutate(Year = as.numeric(Year)) 
+  
 ```
 
 
 ## Interactive Map
-The CO₂ levels change is a gradual process that happens over the year. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions. 
+The CO₂ levels change is a gradual process that happens over the years. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions. 
 
 
 <small>Use the slider below the map to select a specific year and observe the changes in CO₂ emissions compared to previous years. This allows you to closely examine how individual countries have increased or decreased their emissions over time. If you want full automated visualization: Click the play button to animate the map and watch the year-by-year evolution of global CO₂ emissions. </small>
@@ -130,7 +142,7 @@ ggplot(co2_2015) +
 ```
 
 ```{r}
-set.seed(150)
+set.seed(12)
 
 # Train data on values from 1990 to 2014
 train_data <- co2_final[co2_final$Year != 2015, ]

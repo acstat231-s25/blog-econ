@@ -8,8 +8,22 @@ library(broom)
 library(janitor)
 
 # Load the data
-co2_map <- readRDS("Data/co2_map.rds")
+data <- readRDS("Data/data.rds")
 climate_long <- readRDS("Data/climate_long.rds")
+
+#Create a long co2 map df
+co2_map <- data |> 
+  filter(`Indicator Name` == 
+"Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)")|> 
+  select(1:36, geometry) |> 
+  mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |>
+  #Pivot longer: create one row per Year and Value
+  pivot_longer(!c(`Country Name`, `Country Code`, `Indicator Name`, geometry), 
+               names_to  = "Year",
+               values_to = "co2conc" ) |> 
+  # Cap co2conc at 500 % to avoid outliers
+  mutate(co2conc = pmin(co2conc, 500)) |> 
+  mutate(Year = as.numeric(Year)) 
 
 # Remove geometry and delete NA values
 co2_cleaned <- co2_map |> 
@@ -50,7 +64,7 @@ co2_final <- co2_final |>
   mutate(Cluster = as.factor(Cluster))
 
 # Set Seed fed for data training
-set.seed(150)
+set.seed(12)
 
 # Train data on values from 1990 to 2014
 train_data <- co2_final[co2_final$Year != 2015, ]
@@ -88,7 +102,8 @@ ui <- fluidPage(
     sidebarPanel(
       sliderInput("renew_cons", "Renewable Consumption (%)",
                   min = 0, max = 100, value = 50),
-      sliderInput("renew_elec", "Electricity production from Renewable sources (%)",
+      sliderInput("renew_elec",
+                  "Electricity production from Renewable sources (%)",
                   min = 0, max = 100, value = 50),
       sliderInput("oil_elec", "Electricity production from Oil (%)", min = 0,
                   max = 100, value = 30),

@@ -20,10 +20,22 @@ if (!require('pacman')) install.packages('pacman'); library('pacman')
 pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr, 
                broom, sf, rnaturalearth, janitor, countrycode, stringr, 
                GGally, tidyr, kableExtra, shinylive, randomForest, plotly)
-
-co2_map <- readRDS("Data/co2_map.rds")
 data <- readRDS("Data/data.rds")
 world <- ne_countries(scale = "medium", returnclass = "sf") # world map data
+
+# Create a long CO2 df version:
+co2_map <- data |> 
+  filter(`Indicator Name` == 
+"Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)")|> 
+  select(1:36, geometry) |> 
+  mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |>
+  #Pivot longer: create one row per Year and Value
+  pivot_longer(!c(`Country Name`, `Country Code`, `Indicator Name`, geometry), 
+               names_to  = "Year",
+               values_to = "co2conc" ) |> 
+  # Cap co2conc at 500 % to avoid outliers
+  mutate(co2conc = pmin(co2conc, 500)) |> 
+  mutate(Year = as.numeric(Year)) 
 ```
 
 
