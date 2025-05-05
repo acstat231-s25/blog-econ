@@ -55,7 +55,7 @@ These variables, coupled with clustering based on sustainability, will help us t
 
 # Yearly data by environmental indicators
 
-Sustainability and the state of the environment are influenced by a number of factors and can impact the development of the country. While it is difficult to capture the effect of every variable on the state of the environment, we decided to select those that cover both causes and consequences of natural disasters, including energy consumption, renewable energy production, forest area, population growth rates, and CO2 emissions. 
+Sustainability and the state of the environment are influenced by a number of factors and can impact the development of the country. While it is difficult to capture the effect of every variable on the state of the environment, we decided to select those that cover both causes and consequences of natural disasters, including energy consumption, renewable energy production, forest area, population growth rates, and CO₂ emissions. 
 For instance, forests cover roughly a third of all the land on earth. [This dashboard](https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/) allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020, but the main insights will be discussed below.
 
 ## Deforestation
