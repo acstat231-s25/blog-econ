@@ -288,7 +288,7 @@ ggplotly(p4, tooltip = "text")
 
 **Web Sources & Reports**
 
-* 3 Direct Solar Energy, www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf. Accessed 4 May 2025. 
-* “How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, * www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis. Accessed 4 May 2025. 
-* United Nations. “Emissions Gap Report 2024.” UNEP, www.unep.org/resources/emissions-gap-report-2024. Accessed 4 May 2025. 
-* United Nations. “Methane Alert and Response System (MARS).” UNEP, www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system. Accessed 4 May 2025. 
+* 3 Direct Solar Energy, [www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf](www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf). Accessed 4 May 2025. 
+* “How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, [www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis](www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis). Accessed 4 May 2025. 
+* United Nations. “Emissions Gap Report 2024.” UNEP, [www.unep.org/resources/emissions-gap-report-2024](www.unep.org/resources/emissions-gap-report-2024). Accessed 4 May 2025. 
+* United Nations. “Methane Alert and Response System (MARS).” UNEP, [www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system](www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system). Accessed 4 May 2025. 
