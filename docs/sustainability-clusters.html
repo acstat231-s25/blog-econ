@@ -99,12 +99,16 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./policies.html"> 
-<span class="menu-text">Policies</span></a>
+    <a class="nav-link active" href="./sustainability-clusters.html" aria-current="page"> 
+<span class="menu-text">Sustainability Clusters</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./interactivity.html"> 
-<span class="menu-text">More interactivity</span></a>
+<span class="menu-text">CO₂ Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./policies.html"> 
+<span class="menu-text">Policies</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./methodology.html"> 
@@ -125,7 +129,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#clustering-by-sustainability-levels" id="toc-clustering-by-sustainability-levels" class="nav-link active" data-scroll-target="#clustering-by-sustainability-levels">Clustering by sustainability levels</a></li>
+  <li><a href="#clustering-by-sustainability-levels" id="toc-clustering-by-sustainability-levels" class="nav-link active" data-scroll-target="#clustering-by-sustainability-levels">Clustering by sustainability levels</a>
+  <ul class="collapse">
+  <li><a href="#scatterplot-matrices-of-sustainability-indicators-by-cluster" id="toc-scatterplot-matrices-of-sustainability-indicators-by-cluster" class="nav-link" data-scroll-target="#scatterplot-matrices-of-sustainability-indicators-by-cluster">Scatterplot matrices of sustainability indicators by cluster</a></li>
+  <li><a href="#sustainability-cluster-map" id="toc-sustainability-cluster-map" class="nav-link" data-scroll-target="#sustainability-cluster-map">Sustainability cluster map</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -172,11 +180,13 @@ ul.task-list li input[type="checkbox"] {
 <section id="clustering-by-sustainability-levels" class="level1">
 <h1>Clustering by sustainability levels</h1>
 <p>We clustered the data between 1990 and 2015 to determine country’s sustainability by 4 clusters and using the following variables:</p>
-<p>-Renewable energy consumption (% of total final energy consumption)</p>
-<p>-Renewable electricity output (% of total electricity output)</p>
-<p>-Electricity production from oil sources (% of total)</p>
-<p>-Electricity production from coal sources (% of total)</p>
-<p>(See appendix to see why we’ve chose k=4 for clustering).</p>
+<ul>
+<li><p>Renewable energy consumption (% of total final energy consumption)</p></li>
+<li><p>Renewable electricity output (% of total electricity output)</p></li>
+<li><p>Electricity production from oil sources (% of total)</p></li>
+<li><p>Electricity production from coal sources (% of total)</p></li>
+</ul>
+<p>(See <a href="#appendix">Appendix</a> to see why we’ve chose k=4 for clustering).</p>
 <p>After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of ‘Africa Eastern and Southern’ changed groups from 3 to 4, while the country of Argentina moved from 4 to 3.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1086,7 +1096,13 @@ ul.task-list li input[type="checkbox"] {
 
 </div>
 </div>
+<section id="scatterplot-matrices-of-sustainability-indicators-by-cluster" class="level2">
+<h2 class="anchored" data-anchor-id="scatterplot-matrices-of-sustainability-indicators-by-cluster">Scatterplot matrices of sustainability indicators by cluster</h2>
 <p>Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group’s unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster’s special characteristics, we are able to identify which groups are most sustainable and the least sustainable.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">1990</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">2015</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1095,11 +1111,18 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 </div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="sustainability-clusters_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="sustainability-clusters_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1154,38 +1177,33 @@ ul.task-list li input[type="checkbox"] {
 <li>Still in third place in sustainability ranking.</li>
 </ul></li>
 </ul>
-<section id="sustainability-cluster-map" class="level3">
-<h3 class="anchored" data-anchor-id="sustainability-cluster-map">Sustainability cluster map</h3>
+</section>
+<section id="sustainability-cluster-map" class="level2">
+<h2 class="anchored" data-anchor-id="sustainability-cluster-map">Sustainability cluster map</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">1990 Map</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">2015 Map</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="sustainability-clusters_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="sustainability-clusters_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="sustainability-clusters_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis.</p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="sustainability-clusters_files/figure-html/elbow-plots-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="sustainability-clusters_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="sustainability-clusters_files/figure-html/elbow-plots-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+</div>
 </div>
 </div>
 </div>
