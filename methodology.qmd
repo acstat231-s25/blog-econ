@@ -21,9 +21,7 @@ Before proceeding to the analysis, we cleaned up the data and combined rows of t
 
 ## Methods
 
-After wrangling, we mapped changes in CO2 emissions, using `sf` and `ggplot2` packages. We plot time-series data on indicators of interest, and built a [Shiny app](https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/) allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020. 
-
-Throughout the blog, we employed data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We began with map which showed the trend in CO2 emissions of each country. We also included line graphs for different sustainbability and nature related variables trends over time. 
+After wrangling, we mapped changes in CO2 emissions, using `sf` and `ggplot2` packages. We plot time-series data on indicators of interest to observe the effects of these indicators on individual continents across the period from 1990 to 2020. Throughout the blog, we employed data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We also included line graphs for different sustainability and nature related variables trends over time. We built a separate [Shiny app dashboard](https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/), which allows the users explore individual changes in indicators of interest by country or continent throughout the period of 1990 to 2020. 
 
 To identify groups of countries with similar sustainability profiles, we used k-means clustering on standardized indicators such as renewable energy consumption and electricity production from coal and oil. We applied the elbow method to determine the optimal number of clusters, selecting k = 4 based on the elbow plot. This helped us segment countries into more and less sustainable groups and track their transitions over time.
 
