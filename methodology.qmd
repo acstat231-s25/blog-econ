@@ -31,6 +31,14 @@ To identify groups of countries with similar sustainability profiles, we used k-
 ![Elbow Plot for 1990 Sustainability Data](images/elb1.jpg)
 ![Elbow Plot for 2015 Sustainability Data](images/elb2.jpg)
 
+**Shiny App**: You can explore interactive trends by country or continent in the embedded app below:
+
+<iframe src="https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/"
+        width="100%" 
+        height="800" 
+        frameborder="0">
+</iframe>
+
 # References
 
 **Web Sources & Reports**

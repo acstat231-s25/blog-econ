@@ -38,12 +38,9 @@ However, there are still some significant challenges remaining. 80% of the main 
 
 
 
-## Bibliography
+## References
 
-Additional information used:
-
-* [Methane Alert and Response System (MARS)](https://www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system) - A global initiative led by UNEP to detect and address major methane leaks in near real-time.</li>
-* [The Emissions Gap Report 2024](https://www.unep.org/resources/emissions-gap-report-2024) - Annual report analyzing the gap between current climate pledges and the emissions reductions needed to meet global climate targets.</li>
-* [How Halting Deforestation Helps Fight Climate Change](https://www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis) - UNEP article exploring the role of forest conservation in mitigating the climate crisis.</li>
-* [Solar Energy’s Climate Impact: IPCC Report](https://www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf) - Assessment of solar energy’s potential to reduce emissions, stating its impact can be 10,000 times more beneficial than fossil fuels.</li>
-
+* 3 Direct Solar Energy, [www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf](www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf). Accessed 4 May 2025. 
+* “How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, [www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis](www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis). Accessed 4 May 2025. 
+* United Nations. “Emissions Gap Report 2024.” UNEP, [www.unep.org/resources/emissions-gap-report-2024](www.unep.org/resources/emissions-gap-report-2024). Accessed 4 May 2025. 
+* United Nations. “Methane Alert and Response System (MARS).” UNEP, [www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system](www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system). Accessed 4 May 2025. 

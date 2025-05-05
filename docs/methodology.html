@@ -9,7 +9,7 @@
 <meta name="author" content="Eglah Belizor">
 <meta name="author" content="Shamil Khusnullin">
 <meta name="author" content="Mariia Koval">
-<meta name="dcterms.date" content="2025-05-04">
+<meta name="dcterms.date" content="2025-05-05">
 
 <title>Analyzing Sustainability Indicators Amidst Climate Change – Environmental Indicators: Past, Present, Future</title>
 <style>
@@ -130,10 +130,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#data-collection" id="toc-data-collection" class="nav-link active" data-scroll-target="#data-collection">Data collection</a></li>
   <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data wrangling</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
-  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
-  <ul class="collapse">
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -165,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Last updated</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 4, 2025</p>
+      <p class="date">May 5, 2025</p>
     </div>
   </div>
   
@@ -187,40 +185,41 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<p>After wrangling, we mapped changes in CO2 emissions, using <code>sf</code> and <code>ggplot2</code> packages. We plot time-series data on indicators of interest, and built a <a href="https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/">Shiny app</a> allows to observe the effects of these indicators on individual countries and continents across the period from 1990 to 2020.</p>
-<p>Throughout the blog, we employed data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We began with map which showed the trend in CO2 emissions of each country. We also included line graphs for different sustainbability and nature related variables trends over time.</p>
+<p>After wrangling, we mapped changes in CO2 emissions, using <code>sf</code> and <code>ggplot2</code> packages. We plot time-series data on indicators of interest to observe the effects of these indicators on individual continents across the period from 1990 to 2020. Throughout the blog, we employed data visualization, clustering, and predictive modeling to analyze sustainability patterns across countries. We also included line graphs for different sustainability and nature related variables trends over time. We built a separate <a href="https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/">Shiny app dashboard</a>, which allows the users explore individual changes in indicators of interest by country or continent throughout the period of 1990 to 2020.</p>
 <p>To identify groups of countries with similar sustainability profiles, we used k-means clustering on standardized indicators such as renewable energy consumption and electricity production from coal and oil. We applied the elbow method to determine the optimal number of clusters, selecting k = 4 based on the elbow plot. This helped us segment countries into more and less sustainable groups and track their transitions over time.</p>
-<p>Finally, we used a logistic regression model to predict whether a country will jump from one cluster to another. By comparing cluster assignments between 1990 and 2015, we analyzed the role of sustainability factors in driving these transitions. In addition, we applied a random forest classifier to identify the key drivers of sustainability improvement. Furthermore, we trained the model to predict the cluster a country is likely to belong to in the future. The model achieved a prediction accuracy of approximately 86%.</p>
 </section>
 <section id="appendix" class="level1">
 <h1>Appendix</h1>
 <p><strong>K-means Clustering</strong>: The elbow plots below were used to determine the optimal number of cluster groups (k) for countries based on their sustainability levels. Not all seven sustainability indicators were considered in the k-means clustering model because the goal was to prioritize the sustainability indicators that signal robust economic activity and is thus prone to annual fluctuations, such as renewable energy consumption, renewable electricity output, as well as electricity production from oil and coal sources. We determined that 4 cluster groups was the optimal amount to proceed with our analysis. <img src="images/elb1.jpg" class="img-fluid" alt="Elbow Plot for 1990 Sustainability Data"> <img src="images/elb2.jpg" class="img-fluid" alt="Elbow Plot for 2015 Sustainability Data"></p>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><strong>Shiny App</strong>: You can explore interactive trends by country or continent in the embedded app below:</p>
+<iframe src="https://03t37e-mariia-koval.shinyapps.io/sustainability-indicators/" width="100%" height="800" frameborder="0">
+</iframe>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 <p><strong>Web Sources &amp; Reports</strong></p>
 <ul>
-<li>3 Direct Solar Energy, www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf. Accessed 4 May 2025.</li>
-<li>“How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, * www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis. Accessed 4 May 2025.</li>
-<li>United Nations. “Emissions Gap Report 2024.” UNEP, www.unep.org/resources/emissions-gap-report-2024. Accessed 4 May 2025.</li>
-<li>United Nations. “Methane Alert and Response System (MARS).” UNEP, www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system. Accessed 4 May 2025.</li>
+<li>3 Direct Solar Energy, <a href="www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf">www.ipcc.ch/site/assets/uploads/2018/03/Chapter-3-Direct-Solar-Energy-1.pdf</a>. Accessed 4 May 2025.</li>
+<li>“How Halting Deforestation Can Help Counter the Climate Crisis.” UNEP, <a href="www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis">www.unep.org/news-and-stories/story/how-halting-deforestation-can-help-counter-climate-crisis</a>. Accessed 4 May 2025.</li>
+<li>United Nations. “Emissions Gap Report 2024.” UNEP, <a href="www.unep.org/resources/emissions-gap-report-2024">www.unep.org/resources/emissions-gap-report-2024</a>. Accessed 4 May 2025.</li>
+<li>United Nations. “Methane Alert and Response System (MARS).” UNEP, <a href="www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system">www.unep.org/topics/energy/methane/international-methane-emissions-observatory/methane-alert-and-response-system</a>. Accessed 4 May 2025.</li>
 </ul>
 <p><strong>Datasets</strong></p>
 <ul>
-<li>World Bank. Climate Change. World Bank, https://data.worldbank.org/topic/climate-change. Accessed 4 May 2025.</li>
-<li>World Bank. Carbon Dioxide (CO₂) Emissions (EN.GHG.CO2.ZG.AR5). World Bank, https://data.worldbank.org/indicator/EN.GHG.CO2.ZG.AR5. Accessed 4 May 2025.</li>
+<li>World Bank. Climate Change. World Bank, <a href="https://data.worldbank.org/topic/climate-change">https://data.worldbank.org/topic/climate-change</a>. Accessed 4 May 2025.</li>
+<li>World Bank. Carbon Dioxide (CO₂) Emissions (EN.GHG.CO2.ZG.AR5). World Bank, <a href="https://data.worldbank.org/indicator/EN.GHG.CO2.ZG.AR5">https://data.worldbank.org/indicator/EN.GHG.CO2.ZG.AR5</a>. Accessed 4 May 2025.</li>
 </ul>
 <p><strong>R Packages &amp; Technical Resources</strong></p>
 <ul>
-<li>Chang, Winston. “Shinylive Extension.” Quarto, 25 Oct.&nbsp;2022, quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/.</li>
-<li>Grolemund, Hadley Wickham and Garrett. “R for Data Science.” 19 Functions, r4ds.had.co.nz/functions.html#function-arguments. Accessed 4 May 2025.</li>
+<li>Chang, Winston. “Shinylive Extension.” Quarto, 25 Oct.&nbsp;2022, <a href="quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/">quarto.org/docs/blog/posts/2022-10-25-shinylive-extension/</a>.</li>
+<li>Grolemund, Hadley Wickham and Garrett. “R for Data Science.” 19 Functions, <a href="r4ds.had.co.nz/functions.html#function-arguments">r4ds.had.co.nz/functions.html#function-arguments</a>. Accessed 4 May 2025.</li>
 <li>“Interactivity.” Quarto, quarto.org/docs/interactive/#shiny. Accessed 4 May 2025.</li>
-<li>Radečić, Dario. “Observe Function in R Shiny - How to Implement a Reactive Observer.” RSS, www.appsilon.com/post/observe-function-r-shiny. Accessed 4 May 2025.</li>
-<li>“Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept.&nbsp;2024, https://cran.r-project.org/web/packages/randomForest/randomForest.pdf.</li>
+<li>Radečić, Dario. “Observe Function in R Shiny - How to Implement a Reactive Observer.” RSS, <a href="www.appsilon.com/post/observe-function-r-shiny">www.appsilon.com/post/observe-function-r-shiny</a>. Accessed 4 May 2025.</li>
+<li>“Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept.&nbsp;2024, <a href="https://cran.r-project.org/web/packages/randomForest/randomForest.pdf">https://cran.r-project.org/web/packages/randomForest/randomForest.pdf</a>.</li>
 <li>Various authors. R Packages Used: viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr, broom, sf, rnaturalearth, janitor, countrycode, stringr, GGally, tidyr, kableExtra, shinylive, randomForest, plotly.</li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
