@@ -149,8 +149,9 @@ write_rds(data, "Data/data.rds")
 
 ``` {r}
 #| label: kmeans-clustering
+climate1 <- read.csv("raw-data/climate-change.csv", skip = 3)
 
-climate1 <- climate |>
+climate1 <- climate1 |>
   row_to_names(row_number = 1)|>
   select(-"Indicator Code") 
 
