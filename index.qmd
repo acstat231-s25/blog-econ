@@ -122,7 +122,8 @@ ggplot(co2_2022) +
   theme(
     legend.position = "bottom",
     plot.margin = unit(c(0, 0, 0, 0), "cm"),
-    legend.text = element_text(size = 8)
+    legend.text = element_text(size = 8),
+    legend.key.width = unit(1, "cm")
   ) +
   labs(title = "Percentage change in CO2 emissions in 2022 compared to 1990") 
 
