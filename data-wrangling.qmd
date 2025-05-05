@@ -35,7 +35,7 @@ pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, purrr, broom,
 #| label: load-data
 
 #Read in the data
- climate <- read.csv("raw-data/climate-change.csv", skip = 3)
+climate <- read.csv("raw-data/climate-change.csv", skip = 3)
 co2 <- read.csv("raw-data/co2-emissions(co2-emissions).csv", skip = 3)
  
 #assigned the names of the first row to row names
@@ -61,12 +61,14 @@ region <- ne_countries(scale = "medium", returnclass = "sf") |>
   rename(`Country Code` = iso_a3, `Country Name` = sovereignt)
 
 #created a vector with variables of interest
-variables<- c("Renewable energy consumption (% of total final energy consumption)", 
+variables <- 
+  c("Renewable energy consumption (% of total final energy consumption)", 
               "Electricity production from oil sources (% of total)",
               "Electricity production from coal sources (% of total)",
               "Renewable electricity output (% of total electricity output)",
               "Population growth (annual %)", 
               "Forest area (% of land area)")
+
 #filtered observations with variables of interest
 climate <- climate |>
   filter(`Indicator Name` %in% variables)|>
@@ -106,7 +108,6 @@ write_rds(co2_map, "Data/co2_map.rds")
 ```
 
 ```{r}
-
 co2_map <- co2_map |>
   pivot_wider(
     names_from = Year,
@@ -121,20 +122,21 @@ data <- rbind(co2_map, climate)
 
 #combine yearly median data by continent
 #Group countries my region, period and variable of interest
-#find the median value per continent
 climate_medians <- data |>
   pivot_longer(
     cols = matches("^(19|20)\\d{2}$"),
     names_to = "period",
     values_to = "value"
   ) |>
+  #find the median value per continent
   group_by(region_un, `Indicator Name`, period) |>
   summarise(median_value = median(value, na.rm = TRUE)) |>
   ungroup() |>
   # Pivot wider to get columns for each period
   pivot_wider(
     names_from = period,
-    names_glue = "{period}_median", #assign the name "_median" to each variable
+    #assign the name "_median" to each variable
+    names_glue = "{period}_median", 
     values_from = median_value
   )
 #Join back to original data
@@ -142,14 +144,14 @@ data <- data |>
   left_join(climate_medians, by = c("region_un", "Indicator Name")) |>
   distinct()
 
+# Save the dataset
 write_rds(data, "Data/data.rds")
 ```
 
 ``` {r}
 #| label: kmeans-clustering
 
-climate1 <- read.csv("raw-data/climate-change.csv", skip = 3)
-climate1 <- climate1 |>
+climate1 <- climate |>
   row_to_names(row_number = 1)|>
   select(-"Indicator Code") 
 
@@ -249,10 +251,14 @@ cluster_comparison
 # for standardized 1990 cluster data
 sustain_1990_c5 |>
   rename (
-      renew_energy_consume = "Renewable energy consumption (% of total final energy consumption)",
-      renew_electric_output = "Renewable electricity output (% of total electricity output)",
-      electric_prod_oil = "Electricity production from oil sources (% of total)", 
-      electric_prod_coal = "Electricity production from coal sources (% of total)"
+      renew_energy_consume = 
+      "Renewable energy consumption (% of total final energy consumption)",
+      renew_electric_output = 
+      "Renewable electricity output (% of total electricity output)",
+      electric_prod_oil = 
+        "Electricity production from oil sources (% of total)", 
+      electric_prod_coal = 
+        "Electricity production from coal sources (% of total)"
     ) |>
   select(`renew_energy_consume`, `renew_electric_output`, `electric_prod_oil`, 
          `electric_prod_coal`, `cluster_1990`) |>
