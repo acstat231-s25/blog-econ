@@ -74,8 +74,8 @@ variables <-
               "Electricity production from oil sources (% of total)",
               "Electricity production from coal sources (% of total)",
               "Renewable electricity output (% of total electricity output)",
-              "Population growth (annual %)", 
               "Forest area (% of land area)",
+    "Electricity production from natural gas sources (% of total)",
 "Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)")
 
 #filtered observations with variables of interest
