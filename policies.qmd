@@ -4,13 +4,11 @@ author:
 - "Eglah Belizor"
 - "Shamil Khusnullin"
 - "Mariia Koval"
-abstract: "We analyze global trends in sustainability from 1990 to 2022 in terms of CO₂ emissions, renewables usage, deforestation, and fossil fuel usage. Through visualization, clustering, and logistic regression, we uncover clusters of nations by sustainability levels and how they shift over time. Europe and North America reduced emissions, while Southeast Asia grew tremendously. Growth in renewable energy and a reduction in fossil fuel usage were strong predictors of enhanced sustainability."
 
 resources:
       - Data/co2_map.rds`
 ---
-
-# Summary of policies
+**Overview**
 
 As discussed in the earlier sections, there is a variety of indicators that change on a country to country basis and have different implications for the climate change, sustainable development, and environmental crisis mitigation. Organizations, such as United Nations, International Energy Agency, World Bank, OECD, among others, prepare reports with annual changes in countries' policy frameworks and sustainability indicators. To compare the strategies of these countries and assess the effectiveness of actions they implement, we outlined the most insightful strategies. Data-driven approach in policy-making is crucial to establishing associations and causality among many factors.
 
