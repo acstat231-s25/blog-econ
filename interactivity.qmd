@@ -6,8 +6,6 @@ author:
   - "Shamil Khusnullin"
   - "Mariia Koval"
 abstract: "This page allows you to dive deeper into the exploration of CO₂ levels change happening over the last 30 years around the world. You can explore the CO₂ level changes on the map year by year. Furthermore, this page includes the clustering and a trained algorithm that predicts the CO₂ level change relative to 1990 based on the electricity production input."
-resources:
-  - Data/co2_map.rds
 ---
 
 ```{r}
@@ -25,7 +23,6 @@ pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr,
 
 co2_map <- readRDS("Data/co2_map.rds")
 data <- readRDS("Data/data.rds")
-world <- ne_countries(scale = "medium", returnclass = "sf") # world map data
 climate_long <- readRDS("Data/climate_long.rds")
 ```
 

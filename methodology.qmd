@@ -4,9 +4,6 @@ author:
   - "Eglah Belizor"
   - "Shamil Khusnullin"
   - "Mariia Koval"
-resources:
-  - Data/co2_map.rds
-
 ---
 
 ## Data collection
