@@ -39,7 +39,7 @@ We clustered the data between 1990 and 2015 to determine country's sustainabilit
 * Electricity production from coal sources (% of total) 
 
 
-(See [Appendix](#appendix) to see why we've chose k=4 for clustering).
+(See [Appendix](#appendix) to see why we've chosen k=4 for clustering).
 
 ```{r}
 #| label: kmeans-clustering
