@@ -116,8 +116,6 @@ data <- data |>
   left_join(climate_medians, by = c("region_un", "Indicator Name")) |>
   distinct()
 
-# Save the dataset
-write_rds(data, "Data/data.rds")
 ```
 
 ```{r}
