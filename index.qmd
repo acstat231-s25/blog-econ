@@ -197,7 +197,7 @@ ggplotly(p1, tooltip = "text")
 
 ```{r, warning=FALSE, fig.width=10, fig.height=5}
 
-# Plot renewable electricity output
+# Plot renewable electricity consumption
 p2 <- ggplot(data1 |> 
               filter(`Indicator Name` == 
               "Renewable energy consumption (% of total final energy consumption)"), 
@@ -243,7 +243,7 @@ According to data in the plots below, Oceania is heavily reliable on fossil fuel
 
 ```{r, warning=FALSE, fig.width=10, fig.height=5}
 
-# Plot renewable electricity output
+# Plot electricity production from oil sources
 p3 <- ggplot(data1 |> 
               filter(`Indicator Name` == 
               "Electricity production from oil sources (% of total)"), 
@@ -271,7 +271,7 @@ ggplotly(p3, tooltip = "text")
 
 ```{r, warning=FALSE, fig.width=10, fig.height=5}
 
-# Plot renewable electricity output
+# Plot electricity production from coal sources
 p4 <- ggplot(data1 |> 
               filter(`Indicator Name` == 
               "Electricity production from coal sources (% of total)"), 
