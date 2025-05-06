@@ -184,7 +184,7 @@ We calcualted overall accuracy by dividing number of correct guesses by total nu
 Of course, this approach has limitations. By focusing on only five energy variables, the model misses other drivers of CO₂ change-economic growth, the neigbhoring contries contributing to CO₂ change, or policy interventions. For example Ethiopia illustrates this: despite nearly 100% renewable consumption and electricity generation, its CO₂ levels still rose, so the model misclassified it. This counterintuitive result reminds us that no predictor set is perfect, and further work could include additional socioeconomic variables to capture the full complexity of emissions trends.
 
 ```{r}
-# Calculate Accuracy
+# Calculate Accuracy (sum of diagonal entries over total number of entries)
 accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 print(paste("Prediction Accuracy:", round(accuracy, 3)))
 
