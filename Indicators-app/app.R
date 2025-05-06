@@ -57,7 +57,7 @@ ui <- dashboardPage(
               ),
               fluidRow(
                 column(12,
-                       p("Explore regional trends based on country selection and indicator of interest.",
+p("Explore trends based on country selection and indicator of interest.",
                          style = "font-size: 12px"),
                        align = "center")
               ),
@@ -88,13 +88,13 @@ ui <- dashboardPage(
               ),
               fluidRow(
                 column(12,
-                       p("Explore regional trends based on continent selection and indicator of interest.",
+p("Explore trends based on continent selection and indicator of interest.",
                          style = "font-size: 12px"),
                        align = "center")
               ),
               fluidRow(
                 column(4,
-                       selectizeInput("country_select_con", "Choose a Continent:",
+                     selectizeInput("country_select_con", "Choose a Continent:",
                                       choices = sort(valid_medians))
                 ),
                 column(4,
