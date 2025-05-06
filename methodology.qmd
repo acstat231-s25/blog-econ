@@ -14,7 +14,7 @@ In order to plot and analyze carbon emissions data, we used the [Carbon dioxide 
 
 ## Data wrangling
 
-Before proceeding to the analysis, we cleaned up the data and combined rows of the two datasets. Specifically, we removed unused columns, selected variables of interest, imputed geographic data to plot the map outlines, filtered relevant years and calculated median values for each of the continents. For the k-means clustering, we normalized the data to amke sure the variables are on the same scale. Using an elbow plot, we identified the optimal number of clusters and added cluster assignments. Cluster assignments are created for 2-year periods to compare how countries are distributed across the indicators and years.
+Before proceeding to the analysis, we cleaned up the data and combined rows of the two datasets. Specifically, we removed unused columns, selected variables of interest, imputed geographic data to plot the map outlines, filtered relevant years and calculated median values for each of the continents. For the k-means clustering, we normalized the data to amke sure the variables are on the same scale. Using an elbow plot, we identified the optimal number of clusters and added cluster assignments. Cluster assignments are created for 2 periods to compare how countries are distributed across the indicators and years.
 
 ## Methods
 
