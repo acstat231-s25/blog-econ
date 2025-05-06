@@ -7,6 +7,8 @@ author:
 ---
 **Overview**
 
+This page analyzes global sustainability trends by applying k-means clustering to energy data from the World Bank from two periods: 1990 and 2015. It groups countries into four clusters based on four key energy indicators that capture both fossil fuel dependence and renewable energy use. Users can explore how energy profiles evolved over time by comparing cluster assignments between 1990 and 2015, supported by tables, scatterplot visualizations and world map. These tools help assess which countries are progressing toward more sustainable energy practices and which remain reliant on less sustainable sources. Lastly, this page offers some insights that directly address the research question of how sustainability efforts vary across the world.
+
 ```{r}
 #| label: setup
 #| include: false
@@ -24,7 +26,11 @@ pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr,
 
 # Clustering by sustainability levels
 
-To better understand global trends in energy sustainability over time, we applied k-means clustering to a World Bank dataset spanning from 1990 to 2015. Our objective was to classify countries and regions into one of four groups based on their energy production and consumption profiles. The analysis focused on the following four key energy indicators:
+The year **2015** marked a turning point in the global effort to address both climate change and sustainable development. It saw the adoption of the Sustainable Development Goals (SDGs)—a set of 17 global objectives aimed at improving quality of life while respecting ecological boundaries. These goals, building on the earlier Millennium Development Goals, emphasize a more universal approach to sustainability, calling for action not only in low-income nations but across all economies. Energy sits at the heart of this challenge. While access to reliable energy can drive prosperity and well-being, it also contributes significantly to environmental issues like climate change and pollution (World Economic Forum, 2015).
+
+To explore how countries are progressing on these sustainability fronts, particularly in the context of energy production and consumption, we conducted a k-means clustering analysis using World Bank data from 1990 to 2015. (See [Appendix](#appendix) to see why we've chosen k=4 for clustering).
+
+Our objective was to classify countries and regions into one of four groups based on their energy production and consumption profiles. To highlight the tension between traditional fossil fuels and cleaner energy alternatives, the analysis focused on four key indicators that capture both ends of the sustainability spectrum:
 
 * `Renewable energy consumption (% of total final energy consumption)`
 
@@ -34,8 +40,7 @@ To better understand global trends in energy sustainability over time, we applie
 
 * `Electricity production from coal sources (% of total)`
 
-
-(See [Appendix](#appendix) to see why we've chosen k=4 for clustering).
+Together, these metrics illustrate how countries are balancing their reliance on fossil fuels, such as oil and coal, with a growing shift toward renewable energy. As global efforts intensify to reduce greenhouse gas emissions and move toward low-carbon energy systems, examining these opposing forces provides vital insight into each country’s progress toward becoming a cleaner, more sustainable economy.
 
 ```{r, fig.show='hide'}
 #| label: kmeans-clustering
@@ -158,9 +163,9 @@ cluster_comparison |>
   scroll_box(width = "500px", height = "200px")
 ```
 
-## Summary statistics for sustainability cluster groups
+## Scaterplot matrices
 
-To better understand the defining characteristics of each cluster, we next visualized the distribution of values for the four energy indicators using scatterplot matrices for 1990 and 2015. These visualizations allowed us todifferentiate clusters based on their energy profiles and to assign relative sustainability rankings.
+To better understand the defining characteristics of each cluster, we next visualized the distribution of values for the four energy indicators using scatterplot matrices for 1990 and 2015. These visualizations allowed us to differentiate clusters based on their energy profiles and to assign relative sustainability rankings.
 
 ::: {.panel-tabset}
 
@@ -248,7 +253,7 @@ In 2015:
 
 **Ranking from least to most sustainable groups in 2015**: 4, 1, 3, 2
 
-### Summary tables of sustainability clusters
+## Summary tables
 ```{r}
 # Add cluster labels back to the original indicator data
 sustain1990_summary <- sustainability1990 |>
@@ -313,9 +318,11 @@ summary_2015 |>
 
 From the table above, the number of countries classified as ‘least sustainable’ increased from 32 in 1990 to 48 in 2015, indicating a significant expansion of this group over time. Concurrently, six additional countries joined the ‘most sustainable’ cluster by 2015. Notably, countries within the same sustainability category often differ substantially in both geographic location and economic development. For instance, in 2015, the ‘most sustainable’ group included not only high-income nations such as Canada and the Nordic countries (Denmark, Norway, Sweden, and Finland) but also emerging and lower-income economies, including several Sub-Saharan African countries and Brazil. This suggests that sustainability outcomes are not strictly determined by income/GDP or geography, but may reflect differing national priorities, governance structures, or other circumstances.
 
-## Sustainability cluster map
+# Sustainability cluster map
 
-In 1990, The United States was a different sustainability landscape than in recent times and this world map visualizes this progress: It was among one of the least sustainable nations with higher coal-based electricity production as a share of its total electricity productionn and less renewable energy consumption and output. By 2015, the U.S. advanced to a moderate sustainablity level by more than doubling its renewable energy consumption and also increasing its renewable electricity output, while also reducing its share of total electricity production from both oil and coal sources. The story of environmental sustainability progress looks different for all 185 countries with publicly available data on the four energy indicators. Explore the choropleth world map below to investigate how the country of your interest has fared in the race towards a cleaner future.
+In 1990, The United States was a different sustainability landscape than in recent times and this world map visualizes this progress: It was among one of the least sustainable nations with higher coal-based electricity production as a share of its total electricity productionn and less renewable energy consumption and output. By 2015, the U.S. advanced to a moderate sustainablity level by more than doubling its renewable energy consumption and also increasing its renewable electricity output, while also reducing its share of total electricity production from both oil and coal sources. The story of environmental sustainability progress looks different for all 185 countries with publicly available data on the four energy indicators. 
+
+Explore the choropleth world map below to investigate how the country of your interest has fared in the race towards a cleaner future.
 
 ::: {.panel-tabset}
 
@@ -444,9 +451,14 @@ plot_2015
 ```
 
 :::
-## Discussion
 
-## References
+# Discussion
+This analysis set out to address the question: Which countries perform similarly for key sustainability indicators, such as renewable energy consumption, electricity production from oil/coal, or renewable energy sources? Using k-means clustering, we grouped countries by their energy production and consumption profiles for the years 1990 and 2015. The clustering focused on four critical indicators that reflect both sustainable practices (renewable energy consumption and renewable electricity output) and traditional, high-emission energy use (electricity production from oil and coal sources).
+
+By standardizing these indicators and clustering countries separately for each year, we were able to identify groups of nations with shared sustainability characteristics. These clusters help reveal which countries are performing at similar levels, offering insight into global patterns and progress over time. The map and accompanying cluster comparisons illustrate how some regions have shifted between groups. We saw how some countries experienced either improvements, declines, or stagnation in their energy use practices. For policymakers, these clusters offer a high-level framework for identifying peers, setting benchmarks, and targeting cooperation or policy interventions. Understanding which countries share similar energy profiles can inform regionally tailored strategies for accelerating the transition toward cleaner energy systems.
+
+# References
+* “Why Energy Efficiency Is Key to Sustainable Development.” World Economic Forum, 10 Sept. 2024, www.weforum.org/stories/2015/06/why-energy-efficiency-is-key-to-sustainable-development.
 * Zhu, Hao. “Create Awesome HTML Table with Knitr::Kable and Kableextra.” Cran, 23 Jan. 2024, https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html.
 * “Hexadecimal HTML Color Codes.” Hexadecimal HTML Color Codes, https://html-color-codes.com/. 
 * Sievert, Carson. “Interactive Web-Based Data Visualization with R, Plotly, and Shiny.” 4 Maps, 19 Dec. 2019, https://plotly-r.com/maps.
