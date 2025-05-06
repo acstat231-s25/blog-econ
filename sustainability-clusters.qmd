@@ -7,7 +7,7 @@ author:
 ---
 **Overview**
 
-This page analyzes global sustainability trends by applying k-means clustering to energy data from the World Bank from two periods: 1990 and 2015. It groups countries into four clusters based on four key energy indicators that capture both fossil fuel dependence and renewable energy use. Users can explore how energy profiles evolved over time by comparing cluster assignments between 1990 and 2015, supported by tables, scatterplot visualizations and a world map. These tools help assess which countries are progressing toward more sustainable energy practices and which remain reliant on less sustainable sources. Lastly, this page offers some insights that directly address the research question of how sustainability efforts vary across the world.
+This page allows users to explore how energy profiles for countries evolved over time by comparing cluster assignments between 1990 and 2015, supported by tables, scatterplot visualizations and a world map. These tools help assess which countries are progressing toward a more sustainable energy path and which remain reliant on less sustainable sources. Most importantly, this page offers insights that directly address the research objective of identifying how sustainability efforts vary around the world.
 
 ```{r}
 #| label: setup
