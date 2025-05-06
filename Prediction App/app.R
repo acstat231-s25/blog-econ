@@ -8,8 +8,7 @@ library(broom)
 library(janitor)
 
 # Load the data
-data <- readRDS("Data/data.rds")
-climate_long <- readRDS("Data/climate_long.rds")
+load("Data/data.RData")
 
 #Create a long co2 map df
 co2_map <- data |> 

@@ -123,7 +123,7 @@ write_rds(data, "Data/data.rds")
 ```{r}
 #| label: climate_long
 #Create a version with all years in one column
-climate_long <- climate1 |> 
+climate_long <- climate |> 
   # 1) Filter for the four indicators in the image
   filter(
     `Indicator Name` %in% c(
@@ -141,7 +141,6 @@ climate_long <- climate1 |>
     "Indicator Name",
     matches("^(19|20)\\d{2}$")
   ) |> 
-  
   mutate(across(matches("^(19|20)\\d{2}$"), as.numeric)) |> 
   # 5) Pivot longer to get Year and Value
   pivot_longer(
@@ -160,7 +159,9 @@ climate_long <- climate1 |>
 names(climate_long) <- c("Country Code", "Country Name", "Year",
                          "Renew_Cons", "Renew_Elec",   "Oil_Elec", "Gas_Elec",
                          "Coal_Elec")
+```
 
-
-write_rds(climate_long, "Data/climate_long.rds")
+```{r}
+# Save both data frames in a single file
+save(data, climate_long, file = "Data/data.RData")
 ```

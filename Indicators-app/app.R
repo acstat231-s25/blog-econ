@@ -9,7 +9,7 @@ pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf,
                plotly)
 
 # =============== import data =================================================
-data <- readRDS("Data/data.rds")
+load("Data/data.RData")
 # =============================================================================
   
 

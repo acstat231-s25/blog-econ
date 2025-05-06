@@ -11,12 +11,7 @@ library(viridis)
 
 
 #-----------------------------------------------------------------------------#
-
-
-
-
-
-data <- readRDS("Data/data.rds")
+load("Data/data.RData")
 # Create a long CO2 df version:
 co2_map <- data |> 
   filter(`Indicator Name` == 
