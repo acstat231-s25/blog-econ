@@ -79,8 +79,10 @@ According to the [United Nations](https://www.unep.org/news-and-stories/story/ho
       ==  c("Renewable electricity output (% of total electricity output)", 
          "Renewable energy consumption (% of total final energy consumption)",
          "Electricity production from coal sources (% of total)",
-               "Electricity production from oil sources (% of total)", 
+          "Electricity production from oil sources (% of total)", 
          "Forest area (% of land area)")) |>
+  
+  # Select continent medians only, as they will be plotted
     select(region_un, `Indicator Name`, starts_with(c("19", "20")), 
            ends_with("_median")) |>
     pivot_longer(
@@ -91,7 +93,7 @@ According to the [United Nations](https://www.unep.org/news-and-stories/story/ho
     mutate(period = as.integer(str_remove(period, "_median"))) |>
     rename()
   
-# Plot forest area trends
+# Plot forest area trends. by filtering indicator of interest
 p <- ggplot(data1 |> 
               filter(`Indicator Name` ==  "Forest area (% of land area)"), 
                        aes(x = period, y = value, color = region_un,
