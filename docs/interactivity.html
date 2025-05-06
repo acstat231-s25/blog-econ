@@ -9,7 +9,7 @@
 <meta name="author" content="Eglah Belizor">
 <meta name="author" content="Shamil Khusnullin">
 <meta name="author" content="Mariia Koval">
-<meta name="dcterms.date" content="2025-05-05">
+<meta name="dcterms.date" content="2025-05-06">
 
 <title>Analyzing Sustainability Indicators Amidst Climate Change – Environmental Indicators: Past, Present, Future</title>
 <style>
@@ -162,24 +162,20 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Last updated</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 5, 2025</p>
+      <p class="date">May 6, 2025</p>
     </div>
   </div>
   
     
   </div>
   
-<div>
-  <div class="abstract">
-    <div class="block-title">Abstract</div>
-    This page allows you to dive deeper into the exploration of CO₂ levels change happening over the last 30 years around the world. You can explore the CO₂ level changes on the map year by year. Furthermore, this page includes the clustering and a trained algorithm that predicts the CO₂ level change relative to 1990 based on the electricity production input.
-  </div>
-</div>
 
 
 </header>
 
 
+<p><strong>Overview</strong></p>
+<p>“This page allows you to dive deeper into the exploration of CO₂ levels change happening over the last 30 years around the world. You can explore the CO₂ level changes on the map year by year. Furthermore, this page includes the clustering and a trained algorithm that predicts the CO₂ level change relative to 1990 based on the electricity production input.”</p>
 <section id="interactive-map" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-map">Interactive Map</h2>
 <p>The CO₂ levels change is a gradual process that happens over the years. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions.</p>
@@ -234,30 +230,30 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Decrease/Slight Increase</td>
-<td style="text-align: right;">54</td>
+<td style="text-align: right;">55</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Extreme Increase</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">8</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">High Increase</td>
-<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">20</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Moderate Increase</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
 <td style="text-align: right;">3</td>
 </tr>
 </tbody>
@@ -268,7 +264,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Of course, this approach has limitations. By focusing on only five energy variables, the model misses other drivers of CO₂ change-economic growth, the neigbhoring contries contributing to CO₂ change, or policy interventions. For example Ethiopia illustrates this: despite nearly 100% renewable consumption and electricity generation, its CO₂ levels still rose, so the model misclassified it. This counterintuitive result reminds us that no predictor set is perfect, and further work could include additional socioeconomic variables to capture the full complexity of emissions trends.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Prediction Accuracy: 0.681"</code></pre>
+<pre><code>[1] "Prediction Accuracy: 0.725"</code></pre>
 </div>
 </div>
 <p>You can test the alogorithm below:</p>
