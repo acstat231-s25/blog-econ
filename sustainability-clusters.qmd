@@ -4,8 +4,6 @@ author:
   - "Eglah Belizor"
   - "Shamil Khusnullin"
   - "Mariia Koval"
-resources:
-  - Data/co2_map.rds
 ---
 
 ```{r}
@@ -21,21 +19,19 @@ pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr,
                broom, sf, rnaturalearth, janitor, countrycode, stringr, 
                GGally, tidyr, kableExtra, shinylive, randomForest)
 
-co2_map <- readRDS("Data/co2_map.rds")
-data <- readRDS("Data/data.rds")
 ```
 
 # Clustering by sustainability levels
 
-We clustered the data between 1990 and 2015 to determine country's sustainability by 4 clusters and using the following variables:
+To better understand global trends in energy sustainability over time, we applied k-means clustering to a World Bank dataset spanning from 1990 to 2015. Our objective was to classify countries and regions into one of four groups based on their energy production and consumption profiles. The analysis focused on the following four key indicators:
 
-* Renewable energy consumption (% of total final energy consumption)
+* `Renewable energy consumption (% of total final energy consumption)`
 
-* Renewable electricity output (% of total electricity output)
+* `Renewable electricity output (% of total electricity output)`
 
-* Electricity production from oil sources (% of total)
+* `Electricity production from oil sources (% of total)`
 
-* Electricity production from coal sources (% of total) 
+* `Electricity production from coal sources (% of total)`
 
 
 (See [Appendix](#appendix) to see why we've chosen k=4 for clustering).
@@ -137,7 +133,9 @@ clusters_2015 <- sustain_2015_c4 |>
   select(`Country Name`, cluster_2015)
 ```
 
-After the process of standardizing indicators and k-means clustering for the years 1990 and 2015 was complete, the table we created allowed us to take a glimpse at the changes in cluster group assignments for the first 10 countries and regions in this newly formed dataset. At first glance, you can see the region of 'Africa Western and Central' changed groups from 3 to 2, while the country of Argentina moved from 4 to 3.
+By standardizing these indicators and conducting clustering separately for each year, we were able to group countries with similar energy characteristics and track how these groupings evolved over time. A table comparing cluster assignments for all countries and regions with publicly available data revealed some notable changes. For example, Africa Eastern and Southern shifted from cluster 3 to cluster 4, and Argentina moved from cluster 4 to cluster 3 between 1990 and 2015. However, a change in cluster assignment does not always reflect real changes in sustainability. Australia, for instance, moved from cluster 3 to cluster 4, yet both clusters represented the least sustainable group in their respective years.
+
+Since k-means clustering is conducted independently for each time period, the composition and characteristics of each cluster may vary. Therefore, it is necessary to to evaluate and rank the clusters separately within each year to draw accurate and meaningful conclusions about sustainability progress over time.
 
 ```{r}
 cluster_comparison <- clusters_1990 |>
@@ -145,7 +143,6 @@ cluster_comparison <- clusters_1990 |>
   rename(`1990 Cluster` = `cluster_1990`,
          `2015 Cluster` = `cluster_2015`) |>
   mutate(Moved = `1990 Cluster` != `2015 Cluster`) #Count how many countries moved clusters
-
 
 # kable table
 cluster_comparison |>
@@ -158,14 +155,13 @@ cluster_comparison |>
   scroll_box(width = "500px", height = "200px")
 ```
 
-## Scatterplot matrices of sustainability indicators by cluster
+## Summary statistics for sustainability cluster groups
 
-Next, the goal was to visualize the distribution of values for each cluster group in order to distinguish each group's unique characteristics using a scatterplot matrix. There are two matrices to represent the cluster groups for two different periods. By knowing each cluster's special characteristics, we are able to identify which groups are most sustainable and the least sustainable.
+To better understand the defining characteristics of each cluster, we next visualized the distribution of values for the four energy indicators using scatterplot matrices for 1990 and 2015. These visualizations allowed us to differentiate clusters based on their energy profiles and to assign relative sustainability rankings.
 
 ::: {.panel-tabset}
 
 ### 1990
-
 ```{r}
 # Scatterplot matrix for standardized 1990 cluster data
 sustain_1990_c4 |>
@@ -188,7 +184,6 @@ sustain_1990_c4 |>
 ```
 
 ### 2015
-
 ```{r}
 # Scatterplot matrix for standardized 2015 cluster data
 sustain_2015_c4 |>
@@ -214,47 +209,100 @@ sustain_2015_c4 |>
 
 In 1990:
 
-- **Cluster 1 (red)**  
-  - Relatively lower values across all four indicators. Although two outliers with higher oil production.
-  - Moderate sustainability: Not a stand out in fossil fuel or renewable usage.
+- **Cluster 1 (red - Low-Moderately Sustainable)**  
+  - Relatively high oil-based electricity production, with low renewable energy consumption and low renewable electricity output.
+  - These countries lead in heavy reliance on oil for producing electricity while also having limited renewable resources.
 
-- **Cluster 2 (green)**  
-  - Characterized by high oil-based electricity production, but very low renewable energy consumption and renewable electricity output.
-  - Low- to moderate sustainability: Higher oil-based electric production than the other clusters.
-
-- **Cluster 3 (blue)**  
+- **Cluster 2 (green - Most Sustainable)**  
   - Higher levels of renewable energy consumption and electricity output, with low oil and coal electricity production.
-  - Most sustainable: Likely represents countries investing in renewables with limited reliance on fossil fuels.
+  - Countries in this group tend to be ahead of the curve on sustainability. These are likely to include nations with strong environmental policies or access to abundant natural resources like hydropower. Think of places like Norway or Costa Rica.
 
-- **Cluster 4 (purple)**  
-  - All countries have relatively high coal-based electricity production, while a few of them have moderate renewable energy consumption. 
-  - Least sustainable: Higher fossil fuel usage (coal) than the others.
+- **Cluster 3 (blue - Least Sustainable)**  
+  - Relatively high coal-based electricity production, with moderate renewable energy consumption.  
+  - These countries still rely heavily on coal for electricity. Economic or political barriers might make renewable investment difficult—or fossil fuels may simply be more affordable or accessible in these regions.
 
-**Ranking from least to most sustainable groups in 1990**: 4, 2, 1, 3
+- **Cluster 4 (purple - Moderately Sustainable)**  
+  - Low to moderate values across all four indicators. Moderate coal usage but low in renewable energy usage. 
+  - These countries have no extreme values in either fossil fuel use or renewable usage.
+
+**Ranking from least to most sustainable groups in 1990**: 3, 1, 4, 2
 
 In 2015:
 
-- **Cluster 1 (red)**  
-  - Although relatively higher renewable energy consumption, there is very high oil-based production.
-  - Low- to moderate sustainable group. 
+- **Cluster 1**  
+  - Remains the second least sustainable due to oil-based production, although with some improvement in renewable energy consumption.
 
-- **Cluster 2 (green)**  
-  - Now the most sustainable. Relatively high renewable energy consumption and output.
+- **Cluster 2**  
+  - Remains the most sustainable. Clear leader in sustainability metrics.
 
-- **Cluster 3 (blue)**  
+- **Cluster 3**  
   - Lower values across all four indicators.  
   - Now the moderately sustainable group.
 
-- **Cluster 4 (purple)**  
+- **Cluster 4**  
   - Higher coal production than the other clusters. Moderate renewable energy and output.  
   - Least sustainable due to high coal-based production.
 
 **Ranking from least to most sustainable groups in 2015**: 4, 1, 3, 2
 
+### Summary tables of sustainability clusters
+```{r}
+# Add cluster labels back to the original indicator data
+sustain1990_summary <- sustainability1990 |>
+  inner_join(sustain_1990_c4 |> select(`Country Name`, cluster_1990), by = "Country Name")
+
+sustain2015_summary <- sustainability2015 |>
+  inner_join(sustain_2015_c4 |> select(`Country Name`, cluster_2015), by = "Country Name")
+
+# 1990 Summary: Count + means
+summary_1990 <- sustain1990_summary |>
+  group_by(cluster_1990) |>
+  summarise(
+    Countries = n(),
+    `Avg Renewable Energy Consumption (%)` = mean(`Renewable energy consumption (% of total final energy consumption)`),
+    `Avg Renewable Electricity Output (%)` = mean(`Renewable electricity output (% of total electricity output)`),
+    `Avg Oil Production Share (%)` = mean(`Electricity production from oil sources (% of total)`),
+    `Avg Coal Production Share (%)` = mean(`Electricity production from coal sources (% of total)`)
+  )
+
+# 2015 Summary: Count + means
+summary_2015 <- sustain2015_summary |>
+  group_by(cluster_2015) |>
+  summarise(
+    Countries = n(),
+    `Avg Renewable Energy Consumption (%)` = mean(`Renewable energy consumption (% of total final energy consumption)`),
+    `Avg Renewable Electricity Output (%)` = mean(`Renewable electricity output (% of total electricity output)`),
+    `Avg Oil Production Share (%)` = mean(`Electricity production from oil sources (% of total)`),
+    `Avg Coal Production Share (%)` = mean(`Electricity production from coal sources (% of total)`)
+  )
+```
+
+::: {.panel-tabset}
+
+# 1990
+```{r}
+summary_1990 |>
+  rename(`Cluster Group (1990)` = cluster_1990) |>
+  kbl(booktabs = TRUE, digits = 2, align = "l") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+# 2015
+```{r}
+summary_2015 |>
+  rename(`Cluster Group (2015)` = cluster_2015) |>
+  kbl(booktabs = TRUE, digits = 2, align = "l") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+:::
+
+From the table above, the number of countries classified as ‘least sustainable’ increased from 32 in 1990 to 48 in 2015, indicating a significant expansion of this group over time. Concurrently, six additional countries joined the ‘most sustainable’ cluster by 2015. Notably, countries within the same sustainability category often differ substantially in both geographic location and economic development. For instance, in 2015, the ‘most sustainable’ group included not only high-income nations such as Canada and the Nordic countries (Denmark, Norway, Sweden, and Finland) but also emerging and lower-income economies, including several Sub-Saharan African countries and Brazil. This suggests that sustainability outcomes are not strictly determined by income/GDP or geography, but may reflect differing national priorities, governance structures, or other circumstances.
+
 ## Sustainability cluster map
 
-Holistic Summary of cluster data based on the world map: From the available data, there were more countries and regions in the 'least sustainable' group (34) than countries in the 'most sustainable' group (19) in 1990. The most countries were in the 'moderately sustainable' group (40). By 2015, more countries entered the most sustainable group (43), while the least sustainable countries were the smallest group (14). See the Appendix for more information on the exact amount of countries in each group for both periods.
-Interestingly, there is much regional and economic diversity in countries who share the same group. In 2015, many Sub-Saharan African countries were most sustainable along with countries like Canada, Brazil, and Scandinavia (Denmark, Norway, Sweden, Finland).
+In 1990, The United States was a different sustainability landscape than in recent times and this world map visualizes this progress: It was among one of the least sustainable nations with higher coal-based electricity production as a share of its total electricity productionn and less renewable energy consumption and output. By 2015, the U.S. advanced to a moderate sustainablity level by more than doubling its renewable energy consumption and also increasing its renewable electricity output, while also reducing its share of total electricity production from both oil and coal sources. The story of environmental sustainability progress looks different for all 185 countries with publicly available data on the four energy indicators. Explore the choropleth world map below to investigate how the country of your interest has fared in the race towards a cleaner future.
 
 ::: {.panel-tabset}
 
@@ -273,7 +321,7 @@ data_1990 <- sustainability1990 |>
   ) |>
   mutate(
     cluster_label = factor(cluster_1990,
-                           levels = c(4, 2, 1, 3),
+                           levels = c(3, 1, 4, 2),
                            labels = c("Least Sustainable", "Low-Moderate", "Moderate", "Most Sustainable")),
     hover_text = paste0(
       "<b>", `Country Name`, "</b><br>",
@@ -290,7 +338,7 @@ plot_1990 <- plot_geo(data_1990) |>
   add_trace(
     locations = ~`Country Code`,
     locationmode = "ISO-3",
-    z = ~as.numeric(factor(cluster_1990, levels = c(4, 2, 1, 3))),
+    z = ~as.numeric(factor(cluster_1990, levels = c(3, 1, 4, 2))),
     colors = c("1" = "#FF0000", "4" = "#FF9900", "3" = "#FFFF00", "2" = "#33CC33"),
     text = ~hover_text,
     hoverinfo = "text",
@@ -344,13 +392,15 @@ plot_2015 <- plot_geo(data_2015) |>
     title = "Sustainability Clusters and Indicators in 2015",
     geo = list(showframe = TRUE, showcoastlines = TRUE)
   )
-
 plot_2015
 
 ```
 
 :::
+## Discussion
 
 ## References
-* https://cran.r-project.org/web/packages/rnaturalearth/vignettes/rnaturalearth.html
-* https://html-color-codes.com/
+* Zhu, Hao. “Create Awesome HTML Table with Knitr::Kable and Kableextra.” Cran, 23 Jan. 2024, https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html.
+* “Hexadecimal HTML Color Codes.” Hexadecimal HTML Color Codes, https://html-color-codes.com/. 
+* Sievert, Carson. “Interactive Web-Based Data Visualization with R, Plotly, and Shiny.” 4 Maps, 19 Dec. 2019, https://plotly-r.com/maps.
+
