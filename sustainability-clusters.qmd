@@ -23,7 +23,7 @@ pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr,
 
 # Clustering by sustainability levels
 
-To better understand global trends in energy sustainability over time, we applied k-means clustering to a World Bank dataset spanning from 1990 to 2015. Our objective was to classify countries and regions into one of four groups based on their energy production and consumption profiles. The analysis focused on the following four key indicators:
+To better understand global trends in energy sustainability over time, we applied k-means clustering to a World Bank dataset spanning from 1990 to 2015. Our objective was to classify countries and regions into one of four groups based on their energy production and consumption profiles. The analysis focused on the following four key energy indicators:
 
 * `Renewable energy consumption (% of total final energy consumption)`
 
@@ -135,7 +135,7 @@ clusters_2015 <- sustain_2015_c4 |>
 
 By standardizing these indicators and conducting clustering separately for each year, we were able to group countries with similar energy characteristics and track how these groupings evolved over time. A table comparing cluster assignments for all countries and regions with publicly available data revealed some notable changes. For example, Africa Eastern and Southern shifted from cluster 3 to cluster 4, and Argentina moved from cluster 4 to cluster 3 between 1990 and 2015. However, a change in cluster assignment does not always reflect real changes in sustainability. Australia, for instance, moved from cluster 3 to cluster 4, yet both clusters represented the least sustainable group in their respective years.
 
-Since k-means clustering is conducted independently for each time period, the composition and characteristics of each cluster may vary. Therefore, it is necessary to to evaluate and rank the clusters separately within each year to draw accurate and meaningful conclusions about sustainability progress over time.
+Since k-means clustering is conducted independently for each time period, the composition and characteristics of each cluster may vary. Therefore, it is necessary to evaluate and rank the clusters separately within each year to draw accurate and meaningful conclusions about sustainability progress over time.
 
 ```{r}
 cluster_comparison <- clusters_1990 |>
@@ -339,18 +339,25 @@ plot_1990 <- plot_geo(data_1990) |>
     locations = ~`Country Code`,
     locationmode = "ISO-3",
     z = ~as.numeric(factor(cluster_1990, levels = c(3, 1, 4, 2))),
-    colors = c("1" = "#FF0000", "4" = "#FF9900", "3" = "#FFFF00", "2" = "#33CC33"),
+    colorscale = list(c(0, "#FF0000"), c(0.33, "#FF9900"), c(0.66, "#FFFF00"), c(1, "#33CC33")),  # red to green
+    colorbar = list(
+      title = "Cluster",
+      tickvals = c(1, 2, 3, 4),
+      ticktext = c("Least Sustainable", "Low-Moderate", "Moderate", "Most Sustainable"),
+      xanchor = "center",
+      orientation = 'h',
+      x = 0.5,
+      y = 0
+    ),
     text = ~hover_text,
     hoverinfo = "text",
-    showscale = FALSE
+    showscale = TRUE
   ) |>
   layout(
     title = "Sustainability Clusters and Indicators in 1990",
     geo = list(showframe = TRUE, showcoastlines = TRUE)
   )
 plot_1990
-
-?plot_geo
 
 ```
 
