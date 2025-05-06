@@ -194,6 +194,11 @@ You can test the alogorithm below:
 
 <small> Disclaimer: this algorithm is only 72.5% accurate and can produce inaccurate results </small>
 
+## Discussion
+
+The results of our CO₂ change prediction model indeed show that energy usage variables can be used to predict CO₂ levels. The algorithm highlights both the potential and the limitations of using energy usage variables as indicators. While our model achieved a reasonable accuracy of 72.5%, correctly identifying many countries’ CO₂ change clusters, certain cases revealed the complexity of emissions dynamics. 
+
+Counties such as Ethiopoia do not follow the general expected trens pointing to the need for broader, multi-dimensional models that integrate socioeconomic and policy-related variables to better capture the full picture of CO₂ change across nations.
 
 ## References
 “Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept. 2024, [https://cran.r-project.org/web/packages/randomForest/randomForest.pdf](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf). 
