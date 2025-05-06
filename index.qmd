@@ -20,7 +20,7 @@ if (!require('pacman')) install.packages('pacman'); library('pacman')
 pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr, 
                broom, sf, rnaturalearth, janitor, countrycode, stringr, 
                GGally, tidyr, kableExtra, shinylive, randomForest, plotly)
-data <- readRDS("Data/data.rds")
+load("Data/data.RData")
 world <- ne_countries(scale = "medium", returnclass = "sf") # world map data
 
 # Create a long CO2 df version:
