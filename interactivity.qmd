@@ -24,7 +24,6 @@ pacman::p_load(viridis, tidyverse, ggplot2, lubridate, knitr, dplyr, purrr,
                broom, sf, rnaturalearth, janitor, countrycode, stringr, 
                GGally, tidyr, kableExtra, shinylive, randomForest)
 load("Data/data.RData")
-climate_long <- readRDS("Data/climate_long.rds")
 # Create a long CO2 df version:
 co2_map <- data |> 
   filter(`Indicator Name` == 
