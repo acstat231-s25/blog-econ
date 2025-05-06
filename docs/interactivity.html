@@ -6,9 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Eglah Belizor">
 <meta name="author" content="Shamil Khusnullin">
-<meta name="author" content="Mariia Koval">
 <meta name="dcterms.date" content="2025-05-06">
 
 <title>Analyzing Sustainability Indicators Amidst Climate Change – Environmental Indicators: Past, Present, Future</title>
@@ -130,6 +128,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#interactive-map" id="toc-interactive-map" class="nav-link active" data-scroll-target="#interactive-map">Interactive Map</a></li>
   <li><a href="#classifying-co₂-changes" id="toc-classifying-co₂-changes" class="nav-link" data-scroll-target="#classifying-co₂-changes">Classifying CO₂ changes</a></li>
   <li><a href="#predicting-co₂-based-on-electricity-production-variables." id="toc-predicting-co₂-based-on-electricity-production-variables." class="nav-link" data-scroll-target="#predicting-co₂-based-on-electricity-production-variables.">Predicting CO₂ based on electricity production variables.</a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -152,11 +151,9 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Eglah Belizor </p>
              <p>Shamil Khusnullin </p>
-             <p>Mariia Koval </p>
           </div>
   </div>
     
@@ -179,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
 <p>This page allows you to dive deeper into the exploration of CO₂ levels change happening over the last 30 years around the world. You can explore the CO₂ level changes on the map year by year. Furthermore, this page includes the clustering and a trained algorithm that predicts the CO₂ level change relative to 1990 based on the electricity production input.</p>
 <section id="interactive-map" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-map">Interactive Map</h2>
-<p>The CO₂ levels change is a gradual process that happens over the years. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions.</p>
+<p>The change in atmospheric CO₂ levels is a gradual process that happens over decades. Over the past 30 years, global CO₂ emissions have surged dramatically. Remarkably, more carbon dioxide has been emitted since 1990 than in all prior human history <a href="https://thecorrespondent.com/751/weve-emitted-more-co2-in-the-past-30-years-than-in-all-of-history-these-three-reasons-are-to-blame?">combined</a>. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions.</p>
 <p><small>Use the slider below the map to select a specific year and observe the changes in CO₂ emissions compared to previous years. This allows you to closely examine how individual countries have increased or decreased their emissions over time. If you want full automated visualization: Click the play button to animate the map and watch the year-by-year evolution of global CO₂ emissions. </small></p>
 <iframe src="https://shamchikkhus.shinyapps.io/MapApp/" width="100%" height="600px" frameborder="0">
 </iframe>
@@ -273,9 +270,14 @@ ul.task-list li input[type="checkbox"] {
 </iframe>
 <p><small> Disclaimer: this algorithm is only 72.5% accurate and can produce inaccurate results </small></p>
 </section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>The results of our CO₂ change prediction model indeed show that energy usage variables can be used to predict CO₂ levels. The algorithm highlights both the potential and the limitations of using energy usage variables as indicators. While our model achieved a reasonable accuracy of 72.5%, correctly identifying many countries’ CO₂ change clusters, certain cases revealed the complexity of emissions dynamics.</p>
+<p>Counties such as Ethiopoia do not follow the general expected trens pointing to the need for broader, multi-dimensional models that integrate socioeconomic and policy-related variables to better capture the full picture of CO₂ change across nations.</p>
+</section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
-<p>“Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept.&nbsp;2024, <a href="https://cran.r-project.org/web/packages/randomForest/randomForest.pdf">https://cran.r-project.org/web/packages/randomForest/randomForest.pdf</a>.</p>
+<p>“Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept.&nbsp;2024, <a href="https://cran.r-project.org/web/packages/randomForest/randomForest.pdf">https://cran.r-project.org/web/packages/randomForest/randomForest.pdf</a>. Holthaus, Eric. “We’ve Emitted More CO₂ in the Past 30 Years Than in All of History. These Three Reasons Are to Blame.” The Correspondent, 2019 <a href="https://thecorrespondent.com/751/weve-emitted-more-co2-in-the-past-30-years-than-in-all-of-history-these-three-reasons-are-to-blame.">https://thecorrespondent.com/751/weve-emitted-more-co2-in-the-past-30-years-than-in-all-of-history-these-three-reasons-are-to-blame</a></p>
 
 
 </section>

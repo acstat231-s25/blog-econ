@@ -403,7 +403,7 @@
     "href": "interactivity.html#interactive-map",
     "title": "Analyzing Sustainability Indicators Amidst Climate Change",
     "section": "Interactive Map",
-    "text": "Interactive Map\nThe CO₂ levels change is a gradual process that happens over the years. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions.\nUse the slider below the map to select a specific year and observe the changes in CO₂ emissions compared to previous years. This allows you to closely examine how individual countries have increased or decreased their emissions over time. If you want full automated visualization: Click the play button to animate the map and watch the year-by-year evolution of global CO₂ emissions."
+    "text": "Interactive Map\nThe change in atmospheric CO₂ levels is a gradual process that happens over decades. Over the past 30 years, global CO₂ emissions have surged dramatically. Remarkably, more carbon dioxide has been emitted since 1990 than in all prior human history combined. To better understand the change, we’ve created an interactive map that lets you explore how CO₂ concentrations have shifted year by year, starting from the baseline year of 1991. By moving through the timeline, you can see which regions have experienced the most significant increases or decreases in emissions.\nUse the slider below the map to select a specific year and observe the changes in CO₂ emissions compared to previous years. This allows you to closely examine how individual countries have increased or decreased their emissions over time. If you want full automated visualization: Click the play button to animate the map and watch the year-by-year evolution of global CO₂ emissions."
   },
   {
     "objectID": "interactivity.html#map-by-clustering",
@@ -522,7 +522,7 @@
     "href": "interactivity.html#references",
     "title": "Analyzing Sustainability Indicators Amidst Climate Change",
     "section": "References",
-    "text": "References\n“Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept. 2024, https://cran.r-project.org/web/packages/randomForest/randomForest.pdf."
+    "text": "References\n“Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept. 2024, https://cran.r-project.org/web/packages/randomForest/randomForest.pdf. Holthaus, Eric. “We’ve Emitted More CO₂ in the Past 30 Years Than in All of History. These Three Reasons Are to Blame.” The Correspondent, 2019 https://thecorrespondent.com/751/weve-emitted-more-co2-in-the-past-30-years-than-in-all-of-history-these-three-reasons-are-to-blame"
   },
   {
     "objectID": "sustainability-clusters.html#scaterplot-matrices",
@@ -537,5 +537,12 @@
     "title": "Analyzing Sustainability Indicators Amidst Climate Change",
     "section": "Summary tables",
     "text": "Summary tables\n\n19902015\n\n\n\n\n\n\n\nCluster Group (1990)\nCountries\nAvg Renewable Energy Consumption (%)\nAvg Renewable Electricity Output (%)\nAvg Oil Production Share (%)\nAvg Coal Production Share (%)\n\n\n\n\n1\n25\n16.92\n10.57\n73.14\n3.95\n\n\n2\n54\n63.40\n74.96\n11.42\n1.89\n\n\n3\n32\n23.54\n12.69\n6.55\n70.17\n\n\n4\n67\n11.78\n18.25\n13.87\n19.43\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCluster Group (2015)\nCountries\nAvg Renewable Energy Consumption (%)\nAvg Renewable Electricity Output (%)\nAvg Oil Production Share (%)\nAvg Coal Production Share (%)\n\n\n\n\n1\n18\n26.68\n6.33\n76.34\n3.08\n\n\n2\n60\n52.64\n64.92\n9.87\n4.59\n\n\n3\n59\n10.15\n15.83\n5.97\n10.53\n\n\n4\n48\n23.18\n21.29\n3.63\n55.36\n\n\n\n\n\n\n\n\n\n\nFrom the table above, the number of countries classified as ‘least sustainable’ increased from 32 in 1990 to 48 in 2015, indicating a significant expansion of this group over time. Concurrently, six additional countries joined the ‘most sustainable’ cluster by 2015. Notably, countries within the same sustainability category often differ substantially in both geographic location and economic development. For instance, in 2015, the ‘most sustainable’ group included not only high-income nations such as Canada and the Nordic countries (Denmark, Norway, Sweden, and Finland) but also emerging and lower-income economies, including several Sub-Saharan African countries and Brazil. This suggests that sustainability outcomes are not strictly determined by income/GDP or geography, but may reflect differing national priorities, governance structures, or other circumstances."
+  },
+  {
+    "objectID": "interactivity.html#discussion",
+    "href": "interactivity.html#discussion",
+    "title": "Analyzing Sustainability Indicators Amidst Climate Change",
+    "section": "Discussion",
+    "text": "Discussion\nThe results of our CO₂ change prediction model indeed show that energy usage variables can be used to predict CO₂ levels. The algorithm highlights both the potential and the limitations of using energy usage variables as indicators. While our model achieved a reasonable accuracy of 72.5%, correctly identifying many countries’ CO₂ change clusters, certain cases revealed the complexity of emissions dynamics.\nCounties such as Ethiopoia do not follow the general expected trens pointing to the need for broader, multi-dimensional models that integrate socioeconomic and policy-related variables to better capture the full picture of CO₂ change across nations."
   }
 ]
