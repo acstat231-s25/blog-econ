@@ -198,7 +198,7 @@ ggplotly(p1, tooltip = "text")
 # Plot renewable electricity output
 p2 <- ggplot(data1 |> 
               filter(`Indicator Name` == 
-              "Renewable energy consumption (% of total final energy consumption)"), 
+   "Renewable energy consumption (% of total final energy consumption)"), 
                        aes(x = period, y = value, color = region_un,
                 text = paste("Year:", period,
                              "<br>Renewable energy consumption (%):", 
@@ -247,7 +247,7 @@ p3 <- ggplot(data1 |>
               "Electricity production from oil sources (% of total)"), 
                        aes(x = period, y = value, color = region_un,
                 text = paste("Year:", period,
-                             "<br>Electricity production from oil sources (%):", 
+                        "<br>Electricity production from oil sources (%):", 
                              round(value, 2)))) +
  geom_line(aes(group = region_un), alpha = 0.5) +
   geom_point() +
