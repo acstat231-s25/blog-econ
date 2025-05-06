@@ -116,7 +116,8 @@ ggplot(elbow_2015, aes(x = k, y = tot.withinss)) +
        y = "Total Within-Cluster Sum of Squares") +
   theme_minimal()
 
-# based on the elbow plot, k = 4 (output was hidden from this page but image of the plots can be found in Appendix)
+# based on the elbow plot, k = 4 (output was hidden from this page but 
+# image of the plots can be found in Appendix)
 sustain_1990_kmeans4 <- sustain_1990_std |>
   kmeans(centers = 4, nstart = 20)
 sustain_2015_kmeans4 <- sustain_2015_std |>
@@ -143,7 +144,8 @@ cluster_comparison <- clusters_1990 |>
   inner_join(clusters_2015, by = "Country Name") |>
   rename(`1990 Cluster` = `cluster_1990`,
          `2015 Cluster` = `cluster_2015`) |>
-  mutate(Moved = `1990 Cluster` != `2015 Cluster`) #Count how many countries moved clusters
+  #Count how many countries moved clusters
+  mutate(Moved = `1990 Cluster` != `2015 Cluster`)
 
 # kable table
 cluster_comparison |>
@@ -158,7 +160,7 @@ cluster_comparison |>
 
 ## Summary statistics for sustainability cluster groups
 
-To better understand the defining characteristics of each cluster, we next visualized the distribution of values for the four energy indicators using scatterplot matrices for 1990 and 2015. These visualizations allowed us to differentiate clusters based on their energy profiles and to assign relative sustainability rankings.
+To better understand the defining characteristics of each cluster, we next visualized the distribution of values for the four energy indicators using scatterplot matrices for 1990 and 2015. These visualizations allowed us todifferentiate clusters based on their energy profiles and to assign relative sustainability rankings.
 
 ::: {.panel-tabset}
 
@@ -250,20 +252,26 @@ In 2015:
 ```{r}
 # Add cluster labels back to the original indicator data
 sustain1990_summary <- sustainability1990 |>
-  inner_join(sustain_1990_c4 |> select(`Country Name`, cluster_1990), by = "Country Name")
+  inner_join(sustain_1990_c4 |> select(`Country Name`, cluster_1990), 
+             by = "Country Name")
 
 sustain2015_summary <- sustainability2015 |>
-  inner_join(sustain_2015_c4 |> select(`Country Name`, cluster_2015), by = "Country Name")
+  inner_join(sustain_2015_c4 |> select(`Country Name`, cluster_2015), 
+             by = "Country Name")
 
 # 1990 Summary: Count + means
 summary_1990 <- sustain1990_summary |>
   group_by(cluster_1990) |>
   summarise(
     Countries = n(),
-    `Avg Renewable Energy Consumption (%)` = mean(`Renewable energy consumption (% of total final energy consumption)`),
-    `Avg Renewable Electricity Output (%)` = mean(`Renewable electricity output (% of total electricity output)`),
-    `Avg Oil Production Share (%)` = mean(`Electricity production from oil sources (% of total)`),
-    `Avg Coal Production Share (%)` = mean(`Electricity production from coal sources (% of total)`)
+    `Avg Renewable Energy Consumption (%)` = 
+    mean(`Renewable energy consumption (% of total final energy consumption)`),
+    `Avg Renewable Electricity Output (%)` =
+    mean(`Renewable electricity output (% of total electricity output)`),
+    `Avg Oil Production Share (%)` =
+    mean(`Electricity production from oil sources (% of total)`),
+    `Avg Coal Production Share (%)` =
+    mean(`Electricity production from coal sources (% of total)`)
   )
 
 # 2015 Summary: Count + means
@@ -271,10 +279,14 @@ summary_2015 <- sustain2015_summary |>
   group_by(cluster_2015) |>
   summarise(
     Countries = n(),
-    `Avg Renewable Energy Consumption (%)` = mean(`Renewable energy consumption (% of total final energy consumption)`),
-    `Avg Renewable Electricity Output (%)` = mean(`Renewable electricity output (% of total electricity output)`),
-    `Avg Oil Production Share (%)` = mean(`Electricity production from oil sources (% of total)`),
-    `Avg Coal Production Share (%)` = mean(`Electricity production from coal sources (% of total)`)
+    `Avg Renewable Energy Consumption (%)` =
+    mean(`Renewable energy consumption (% of total final energy consumption)`),
+    `Avg Renewable Electricity Output (%)` =
+    mean(`Renewable electricity output (% of total electricity output)`),
+    `Avg Oil Production Share (%)` =
+    mean(`Electricity production from oil sources (% of total)`),
+    `Avg Coal Production Share (%)` =
+    mean(`Electricity production from coal sources (% of total)`)
   )
 ```
 
@@ -315,15 +327,20 @@ library(plotly)
 data_1990 <- sustainability1990 |>
   left_join(clusters_1990, by = c("Country Name")) |>
   rename(
-    `Renewable Energy (%)` = `Renewable energy consumption (% of total final energy consumption)`,
-    `Renewable Electricity (%)` = `Renewable electricity output (% of total electricity output)`,
-    `Oil Electricity (%)` = `Electricity production from oil sources (% of total)`,
-    `Coal Electricity (%)` = `Electricity production from coal sources (% of total)`
+    `Renewable Energy (%)` =
+    `Renewable energy consumption (% of total final energy consumption)`,
+    `Renewable Electricity (%)` =
+    `Renewable electricity output (% of total electricity output)`,
+    `Oil Electricity (%)` =
+    `Electricity production from oil sources (% of total)`,
+    `Coal Electricity (%)` =
+    `Electricity production from coal sources (% of total)`
   ) |>
   mutate(
     cluster_label = factor(cluster_1990,
                            levels = c(3, 1, 4, 2),
-                           labels = c("Least Sustainable", "Low-Moderate", "Moderate", "Most Sustainable")),
+                           labels = c("Least Sustainable", "Low-Moderate", 
+                                      "Moderate", "Most Sustainable")),
     hover_text = paste0(
       "<b>", `Country Name`, "</b><br>",
       "Cluster: ", cluster_label, "<br>",
@@ -340,11 +357,13 @@ plot_1990 <- plot_geo(data_1990) |>
     locations = ~`Country Code`,
     locationmode = "ISO-3",
     z = ~as.numeric(factor(cluster_1990, levels = c(3, 1, 4, 2))),
-    colorscale = list(c(0, "#FF0000"), c(0.33, "#FF9900"), c(0.66, "#FFFF00"), c(1, "#33CC33")),  # red to green
+    colorscale = list(c(0, "#FF0000"), c(0.33, "#FF9900"), 
+                      c(0.66, "#FFFF00"), c(1, "#33CC33")),  # red to green
     colorbar = list(
       title = "Cluster",
       tickvals = c(1, 2, 3, 4),
-      ticktext = c("Least Sustainable", "Low-Moderate", "Moderate", "Most Sustainable"),
+      ticktext = c("Least Sustainable", "Low-Moderate", 
+                   "Moderate", "Most Sustainable"),
       xanchor = "center",
       orientation = 'h',
       x = 0.5,
@@ -368,15 +387,20 @@ plot_1990
 data_2015 <- sustainability2015 |>
   left_join(clusters_2015, by = c("Country Name")) |>
   rename(
-    `Renewable Energy (%)` = `Renewable energy consumption (% of total final energy consumption)`,
-    `Renewable Electricity (%)` = `Renewable electricity output (% of total electricity output)`,
-    `Oil Electricity (%)` = `Electricity production from oil sources (% of total)`,
-    `Coal Electricity (%)` = `Electricity production from coal sources (% of total)`
+    `Renewable Energy (%)` = 
+    `Renewable energy consumption (% of total final energy consumption)`,
+    `Renewable Electricity (%)` = 
+    `Renewable electricity output (% of total electricity output)`,
+    `Oil Electricity (%)` = 
+    `Electricity production from oil sources (% of total)`,
+    `Coal Electricity (%)` =
+    `Electricity production from coal sources (% of total)`
   ) |>
   mutate(
     cluster_label = factor(cluster_2015,
                            levels = c(4, 1, 3, 2),
-                           labels = c("Least Sustainable", "Low-Moderate", "Moderate", "Most Sustainable")),
+                           labels = c("Least Sustainable", "Low-Moderate", 
+                                      "Moderate", "Most Sustainable")),
     hover_text = paste0(
       "<b>", `Country Name`, "</b><br>",
       "Cluster: ", cluster_label, "<br>",
@@ -394,11 +418,13 @@ plot_2015 <- plot_geo(data_2015) |>
     locations = ~`Country Code`,
     locationmode = "ISO-3",
     z = ~as.numeric(factor(cluster_2015, levels = c(4, 1, 3, 2))),
-    colorscale = list(c(0, "#FF0000"), c(0.33, "#FF9900"), c(0.66, "#FFFF00"), c(1, "#33CC33")),  # red to green
+    colorscale = list(c(0, "#FF0000"), c(0.33, "#FF9900"), 
+                      c(0.66, "#FFFF00"), c(1, "#33CC33")),  # red to green
     colorbar = list(
       title = "Cluster",
       tickvals = c(1, 2, 3, 4),
-      ticktext = c("Least Sustainable", "Low-Moderate", "Moderate", "Most Sustainable"),
+      ticktext = c("Least Sustainable", "Low-Moderate", 
+                   "Moderate", "Most Sustainable"),
       xanchor = "center",
       orientation = 'h',
       x = 0.5,
@@ -424,4 +450,5 @@ plot_2015
 * Zhu, Hao. “Create Awesome HTML Table with Knitr::Kable and Kableextra.” Cran, 23 Jan. 2024, https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html.
 * “Hexadecimal HTML Color Codes.” Hexadecimal HTML Color Codes, https://html-color-codes.com/. 
 * Sievert, Carson. “Interactive Web-Based Data Visualization with R, Plotly, and Shiny.” 4 Maps, 19 Dec. 2019, https://plotly-r.com/maps.
+* Legend in a world map using Plotly doesn’t show up when there is a colorbar. Stack Overflow, 1 Aug. 2023. https://stackoverflow.com/questions/76815646/legend-in-a-world-map-using-plotly-doesnt-show-up-when-there-is-a-colorbar
 
