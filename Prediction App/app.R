@@ -7,7 +7,12 @@ library(tibble)
 library(broom)   
 library(janitor)
 
-# Load the data
+#-----------------------------------------------------------------------------#
+
+## Data Wrangling
+
+
+#-----------------------------------------------------------------------------#
 load("Data/data.RData")
 
 #Create a long co2 map df
@@ -88,7 +93,16 @@ print(confusion_matrix)
 accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 print(paste("Prediction Accuracy:", round(accuracy, 3)))
 
+
+
+#-----------------------------------------------------------------------------#
+
+# User Interface 
+
 # ShinyApp
+
+
+#-----------------------------------------------------------------------------#
 
 library(shiny)
 library(randomForest)
@@ -119,7 +133,12 @@ ui <- fluidPage(
   )
 )
 
-# Server
+#-----------------------------------------------------------------------------#
+
+## Server
+
+
+#-----------------------------------------------------------------------------#
 server <- function(input, output) {
   observeEvent(input$predictBtn, {
     # Create new data point
