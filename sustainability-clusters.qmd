@@ -350,6 +350,8 @@ plot_1990 <- plot_geo(data_1990) |>
   )
 plot_1990
 
+?plot_geo
+
 ```
 
 ### 2015 Map
@@ -378,20 +380,31 @@ data_2015 <- sustainability2015 |>
   )
 
 # Map (2015)
+
 plot_2015 <- plot_geo(data_2015) |>
   add_trace(
     locations = ~`Country Code`,
     locationmode = "ISO-3",
-    z = ~as.numeric(factor(cluster_2015, levels = c(4, 1, 3, 2))),  # force correct mapping order
-    colors = c("#FF0000", "#FF9900", "#FFFF00", "#33CC33"),        # red, orange, yellow, green
+    z = ~as.numeric(factor(cluster_2015, levels = c(4, 1, 3, 2))),
+    colorscale = list(c(0, "#FF0000"), c(0.33, "#FF9900"), c(0.66, "#FFFF00"), c(1, "#33CC33")),  # red to green
+    colorbar = list(
+      title = "Cluster",
+      tickvals = c(1, 2, 3, 4),
+      ticktext = c("Least Sustainable", "Low-Moderate", "Moderate", "Most Sustainable"),
+      xanchor = "center",
+      orientation = 'h',
+      x = 0.5,
+      y = 0
+    ),
     text = ~hover_text,
     hoverinfo = "text",
-    showscale = FALSE
+    showscale = TRUE
   ) |>
   layout(
     title = "Sustainability Clusters and Indicators in 2015",
     geo = list(showframe = TRUE, showcoastlines = TRUE)
   )
+
 plot_2015
 
 ```
