@@ -1,9 +1,8 @@
 ---
 title: "Analyzing Sustainability Indicators Amidst Climate Change"
 author: 
-- "Eglah Belizor"
-- "Shamil Khusnullin"
 - "Mariia Koval"
+- "Shamil Khusnullin"
 ---
 **Overview**
 
