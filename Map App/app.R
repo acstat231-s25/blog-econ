@@ -1,9 +1,20 @@
-# Load required libraries 
+# Load the required libraries 
 library(shiny)
 library(ggplot2)
 library(dplyr)
 library(sf)
 library(viridis)
+
+#-----------------------------------------------------------------------------#
+
+## Data Wrangling
+
+
+#-----------------------------------------------------------------------------#
+
+
+
+
 
 data <- readRDS("Data/data.rds")
 # Create a long CO2 df version:
@@ -21,6 +32,14 @@ co2_map <- data |>
   mutate(Year = as.numeric(Year)) 
 
 
+#-----------------------------------------------------------------------------#
+
+## User Interface
+
+
+#-----------------------------------------------------------------------------#
+
+
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
@@ -36,6 +55,15 @@ ui <- fluidPage(
     )
   )
 )
+
+
+#-----------------------------------------------------------------------------#
+
+## Function
+
+
+#-----------------------------------------------------------------------------#
+
 
 server <- function(input, output) {
   filtered <- reactive(co2_map |> filter(Year == input$year))
