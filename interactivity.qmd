@@ -137,7 +137,7 @@ ggplot(co2_2015) +
     legend.position = "bottom",
     legend.text = element_text(size = 8)
   ) +
-  labs(title = "2015 CO2 emission Change relative to 1990")
+  labs(title = "Change in CO₂ Emissions in 2015 Compared to 1990")
 
 ```
 
@@ -177,7 +177,7 @@ kable(confusion_matrix, caption = "Confusion Matrix (Predicted vs Actual)")
 
 We calculated overall accuracy by dividing number of correct guesses by total number of classification. The predicted accuracy was 0.725, meaning the model correctly placed about 72.5% of countries into their true 2015 cluster. Most decreases/slight increases and high‐increase cases were recovered well, though a few countries were confused between neighboring categories.
 
-Of course, this approach has limitations. By focusing on only five energy variables, the model misses other drivers of CO₂ change-economic growth, the neigbhoring contries contributing to CO₂ change, or policy interventions. For example Ethiopia illustrates this: despite nearly 100% renewable consumption and electricity generation, its CO₂ levels still rose, so the model misclassified it. This counterintuitive result reminds us that no predictor set is perfect, and further work could include additional socioeconomic variables to capture the full complexity of emissions trends.
+Of course, this approach has limitations. By focusing on only five energy variables, the model misses other drivers of CO₂ change-economic growth, the neighboring countries contributing to CO₂ change, or policy interventions. For example, Ethiopia illustrates this: despite nearly 100% renewable consumption and electricity generation, its CO₂ levels still rose, so the model misclassified it. This counter intuitive result reminds us that no predictor set is perfect, and further work could include additional socioeconomic variables to capture the full complexity of emissions trends.
 
 ```{r}
 # Calculate Accuracy (sum of diagonal entries over total number of entries)
@@ -198,7 +198,7 @@ You can test the alogorithm below:
 
 The results of our CO₂ change prediction model indeed show that energy usage variables can be used to predict CO₂ levels. The algorithm highlights both the potential and the limitations of using energy usage variables as indicators. While our model achieved a reasonable accuracy of 72.5%, correctly identifying many countries’ CO₂ change clusters, certain cases revealed the complexity of emissions dynamics. 
 
-Counties such as Ethiopoia do not follow the general expected trens pointing to the need for broader, multi-dimensional models that integrate socioeconomic and policy-related variables to better capture the full picture of CO₂ change across nations.
+Countries such as Ethiopia do not follow the general expected trend pointing to the need for broader, multi-dimensional models that integrate socioeconomic and policy-related variables to better capture the full picture of CO₂ change across nations.
 
 ## References
 “Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept. 2024, [https://cran.r-project.org/web/packages/randomForest/randomForest.pdf](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf). 
