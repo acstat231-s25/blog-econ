@@ -205,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="predicting-co₂-based-on-electricity-production-variables." class="level2">
 <h2 class="anchored" data-anchor-id="predicting-co₂-based-on-electricity-production-variables.">Predicting CO₂ based on electricity production variables.</h2>
-<p>We trained a supervised random forest model to predict each country’s CO₂ level change cluster using five predictors: renewable consumption, renewable electricity output, oil‐based electricity, gas‐based electricity, and coal‐based electricity. For training, we used the long CO₂ level change data set covering yearly values from 1991 through 2014.</p>
+<p>We trained a supervised random forest model to predict each country’s CO₂ level change cluster using five predictors: renewable consumption, renewable electricity output, oil‐based electricity, gas‐based electricity, and coal‐based electricity. For training dataset, we used the long CO₂ level change data set covering yearly values from 1991 through 2014. For the actual algorithm we used the supervised machine learning algorithm <a href="https://cran.r-project.org/web/packages/randomForest/randomForest.pdf">randomForest</a> (number of trees = 100)</p>
 <p>To evaluate performance, we held out the 2015 observations entirely and then asked the trained model to predict each country’s 2015 cluster. The resulting confusion matrix (shown below) compares actual versus predicted clusters: rows are the true cluster, columns are the model’s guess, and the diagonal entries are correct classifications.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -271,6 +271,9 @@ ul.task-list li input[type="checkbox"] {
 <iframe src="https://shamchikkhus.shinyapps.io/PredictionApp/" width="100%" height="700px" frameborder="0">
 </iframe>
 <p><small> Disclaimer: this algorithm is only 72.5% accurate and can produce inaccurate results </small></p>
+<ul>
+<li>“Randomforest: Breiman and Cutlers Random Forests for Classification and Regression.” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 22 Sept.&nbsp;2024, <a href="https://cran.r-project.org/web/packages/randomForest/randomForest.pdf">https://cran.r-project.org/web/packages/randomForest/randomForest.pdf</a>.</li>
+</ul>
 
 
 </section>
