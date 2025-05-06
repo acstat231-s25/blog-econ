@@ -2,9 +2,7 @@
 title: "Analyzing Sustainability Indicators Amidst Climate Change"
 subtitle: "A deeper analysis of CO₂"
 author: 
-  - "Eglah Belizor"
   - "Shamil Khusnullin"
-  - "Mariia Koval"
 ---
 
 **Overview** 
