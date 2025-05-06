@@ -10,6 +10,31 @@ pacman::p_load(tidyverse, ggplot2, lubridate, dplyr, kableExtra, sf,
 
 # =============== import data =================================================
 load("Data/data.RData")
+
+#rename variables to fit the plot box
+data <- data |>
+  mutate(`Indicator Name` = case_when(
+    `Indicator Name` == 
+      "Renewable energy consumption (% of total final energy consumption)" ~ 
+      "Renewable energy consumption (% of total)",
+    `Indicator Name` == 
+      "Renewable electricity output (% of total electricity output)" 
+    ~ "Renewable electricity output (% of total)",
+    `Indicator Name` == 
+      "Electricity production from oil sources (% of total)" 
+    ~ "Electricity production from oil (% of total)",
+    `Indicator Name` == 
+      "Electricity production from natural gas sources (% of total)" 
+    ~ "Electricity from natural gas (% of total)",
+    `Indicator Name` == 
+      "Electricity production from coal sources (% of total)" ~ 
+      "Electricity production from coal (% of total)",
+    `Indicator Name` == 
+"Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)" ~ 
+      "CO2 emissions (% change from 1990)",
+    #keep other values unchanged
+    TRUE ~ `Indicator Name`  
+  ))
 # =============================================================================
   
 
@@ -50,45 +75,60 @@ ui <- dashboardPage(
   dashboardBody(
     tabItems(
 # ========== Country tab UI ==========
-      tabItem(tabName = "line",
-              fluidRow(
-                column(12, h2("Regional Trends by Country and Indicator"), 
-                       align = "center")
-              ),
-              fluidRow(
-                column(12,
-p("Explore trends based on country selection and indicator of interest.",
-                         style = "font-size: 12px"),
-                       align = "center")
-              ),
-              fluidRow(
-                column(4,
-                       selectizeInput("country_select", "Choose a Country:",
-                                      choices = sort(valid_countries))
-                ),
-                column(4,
-                       selectizeInput(
-                         "indicator_select",
-                         "Choose an Indicator:",
-                         choices = sort(unique(data$`Indicator Name`))
-                       )
-                )
-              ),
-              fluidRow(
-                column(12,
-                       plotlyOutput("regionPlot")
-                )
-              )
-      ),
+tabItem(tabName = "line",
+        fluidRow(
+          column(12, h2("Regional trends by country"), 
+                 align = "center")
+        ),
+        fluidRow(
+          column(12,
+                 p("Explore trends based on country, indicator and year.",
+                   style = "font-size: 12px"),
+                 align = "center"
+          )
+        ),
+        #output country, variable and year in one row
+        fluidRow(
+          column(4,
+                 selectizeInput("country_select", "Choose a Country:",
+                                choices = sort(valid_countries))
+          ),
+          column(4,
+                 selectizeInput("indicator_select", "Choose an Indicator:",
+                                choices = sort(unique(data$`Indicator Name`)))
+          ),
+          column(4,
+                 selectInput("year_select", "Choose a Year:",
+                             choices = sort(
+                               unique(
+                                 as.integer(
+                                   str_extract(names(data), "^(19|20)\\d{2}$")  # Extracts years like 1990, 2001, etc.
+                                 )
+                               )
+                             ),
+                             selected = 1991))
+        ),
+        fluidRow(
+          column(12,
+                 plotlyOutput("regionPlot")
+          )
+        ),
+        br(),
+        fluidRow(
+          column(12,
+                 plotOutput("mapPlot", height = "450px")
+          )
+        )
+),
 # ========== Continent tab UI ==========
       tabItem(tabName = "line-region",
               fluidRow(
-                column(12, h2("Regional Trends by Continent and Indicator"), 
+                column(12, h2("Regional trends by continent"), 
                        align = "center")
               ),
               fluidRow(
                 column(12,
-p("Explore trends based on continent selection and indicator of interest.",
+p("Explore trends based on continent and indicator.",
                          style = "font-size: 12px"),
                        align = "center")
               ),
@@ -126,7 +166,7 @@ server <- function(input, output, session) {
   output$continentPlot <- renderPlotly({
     req(input$country_select_con, input$indicator_select_con)
     
-    # Prepare filtered and reshaped data
+    # Prepare filtered median data
     continent_data <- reactive({
       data |>
         filter(`region_un` == input$country_select_con,
@@ -140,20 +180,24 @@ server <- function(input, output, session) {
     })
       
     
-    # Generate plot
+    #generate plot
     p1 <- ggplot(continent_data(), aes(x = year, y = value)) +
       geom_line(color = "darkblue", size = 1) +
       geom_point(color = "darkblue", size = 2) +
       labs(
-        title = paste("Variable:", input$indicator_select_con),
+        title = paste(input$indicator_select_con),
         subtitle = paste("Continent:", input$country_select_con),
         x = "Year",
         y = input$indicator_select_con
       ) +
-      theme_minimal()
+      theme_minimal()+
+      theme(
+        axis.text.y = element_text(size = 8) 
+      )
     
     ggplotly(p1)
   })
+  
 # =============================================================================  
   
 
@@ -168,6 +212,7 @@ server <- function(input, output, session) {
       pivot_longer(cols = matches("^(19|20)\\d{2}$"), names_to = "year", 
                    values_to = "value") |>
       group_by(`Indicator Name`) |>
+      #Output only those variables, that have at least one non zero value
       summarise(non_na_count = sum(!is.na(value))) |>
       filter(non_na_count > 0) |>
       pull(`Indicator Name`)  # Extract valid indicators
@@ -177,37 +222,67 @@ server <- function(input, output, session) {
                          choices = valid_indicators, server = TRUE)
   })
 
-  
+  # Generate plotly output
   output$regionPlot <- renderPlotly({
     req(input$country_select, input$indicator_select)
     
     # Filter data by selected country and indicator
-      country_data <- reactive({
-        data |>
-          filter(`Country Name` == input$country_select,
-                 `Indicator Name` == input$indicator_select) |>
-          pivot_longer(
-            cols = matches("^(19|20)\\d{2}$"),
-            names_to = "year",
-            values_to = "value"
-          ) |>
-          mutate(year = as.integer(year))
-      })
+      country_data <- data |>
+        filter(`Country Name` == input$country_select,
+               `Indicator Name` == input$indicator_select) |>
+        pivot_longer(
+          cols = matches("^(19|20)\\d{2}$"),
+          names_to = "year",
+          values_to = "value"
+        ) |>
+        mutate(year = as.integer(year))
     
     # Generate plot
-    p <- ggplot(country_data(), aes(x = year, y = value)) +
+    p <- ggplot(country_data, aes(x = year, y = value)) +
       geom_line(color = "darkblue", size = 1) +
       geom_point(color = "darkblue", size = 2) +
       labs(
-        title = paste("Variable:", input$indicator_select),
+        title = paste(input$indicator_select),
         subtitle = paste("Country:", input$country_select),
         x = "Year",
         y = input$indicator_select
       ) +
-      theme_minimal()
+      theme_minimal()+
+      theme(
+        plot.title = element_text(size = 14, hjust = 0.5)
+      )
     
     ggplotly(p)
   })
+  
+  # Map plot generation
+  output$mapPlot <- renderPlot({
+    req(input$indicator_select, input$year_select)
+    # Transform the selected year as a character value to use as column name
+    year_col <- as.character(input$year_select)
+    # Filter data based on the selected indicator and year
+    map_data <- data |>
+      filter(`Indicator Name` == input$indicator_select) |>
+      select(`Country Name`, geometry, !!year_col) |>
+      rename(value = !!year_col)
+   
+    # Plot the map
+    ggplot(map_data) +
+      geom_sf(aes(geometry = geometry, fill = value),
+              color = "grey", linewidth = 0.2) +
+      scale_fill_viridis_c(option = "viridis", na.value = "grey90",
+                           name = input$indicator_select) +
+      theme(legend.position = "top",
+            legend.text = element_text(size = 8),
+            legend.key.width = unit(2.5, "cm"),
+            axis.text = element_blank(),
+            axis.ticks = element_blank()) +
+      labs(title = paste(input$indicator_select, "in", input$year_select))+
+      theme(
+        plot.title = element_text(size = 20, hjust = 0.5)
+      )
+  })
+  
 }
 # ============================================================================= 
 
